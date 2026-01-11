@@ -40,6 +40,9 @@ import {
 } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
+
 interface ResultsDashboardProps {
   metrics: CalculationResult;
 }
@@ -61,6 +64,34 @@ export function ResultsDashboard({ metrics }: ResultsDashboardProps) {
 
   return (
     <div className="space-y-6">
+      {/* Investment Score Card */}
+      <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-xl font-display font-bold flex items-center gap-2">
+              Investment Score
+              <Badge variant={metrics.investmentScore > 60 ? "default" : "destructive"} className="text-lg px-3">
+                Grade: {metrics.investmentGrade}
+              </Badge>
+            </h3>
+            <p className="text-sm text-muted-foreground mt-1">
+              Overall rating based on yield, cash flow, and return on investment.
+            </p>
+          </div>
+          <div className="text-right">
+            <span className="text-4xl font-bold text-primary">{metrics.investmentScore}</span>
+            <span className="text-muted-foreground ml-1">/ 100</span>
+          </div>
+        </div>
+        <Progress value={metrics.investmentScore} className="h-3" />
+        <div className="flex justify-between mt-2 text-xs text-muted-foreground">
+          <span>Poor</span>
+          <span>Fair</span>
+          <span>Good</span>
+          <span>Excellent</span>
+        </div>
+      </div>
+
       {/* Top Level Metrics */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard

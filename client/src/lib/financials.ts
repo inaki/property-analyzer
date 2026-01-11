@@ -9,6 +9,8 @@ export interface CalculationResult {
   monthlyCashFlow: number;
   capRate: number;
   cashOnCash: number;
+  investmentScore: number;
+  investmentGrade: string;
   totalInitialCash: number;
   yearlyAmortization: AmortizationYear[];
   cumulativeProfit: ProfitYear[];
@@ -95,7 +97,23 @@ export function calculateMetrics(data: InsertAnalysis): CalculationResult {
   const capRate = purchasePrice > 0 ? (annualNOI / purchasePrice) * 100 : 0;
   const cashOnCash = totalInitialCash > 0 ? (annualCashFlow / totalInitialCash) * 100 : 0;
 
-  // 6. Amortization Schedule
+  // 6. Investment Score (0-100)
+  // Weighted calculation based on Cash on Cash (50%), Cap Rate (30%), and Monthly Cash Flow (20%)
+  const cocScore = Math.min(100, Math.max(0, (cashOnCash / 12) * 100)); // 12% CoC is a "perfect" score part
+  const capScore = Math.min(100, Math.max(0, (capRate / 8) * 100));   // 8% Cap Rate is a "perfect" score part
+  const cashFlowScore = Math.min(100, Math.max(0, (monthlyCashFlow / 500) * 100)); // $500/mo is a "perfect" score part
+  
+  const investmentScore = Math.round((cocScore * 0.5) + (capScore * 0.3) + (cashFlowScore * 0.2));
+  
+  let investmentGrade = "F";
+  if (investmentScore >= 90) investmentGrade = "A+";
+  else if (investmentScore >= 80) investmentGrade = "A";
+  else if (investmentScore >= 70) investmentGrade = "B";
+  else if (investmentScore >= 60) investmentGrade = "C";
+  else if (investmentScore >= 50) investmentGrade = "D";
+  else investmentGrade = "F";
+
+  // 7. Amortization Schedule
   const yearlyAmortization: AmortizationYear[] = [];
   let currentBalance = loanAmount;
   let yearlyInterest = 0;
@@ -166,6 +184,8 @@ export function calculateMetrics(data: InsertAnalysis): CalculationResult {
     monthlyCashFlow,
     capRate,
     cashOnCash,
+    investmentScore,
+    investmentGrade,
     totalInitialCash,
     yearlyAmortization,
     cumulativeProfit: profitYears

@@ -263,7 +263,10 @@ export function CalculatorForm() {
                   name="propertyTaxYearly"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Yearly Property Tax (CRIM)</FormLabel>
+                      <FormLabel className="flex items-center gap-2">
+                        Yearly CRIM Property Tax
+                        <Badge variant="outline" className="text-[10px] h-4">Puerto Rico</Badge>
+                      </FormLabel>
                       <FormControl>
                         <div className="relative">
                           <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
