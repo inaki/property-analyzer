@@ -138,34 +138,29 @@ export function ResultsDashboard({ metrics }: ResultsDashboardProps) {
           <MetricCard
             title="Owner Earnings"
             value={formatCurrency(metrics.ownerEarningsMonthly)}
-            icon={DollarSign}
             trend={metrics.ownerEarningsMonthly > 0 ? "up" : "down"}
             description="Monthly after CapEx reserve"
           />
           <MetricCard
             title="Earnings Yield"
             value={formatPercent(metrics.earningsYield)}
-            icon={Activity}
             trend={metrics.earningsYield >= 10 ? "up" : "neutral"}
             description="Owner earnings / price"
           />
           <MetricCard
             title="Intrinsic Value"
             value={formatCurrency(metrics.intrinsicValue)}
-            icon={Building}
             description="10y DCF, 8% terminal cap"
           />
           <MetricCard
             title="Margin of Safety"
             value={formatPercent(metrics.marginOfSafety)}
-            icon={TrendingUp}
             trend={metrics.marginOfSafety >= 25 ? "up" : "down"}
             description="Discount vs intrinsic"
           />
           <MetricCard
             title="Stress CF"
             value={formatCurrency(metrics.stressTestCashFlow)}
-            icon={Wallet}
             trend={metrics.stressTestCashFlow > 0 ? "up" : "down"}
             description="20% rent drop, +15% expenses"
           />
