@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="House">
+  <rect width="64" height="64" rx="12" fill="#1f2937"/>
+  <path d="M12 30.5L32 14l20 16.5" fill="none" stroke="#f9fafb" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M20 28v22h24V28" fill="none" stroke="#f9fafb" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="29" y="38" width="6" height="12" fill="#f9fafb"/>
+</svg>

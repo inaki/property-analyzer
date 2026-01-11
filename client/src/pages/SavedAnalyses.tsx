@@ -42,12 +42,38 @@ export default function SavedAnalyses() {
   const formatCurrency = (val: number | string) => 
     new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(Number(val));
 
+  const handleExport = () => {
+    if (!analyses || analyses.length === 0) {
+      toast({ title: "Nothing to export", description: "No saved analyses found." });
+      return;
+    }
+
+    const blob = new Blob([JSON.stringify(analyses, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "saved-analyses.json";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <Layout>
       <div className="p-8 max-w-6xl mx-auto space-y-8">
         <div>
-          <h1 className="text-3xl font-display font-bold">Saved Analyses</h1>
-          <p className="text-muted-foreground mt-1">Review your past property evaluations.</p>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h1 className="text-3xl font-display font-bold">Saved Analyses</h1>
+              <p className="text-muted-foreground mt-1">Review your past property evaluations.</p>
+            </div>
+            <Button variant="outline" onClick={handleExport} disabled={!analyses || analyses.length === 0}>
+              Export JSON
+            </Button>
+          </div>
         </div>
 
         {isLoading ? (
