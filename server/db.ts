@@ -3,7 +3,9 @@ import Database from "better-sqlite3";
 import fs from "fs";
 import path from "path";
 
-const dataDir = path.resolve(import.meta.dirname, "data");
+const dataDir = process.env.DB_DIR
+  ? path.resolve(process.env.DB_DIR)
+  : path.resolve(process.cwd(), "data");
 const dbPath = path.join(dataDir, "property-analyzer.sqlite");
 
 if (!fs.existsSync(dataDir)) {
