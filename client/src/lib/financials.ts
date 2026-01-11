@@ -7,6 +7,13 @@ export interface CalculationResult {
   totalMonthlyExpenses: number;
   monthlyNOI: number;
   monthlyCashFlow: number;
+  ownerEarningsMonthly: number;
+  ownerEarningsAnnual: number;
+  earningsYield: number;
+  intrinsicValue: number;
+  marginOfSafety: number;
+  stressTestCashFlow: number;
+  stressTestPass: boolean;
   capRate: number;
   cashOnCash: number;
   investmentScore: number;
@@ -29,6 +36,27 @@ export interface ProfitYear {
   cumulativeCashFlow: number;
   equity: number;
   totalValue: number;
+}
+
+function calculateMonthlyMortgage(
+  loanAmount: number,
+  annualRate: number,
+  loanTermYears: number,
+): number {
+  const monthlyRate = (annualRate / 100) / 12;
+  const numberOfPayments = loanTermYears * 12;
+
+  if (monthlyRate > 0 && numberOfPayments > 0) {
+    return loanAmount *
+      (monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) /
+      (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
+  }
+
+  if (numberOfPayments > 0) {
+    return loanAmount / numberOfPayments;
+  }
+
+  return 0;
 }
 
 export function calculateMetrics(data: InsertAnalysis): CalculationResult {
@@ -60,19 +88,12 @@ export function calculateMetrics(data: InsertAnalysis): CalculationResult {
   const totalInitialCash = downPaymentAmount + closingCosts + renovation;
 
   // 3. Mortgage Calculation (Monthly)
-  const monthlyRate = (interestRate / 100) / 12;
   const numberOfPayments = loanTermYears * 12;
-  
-  let monthlyMortgage = 0;
-  if (monthlyRate > 0 && numberOfPayments > 0) {
-    monthlyMortgage = loanAmount * 
-      (monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) / 
-      (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
-  } else if (numberOfPayments > 0) {
-    monthlyMortgage = loanAmount / numberOfPayments;
-  }
+  const monthlyRate = (interestRate / 100) / 12;
+  const monthlyMortgage = calculateMonthlyMortgage(loanAmount, interestRate, loanTermYears);
 
   // 4. Operating Expenses
+  const grossMonthlyIncome = monthlyRent + otherIncome;
   const effectiveGrossIncome = (monthlyRent + otherIncome) * (1 - (vacancyRate / 100));
   
   const managementCost = (monthlyRent + otherIncome) * (managementPercent / 100);
@@ -97,7 +118,56 @@ export function calculateMetrics(data: InsertAnalysis): CalculationResult {
   const capRate = purchasePrice > 0 ? (annualNOI / purchasePrice) * 100 : 0;
   const cashOnCash = totalInitialCash > 0 ? (annualCashFlow / totalInitialCash) * 100 : 0;
 
-  // 6. Investment Score (0-100)
+  // 5. Berkshire-Style Metrics (Conservative Defaults)
+  const capexReservePercent = 5;
+  const requiredReturn = 0.1;
+  const holdingPeriodYears = 10;
+  const terminalCapRate = 0.08;
+
+  const capexReserveMonthly = grossMonthlyIncome * (capexReservePercent / 100);
+  const ownerEarningsMonthly = monthlyNOI - capexReserveMonthly;
+  const ownerEarningsAnnual = ownerEarningsMonthly * 12;
+
+  const earningsYield = purchasePrice > 0
+    ? (ownerEarningsAnnual / purchasePrice) * 100
+    : 0;
+
+  let intrinsicValue = 0;
+  if (ownerEarningsAnnual > 0) {
+    let dcfValue = 0;
+    for (let year = 1; year <= holdingPeriodYears; year += 1) {
+      dcfValue += ownerEarningsAnnual / Math.pow(1 + requiredReturn, year);
+    }
+
+    const terminalValue = ownerEarningsAnnual / terminalCapRate;
+    intrinsicValue = dcfValue + (terminalValue / Math.pow(1 + requiredReturn, holdingPeriodYears));
+  }
+
+  const marginOfSafety = intrinsicValue > 0
+    ? ((intrinsicValue - purchasePrice) / intrinsicValue) * 100
+    : 0;
+
+  // 6. Stress Test
+  const stressRent = monthlyRent * 0.8;
+  const stressOtherIncome = otherIncome * 0.8;
+  const stressVacancyRate = Math.min(100, vacancyRate + 10);
+  const stressGrossIncome = (stressRent + stressOtherIncome) * (1 - (stressVacancyRate / 100));
+  const stressManagement = (stressRent + stressOtherIncome) * (managementPercent / 100);
+  const stressMaintenance = (stressRent + stressOtherIncome) * (maintenancePercent / 100);
+  const fixedMonthlyExpenses =
+    (propTaxYearly / 12) +
+    (insuranceYearly / 12) +
+    hoaMonthly +
+    utilitiesMonthly +
+    otherExpensesMonthly;
+  const stressMonthlyExpenses = (fixedMonthlyExpenses + stressManagement + stressMaintenance) * 1.15;
+  const stressInterestRate = interestRate + 2;
+  const stressMonthlyMortgage = calculateMonthlyMortgage(loanAmount, stressInterestRate, loanTermYears);
+  const stressMonthlyNOI = stressGrossIncome - stressMonthlyExpenses;
+  const stressTestCashFlow = stressMonthlyNOI - stressMonthlyMortgage;
+  const stressTestPass = stressTestCashFlow > 0;
+
+  // 7. Investment Score (0-100)
   // Weighted calculation based on Cash on Cash (50%), Cap Rate (30%), and Monthly Cash Flow (20%)
   const cocScore = Math.min(100, Math.max(0, (cashOnCash / 12) * 100)); // 12% CoC is a "perfect" score part
   const capScore = Math.min(100, Math.max(0, (capRate / 8) * 100));   // 8% Cap Rate is a "perfect" score part
@@ -113,7 +183,7 @@ export function calculateMetrics(data: InsertAnalysis): CalculationResult {
   else if (investmentScore >= 50) investmentGrade = "D";
   else investmentGrade = "F";
 
-  // 7. Amortization Schedule
+  // 8. Amortization Schedule
   const yearlyAmortization: AmortizationYear[] = [];
   let currentBalance = loanAmount;
   let yearlyInterest = 0;
@@ -142,7 +212,7 @@ export function calculateMetrics(data: InsertAnalysis): CalculationResult {
     }
   }
 
-  // 7. Cumulative Profit (Appreciation assumed @ 2% linear for simplicity of this demo)
+  // 9. Cumulative Profit (Appreciation assumed @ 2% linear for simplicity of this demo)
   const profitYears: ProfitYear[] = [];
   let cumCashFlow = -totalInitialCash; // Start negative
   let propertyValue = purchasePrice;
@@ -182,6 +252,13 @@ export function calculateMetrics(data: InsertAnalysis): CalculationResult {
     totalMonthlyExpenses,
     monthlyNOI,
     monthlyCashFlow,
+    ownerEarningsMonthly,
+    ownerEarningsAnnual,
+    earningsYield,
+    intrinsicValue,
+    marginOfSafety,
+    stressTestCashFlow,
+    stressTestPass,
     capRate,
     cashOnCash,
     investmentScore,

@@ -2,6 +2,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
+import net from "net";
 
 const app = express();
 const httpServer = createServer(app);
@@ -31,6 +32,38 @@ export function log(message: string, source = "express") {
   });
 
   console.log(`${formattedTime} [${source}] ${message}`);
+}
+
+async function findAvailablePort(
+  startPort: number,
+  host: string | undefined,
+  maxTries = 20,
+): Promise<number> {
+  for (let port = startPort; port < startPort + maxTries; port += 1) {
+    const isAvailable = await new Promise<boolean>((resolve, reject) => {
+      const tester = net
+        .createServer()
+        .once("error", (err: NodeJS.ErrnoException) => {
+          if (err.code === "EADDRINUSE") {
+            resolve(false);
+            return;
+          }
+
+          reject(err);
+        })
+        .once("listening", () => {
+          tester.close(() => resolve(true));
+        });
+
+      tester.listen(port, host);
+    });
+
+    if (isAvailable) {
+      return port;
+    }
+  }
+
+  throw new Error(`No available ports found starting at ${startPort}.`);
 }
 
 app.use((req, res, next) => {
@@ -84,15 +117,13 @@ app.use((req, res, next) => {
   // Other ports are firewalled. Default to 5000 if not specified.
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
-  const port = parseInt(process.env.PORT || "5000", 10);
-  httpServer.listen(
-    {
-      port,
-      host: "0.0.0.0",
-      reusePort: true,
-    },
-    () => {
-      log(`serving on port ${port}`);
-    },
-  );
+  const basePort = parseInt(process.env.PORT || "5000", 10);
+  const host = process.env.HOST || "0.0.0.0";
+  const port = await findAvailablePort(basePort, host);
+  httpServer.listen(port, host, () => {
+    if (port !== basePort) {
+      log(`port ${basePort} in use, switched to ${port}`);
+    }
+    log(`serving on port ${port}`);
+  });
 })();

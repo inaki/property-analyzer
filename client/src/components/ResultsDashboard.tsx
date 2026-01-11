@@ -121,6 +121,60 @@ export function ResultsDashboard({ metrics }: ResultsDashboardProps) {
         />
       </div>
 
+      {/* Berkshire Lens */}
+      <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-lg font-display font-bold">Berkshire Lens</h3>
+            <p className="text-sm text-muted-foreground mt-1">
+              Owner earnings and margin-of-safety checks (conservative defaults).
+            </p>
+          </div>
+          <Badge variant={metrics.stressTestPass ? "default" : "destructive"}>
+            Stress Test {metrics.stressTestPass ? "Pass" : "Fail"}
+          </Badge>
+        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+          <MetricCard
+            title="Owner Earnings"
+            value={formatCurrency(metrics.ownerEarningsMonthly)}
+            icon={DollarSign}
+            trend={metrics.ownerEarningsMonthly > 0 ? "up" : "down"}
+            description="Monthly after CapEx reserve"
+          />
+          <MetricCard
+            title="Earnings Yield"
+            value={formatPercent(metrics.earningsYield)}
+            icon={Activity}
+            trend={metrics.earningsYield >= 10 ? "up" : "neutral"}
+            description="Owner earnings / price"
+          />
+          <MetricCard
+            title="Intrinsic Value"
+            value={formatCurrency(metrics.intrinsicValue)}
+            icon={Building}
+            description="10y DCF, 8% terminal cap"
+          />
+          <MetricCard
+            title="Margin of Safety"
+            value={formatPercent(metrics.marginOfSafety)}
+            icon={TrendingUp}
+            trend={metrics.marginOfSafety >= 25 ? "up" : "down"}
+            description="Discount vs intrinsic"
+          />
+          <MetricCard
+            title="Stress CF"
+            value={formatCurrency(metrics.stressTestCashFlow)}
+            icon={Wallet}
+            trend={metrics.stressTestCashFlow > 0 ? "up" : "down"}
+            description="20% rent drop, +15% expenses"
+          />
+        </div>
+        <p className="text-xs text-muted-foreground mt-4">
+          Assumes 5% CapEx reserve, 10% required return, 10-year hold, +2% rate bump.
+        </p>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
         {/* Main Chart Area */}
         <div className="lg:col-span-2 bg-card rounded-xl p-6 shadow-sm border border-border">
