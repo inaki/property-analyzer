@@ -48,7 +48,13 @@ export function CalculatorForm() {
                 <FormControl>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input {...field} className="pl-9 font-mono" placeholder="250000" />
+                    <Input 
+                      type="number" 
+                      {...field} 
+                      onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
+                      className="pl-9 font-mono" 
+                      placeholder="250000" 
+                    />
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -65,7 +71,13 @@ export function CalculatorForm() {
                 <FormControl>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input {...field} className="pl-9 font-mono" placeholder="8000" />
+                    <Input 
+                      type="number" 
+                      {...field} 
+                      onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
+                      className="pl-9 font-mono" 
+                      placeholder="8000" 
+                    />
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -82,7 +94,13 @@ export function CalculatorForm() {
                 <FormControl>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input {...field} className="pl-9 font-mono" placeholder="15000" />
+                    <Input 
+                      type="number" 
+                      {...field} 
+                      onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
+                      className="pl-9 font-mono" 
+                      placeholder="15000" 
+                    />
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -135,7 +153,14 @@ export function CalculatorForm() {
                 <FormControl>
                   <div className="relative">
                     <Percent className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input {...field} className="pl-9 font-mono" placeholder="6.5" />
+                    <Input 
+                      type="number"
+                      step="0.01"
+                      {...field} 
+                      onChange={(e) => field.onChange(e.target.value === "" ? "" : e.target.value)}
+                      className="pl-9 font-mono" 
+                      placeholder="6.5" 
+                    />
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -188,7 +213,13 @@ export function CalculatorForm() {
                 <FormControl>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input {...field} className="pl-9 font-mono bg-emerald-50/50 dark:bg-emerald-950/10 border-emerald-100 dark:border-emerald-900" placeholder="2500" />
+                    <Input 
+                      type="number"
+                      {...field} 
+                      onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
+                      className="pl-9 font-mono bg-emerald-50/50 dark:bg-emerald-950/10 border-emerald-100 dark:border-emerald-900" 
+                      placeholder="2500" 
+                    />
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -205,7 +236,13 @@ export function CalculatorForm() {
                 <FormControl>
                   <div className="relative">
                     <Percent className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input {...field} className="pl-9 font-mono" placeholder="5" />
+                    <Input 
+                      type="number"
+                      {...field} 
+                      onChange={(e) => field.onChange(e.target.value === "" ? "" : e.target.value)}
+                      className="pl-9 font-mono" 
+                      placeholder="5" 
+                    />
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -230,7 +267,13 @@ export function CalculatorForm() {
                       <FormControl>
                         <div className="relative">
                           <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                          <Input {...field} className="pl-9 font-mono" placeholder="1200" />
+                          <Input 
+                            type="number"
+                            {...field} 
+                            onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
+                            className="pl-9 font-mono" 
+                            placeholder="1200" 
+                          />
                         </div>
                       </FormControl>
                       <FormDescription className="text-xs">
@@ -250,7 +293,13 @@ export function CalculatorForm() {
                       <FormControl>
                         <div className="relative">
                           <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                          <Input {...field} className="pl-9 font-mono" placeholder="1000" />
+                          <Input 
+                            type="number"
+                            {...field} 
+                            onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
+                            className="pl-9 font-mono" 
+                            placeholder="1000" 
+                          />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -267,7 +316,13 @@ export function CalculatorForm() {
                       <FormControl>
                         <div className="relative">
                           <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                          <Input {...field} className="pl-9 font-mono" placeholder="150" />
+                          <Input 
+                            type="number"
+                            {...field} 
+                            onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
+                            className="pl-9 font-mono" 
+                            placeholder="150" 
+                          />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -284,7 +339,13 @@ export function CalculatorForm() {
                       <FormControl>
                         <div className="relative">
                           <Percent className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                          <Input {...field} className="pl-9 font-mono" placeholder="5" />
+                          <Input 
+                            type="number"
+                            {...field} 
+                            onChange={(e) => field.onChange(e.target.value === "" ? "" : e.target.value)}
+                            className="pl-9 font-mono" 
+                            placeholder="5" 
+                          />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -301,7 +362,13 @@ export function CalculatorForm() {
                       <FormControl>
                         <div className="relative">
                           <Percent className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                          <Input {...field} className="pl-9 font-mono" placeholder="8" />
+                          <Input 
+                            type="number"
+                            {...field} 
+                            onChange={(e) => field.onChange(e.target.value === "" ? "" : e.target.value)}
+                            className="pl-9 font-mono" 
+                            placeholder="8" 
+                          />
                         </div>
                       </FormControl>
                       <FormMessage />

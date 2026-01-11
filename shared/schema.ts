@@ -35,7 +35,20 @@ export const analyses = pgTable("analyses", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const insertAnalysisSchema = createInsertSchema(analyses).omit({ 
+// === BASE SCHEMAS ===
+export const insertAnalysisSchema = createInsertSchema(analyses, {
+  purchasePrice: z.coerce.number(),
+  renovationCost: z.coerce.number(),
+  closingCosts: z.coerce.number(),
+  monthlyRent: z.coerce.number(),
+  otherMonthlyIncome: z.coerce.number(),
+  propertyTaxYearly: z.coerce.number(),
+  insuranceYearly: z.coerce.number(),
+  hoaMonthly: z.coerce.number(),
+  utilitiesMonthly: z.coerce.number(),
+  otherMonthlyExpenses: z.coerce.number(),
+  loanTermYears: z.coerce.number(),
+}).omit({ 
   id: true, 
   createdAt: true 
 });
