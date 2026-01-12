@@ -3,6 +3,9 @@
     "title": "Investments",
     "subtitle": "Puerto Rico Edition",
     "language": "Language",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
     "proTipTitle": "Pro Tip",
     "proTipBody": "Don't forget CRIM property taxes. In PR, use assessed value (~1957 value), not market value."
   },

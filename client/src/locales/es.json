@@ -3,6 +3,9 @@
     "title": "Inversiones",
     "subtitle": "Edición Puerto Rico",
     "language": "Idioma",
+    "theme": "Tema",
+    "themeLight": "Claro",
+    "themeDark": "Oscuro",
     "proTipTitle": "Consejo Pro",
     "proTipBody": "No olvides los impuestos CRIM. En PR usa el valor tasado (~1957), no el valor de mercado."
   },
