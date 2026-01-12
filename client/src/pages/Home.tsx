@@ -168,6 +168,52 @@ export default function Home() {
           </div>
 
         </div>
+
+        <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
+          <h2 className="text-xl font-display font-semibold">Property Analyser Glossary</h2>
+          <p className="text-sm text-muted-foreground mt-1">
+            Quick definitions for the calculator inputs and outputs.
+          </p>
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            {[
+              {
+                term: "NOI",
+                definition:
+                  "Net Operating Income. Rent minus operating expenses before debt service.",
+              },
+              {
+                term: "Cap Rate",
+                definition:
+                  "Annual NOI divided by purchase price. Shows unlevered return.",
+              },
+              {
+                term: "Cash on Cash",
+                definition:
+                  "Annual cash flow divided by cash invested (down payment + closing + reno).",
+              },
+              {
+                term: "Vacancy Rate",
+                definition:
+                  "Percent of time the property is expected to be unoccupied.",
+              },
+              {
+                term: "Maintenance %",
+                definition:
+                  "Reserve for repairs and replacements as a percent of income.",
+              },
+              {
+                term: "DSCR",
+                definition:
+                  "Debt Service Coverage Ratio. NOI divided by debt service.",
+              },
+            ].map((item) => (
+              <div key={item.term} className="rounded-lg border border-border/60 p-4">
+                <h3 className="font-display font-semibold text-sm">{item.term}</h3>
+                <p className="text-sm text-muted-foreground mt-2">{item.definition}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </Layout>
   );

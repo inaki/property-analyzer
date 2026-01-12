@@ -1,10 +1,13 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { insertAnalysisSchema, type Analysis, type InsertAnalysis } from "@shared/schema";
+import { insertAnalysisSchema, type InsertAnalysis } from "@shared/schema";
 import {
-  createAnalysisRecord,
+  createBuydRecord,
+  createPropertyAnalysisRecord,
   deleteAnalysisRecord,
   getAllAnalyses,
   getAnalysisById,
+  type BuydSavedData,
+  type SavedRecord,
 } from "@/lib/indexedDb";
 
 export function useAnalyses() {
@@ -30,8 +33,17 @@ export function useCreateAnalysis() {
   return useMutation({
     mutationFn: async (data: InsertAnalysis) => {
       const validated = insertAnalysisSchema.parse(data);
-      return createAnalysisRecord(validated);
+      return createPropertyAnalysisRecord(validated);
     },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["analyses"] }),
+  });
+}
+
+export function useCreateBuydAnalysis() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (payload: { title: string; description?: string; data: BuydSavedData }) =>
+      createBuydRecord(payload),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["analyses"] }),
   });
 }
@@ -45,3 +57,5 @@ export function useDeleteAnalysis() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["analyses"] }),
   });
 }
+
+export type { SavedRecord };

@@ -4,7 +4,7 @@ import {
   Calculator, 
   History, 
   PieChart, 
-  Settings, 
+  TrendingUp,
   Building2
 } from "lucide-react";
 
@@ -12,7 +12,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
 
   const navItems = [
-    { href: "/", label: "Calculator", icon: Calculator },
+    { href: "/", label: "Property Analyser", icon: Calculator },
+    { href: "/buyd", label: "BUYD", icon: PieChart },
+    { href: "/growth", label: "Growth Calculator", icon: TrendingUp },
     { href: "/saved", label: "Saved Analyses", icon: History },
   ];
 
@@ -25,7 +27,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <Building2 className="h-6 w-6 text-white" />
           </div>
           <div>
-            <h1 className="font-display font-bold text-lg leading-tight tracking-tight">PropAnalyzer</h1>
+            <h1 className="font-display font-bold text-lg leading-tight tracking-tight">Investments</h1>
             <p className="text-xs text-muted-foreground">Puerto Rico Edition</p>
           </div>
         </div>

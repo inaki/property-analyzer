@@ -1,16 +1,16 @@
-import { useAnalyses, useDeleteAnalysis } from "@/hooks/use-analyses";
+import { useAnalyses, useDeleteAnalysis, type SavedRecord } from "@/hooks/use-analyses";
 import { Layout } from "@/components/Layout";
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Trash2, TrendingUp, Building2, ArrowRight } from "lucide-react";
+import { Trash2, Building2 } from "lucide-react";
 import { format } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -39,8 +39,33 @@ export default function SavedAnalyses() {
     }
   };
 
-  const formatCurrency = (val: number | string) => 
-    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(Number(val));
+  const formatCurrency = (val: number | string) =>
+    new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+    }).format(Number(val));
+
+  const getRowMeta = (analysis: SavedRecord) => {
+    if (analysis.kind === "buyd") {
+      return {
+        title: analysis.title,
+        description: analysis.description ?? "BUYD scenario snapshot",
+        value: formatCurrency(analysis.data.summary.netWorth),
+        metric: `${(analysis.data.summary.ltv * 100).toFixed(1)}% LTV`,
+        badge: "BUYD Snapshot",
+      };
+    }
+
+    const data = analysis.data;
+    return {
+      title: analysis.title,
+      description: analysis.description ?? "",
+      value: formatCurrency(data.purchasePrice),
+      metric: `${formatCurrency(data.monthlyRent)}/mo`,
+      badge: null,
+    };
+  };
 
   const handleExport = () => {
     if (!analyses || analyses.length === 0) {
@@ -68,7 +93,9 @@ export default function SavedAnalyses() {
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h1 className="text-3xl font-display font-bold">Saved Analyses</h1>
-              <p className="text-muted-foreground mt-1">Review your past property evaluations.</p>
+              <p className="text-muted-foreground mt-1">
+                Review your saved property and BUYD snapshots.
+              </p>
             </div>
             <Button variant="outline" onClick={handleExport} disabled={!analyses || analyses.length === 0}>
               Export JSON
@@ -86,7 +113,9 @@ export default function SavedAnalyses() {
           <div className="flex flex-col items-center justify-center py-20 border-2 border-dashed border-border rounded-xl bg-muted/20">
             <Building2 className="h-16 w-16 text-muted-foreground mb-4 opacity-50" />
             <h3 className="text-xl font-semibold mb-2">No Saved Analyses</h3>
-            <p className="text-muted-foreground mb-6">Go to the calculator to create your first analysis.</p>
+            <p className="text-muted-foreground mb-6">
+              Go to the calculator to create your first analysis.
+            </p>
             <Button asChild>
               <a href="/">Go to Calculator</a>
             </Button>
@@ -96,61 +125,75 @@ export default function SavedAnalyses() {
             <Table>
               <TableHeader className="bg-muted/50">
                 <TableRow>
-                  <TableHead className="w-[300px]">Property Title</TableHead>
-                  <TableHead>Price</TableHead>
-                  <TableHead>Rent</TableHead>
+                  <TableHead className="w-[300px]">Title</TableHead>
+                  <TableHead>Value</TableHead>
+                  <TableHead>Metric</TableHead>
                   <TableHead>Date Created</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {analyses?.map((analysis) => (
-                  <TableRow key={analysis.id} className="group hover:bg-muted/30 transition-colors">
-                    <TableCell>
-                      <div className="flex flex-col">
-                        <span className="font-medium text-foreground">{analysis.title}</span>
-                        <span className="text-xs text-muted-foreground line-clamp-1">{analysis.description}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="font-mono text-muted-foreground">
-                      {formatCurrency(analysis.purchasePrice)}
-                    </TableCell>
-                    <TableCell className="font-mono text-emerald-600 font-medium">
-                      {formatCurrency(analysis.monthlyRent)}/mo
-                    </TableCell>
-                    <TableCell className="text-muted-foreground text-sm">
-                      {analysis.createdAt ? format(new Date(analysis.createdAt), 'MMM d, yyyy') : '-'}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <AlertDialog>
-                          <AlertDialogTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive">
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </AlertDialogTrigger>
-                          <AlertDialogContent>
-                            <AlertDialogHeader>
-                              <AlertDialogTitle>Delete Analysis?</AlertDialogTitle>
-                              <AlertDialogDescription>
-                                This action cannot be undone. This will permanently delete "{analysis.title}".
-                              </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                              <AlertDialogCancel>Cancel</AlertDialogCancel>
-                              <AlertDialogAction 
-                                onClick={() => handleDelete(analysis.id)}
-                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                {analyses?.map((analysis) => {
+                  const meta = getRowMeta(analysis);
+                  return (
+                    <TableRow key={analysis.id} className="group hover:bg-muted/30 transition-colors">
+                      <TableCell>
+                        <div className="flex flex-col">
+                          <span className="font-medium text-foreground">{meta.title}</span>
+                          <span className="text-xs text-muted-foreground line-clamp-1">
+                            {meta.description}
+                          </span>
+                          {meta.badge && (
+                            <span className="text-[10px] uppercase tracking-wide text-muted-foreground mt-1">
+                              {meta.badge}
+                            </span>
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell className="font-mono text-muted-foreground">
+                        {meta.value}
+                      </TableCell>
+                      <TableCell className="font-mono text-emerald-600 font-medium">
+                        {meta.metric}
+                      </TableCell>
+                      <TableCell className="text-muted-foreground text-sm">
+                        {analysis.createdAt ? format(new Date(analysis.createdAt), "MMM d, yyyy") : "-"}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 text-muted-foreground hover:text-destructive"
                               >
-                                Delete
-                              </AlertDialogAction>
-                            </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>Delete Analysis?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  This action cannot be undone. This will permanently delete "{meta.title}".
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction
+                                  onClick={() => handleDelete(analysis.id)}
+                                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                >
+                                  Delete
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </div>
