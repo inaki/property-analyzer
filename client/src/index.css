@@ -81,6 +81,9 @@
   * {
     @apply border-border;
   }
+  html {
+    font-size: calc(90% - 2px);
+  }
   body {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-body);

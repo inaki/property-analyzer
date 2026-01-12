@@ -97,26 +97,22 @@ export function ResultsDashboard({ metrics }: ResultsDashboardProps) {
         <MetricCard
           title="Monthly Cash Flow"
           value={formatCurrency(metrics.monthlyCashFlow)}
-          icon={Wallet}
           trend={metrics.monthlyCashFlow > 0 ? "up" : "down"}
           description="Net profit after all expenses"
         />
         <MetricCard
           title="Cap Rate"
           value={formatPercent(metrics.capRate)}
-          icon={Activity}
           description="Return without financing"
         />
         <MetricCard
           title="Cash on Cash"
           value={formatPercent(metrics.cashOnCash)}
-          icon={TrendingUp}
           description="Return on cash invested"
         />
         <MetricCard
           title="Initial Cash Needed"
           value={formatCurrency(metrics.totalInitialCash)}
-          icon={PiggyBank}
           description="Down payment + closing + reno"
         />
       </div>
@@ -134,7 +130,7 @@ export function ResultsDashboard({ metrics }: ResultsDashboardProps) {
             Stress Test {metrics.stressTestPass ? "Pass" : "Fail"}
           </Badge>
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           <MetricCard
             title="Owner Earnings"
             value={formatCurrency(metrics.ownerEarningsMonthly)}
