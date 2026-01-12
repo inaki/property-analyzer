@@ -88,7 +88,7 @@ export default function Home() {
       });
       setSaveDialogOpen(false);
       setTitle("");
-    } catch (error) {
+    } catch {
       toast({
         title: t("property.toast.errorTitle"),
         description: t("property.toast.saveErrorBody"),

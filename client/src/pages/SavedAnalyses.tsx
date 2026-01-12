@@ -36,7 +36,7 @@ export default function SavedAnalyses() {
     try {
       await deleteMutation.mutateAsync(id);
       toast({ title: t("saved.toast.deletedTitle"), description: t("saved.toast.deletedBody") });
-    } catch (err) {
+    } catch {
       toast({ title: t("saved.toast.errorTitle"), description: t("saved.toast.deleteError"), variant: "destructive" });
     }
   };

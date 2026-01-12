@@ -4,6 +4,7 @@ import type { Server } from "http";
 import { storage } from "./storage";
 import { api } from "@shared/routes";
 import { z } from "zod";
+import { type InsertAnalysis } from "@shared/schema";
 
 export async function registerRoutes(
   httpServer: Server,
@@ -51,7 +52,7 @@ export async function registerRoutes(
       // Actually, my schema defines numeric columns which return strings in JS, but input numbers are fine.
       // I'll cast them to strings where necessary if type mismatch occurs, but standard insert usually works.
       
-      const analysis = await storage.createAnalysis(input as any);
+      const analysis = await storage.createAnalysis(input as InsertAnalysis);
       res.status(201).json(analysis);
     } catch (err) {
       if (err instanceof z.ZodError) {

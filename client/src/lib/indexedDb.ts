@@ -81,21 +81,28 @@ function sortByCreatedAtDesc(items: SavedRecord[]): SavedRecord[] {
   });
 }
 
-function normalizeRecord(raw: any): SavedRecord | null {
+function normalizeRecord(raw: unknown): SavedRecord | null {
   if (!raw) return null;
-  if (raw.kind === "property" || raw.kind === "buyd") {
+  if (
+    typeof raw === "object" &&
+    raw !== null &&
+    "kind" in raw &&
+    (raw as { kind?: string }).kind &&
+    ((raw as { kind: string }).kind === "property" || (raw as { kind: string }).kind === "buyd")
+  ) {
     return raw as SavedRecord;
   }
 
-  if (typeof raw.purchasePrice === "number") {
-    const createdAt = raw.createdAt ?? new Date().toISOString();
+  if (typeof raw === "object" && raw !== null && "purchasePrice" in raw) {
+    const record = raw as Analysis;
+    const createdAt = record.createdAt ?? new Date().toISOString();
     return {
-      id: raw.id,
+      id: record.id,
       kind: "property",
-      title: raw.title ?? "Property Analysis",
-      description: raw.description ?? null,
+      title: record.title ?? "Property Analysis",
+      description: record.description ?? null,
       createdAt,
-      data: raw as Analysis,
+      data: record,
     };
   }
 
@@ -107,7 +114,7 @@ export async function getAllAnalyses(): Promise<SavedRecord[]> {
   const tx = db.transaction(STORE_NAME, "readonly");
   const store = tx.objectStore(STORE_NAME);
   const rows = await requestToPromise(store.getAll());
-  const normalized = (rows as any[])
+  const normalized = (rows as unknown[])
     .map((row) => normalizeRecord(row))
     .filter((row): row is SavedRecord => row !== null);
   return sortByCreatedAtDesc(normalized);

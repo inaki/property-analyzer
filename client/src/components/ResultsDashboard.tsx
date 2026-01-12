@@ -16,14 +16,6 @@ import {
   Bar
 } from "recharts";
 import { 
-  DollarSign, 
-  TrendingUp, 
-  Wallet, 
-  PiggyBank,
-  Building,
-  Activity
-} from "lucide-react";
-import { 
   Tabs, 
   TabsContent, 
   TabsList, 
