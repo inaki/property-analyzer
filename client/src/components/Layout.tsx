@@ -1,4 +1,5 @@
 import { Link, useLocation } from "wouter";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import { 
   Calculator, 
@@ -7,16 +8,23 @@ import {
   TrendingUp,
   Building2
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
+  const { t, i18n } = useTranslation();
 
   const navItems = [
-    { href: "/", label: "Property Analyser", icon: Calculator },
-    { href: "/buyd", label: "BUYD", icon: PieChart },
-    { href: "/growth", label: "Growth Calculator", icon: TrendingUp },
-    { href: "/saved", label: "Saved Analyses", icon: History },
+    { href: "/", label: t("nav.propertyAnalyser"), icon: Calculator },
+    { href: "/buyd", label: t("nav.buyd"), icon: PieChart },
+    { href: "/growth", label: t("nav.growthCalculator"), icon: TrendingUp },
+    { href: "/saved", label: t("nav.savedAnalyses"), icon: History },
   ];
+
+  const handleLanguageChange = (language: "en" | "es") => {
+    i18n.changeLanguage(language);
+    localStorage.setItem("lang", language);
+  };
 
   return (
     <div className="min-h-screen bg-background flex flex-col md:flex-row font-body">
@@ -27,8 +35,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <Building2 className="h-6 w-6 text-white" />
           </div>
           <div>
-            <h1 className="font-display font-bold text-lg leading-tight tracking-tight">Investments</h1>
-            <p className="text-xs text-muted-foreground">Puerto Rico Edition</p>
+            <h1 className="font-display font-bold text-lg leading-tight tracking-tight">{t("app.title")}</h1>
+            <p className="text-xs text-muted-foreground">{t("app.subtitle")}</p>
           </div>
         </div>
 
@@ -54,11 +62,31 @@ export function Layout({ children }: { children: React.ReactNode }) {
           })}
         </nav>
 
+        <div className="px-4 pb-4">
+          <p className="text-xs text-muted-foreground mb-2">{t("app.language")}</p>
+          <div className="flex gap-2">
+            <Button
+              variant={i18n.language === "en" ? "default" : "outline"}
+              size="sm"
+              onClick={() => handleLanguageChange("en")}
+            >
+              EN
+            </Button>
+            <Button
+              variant={i18n.language === "es" ? "default" : "outline"}
+              size="sm"
+              onClick={() => handleLanguageChange("es")}
+            >
+              ES
+            </Button>
+          </div>
+        </div>
+
         <div className="p-4 border-t border-border/50">
           <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl p-4 text-white shadow-xl">
-            <h4 className="font-display font-bold text-sm mb-1">Pro Tip</h4>
+            <h4 className="font-display font-bold text-sm mb-1">{t("app.proTipTitle")}</h4>
             <p className="text-xs text-slate-300 opacity-90 leading-relaxed">
-              Don't forget CRIM property taxes. In PR, use assessed value (~1957 value), not market value.
+              {t("app.proTipBody")}
             </p>
           </div>
         </div>

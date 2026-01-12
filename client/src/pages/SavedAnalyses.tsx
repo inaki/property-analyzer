@@ -13,6 +13,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Trash2, Building2 } from "lucide-react";
 import { format } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,13 +30,14 @@ export default function SavedAnalyses() {
   const { data: analyses, isLoading } = useAnalyses();
   const deleteMutation = useDeleteAnalysis();
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   const handleDelete = async (id: number) => {
     try {
       await deleteMutation.mutateAsync(id);
-      toast({ title: "Deleted", description: "Analysis removed successfully." });
+      toast({ title: t("saved.toast.deletedTitle"), description: t("saved.toast.deletedBody") });
     } catch (err) {
-      toast({ title: "Error", description: "Failed to delete.", variant: "destructive" });
+      toast({ title: t("saved.toast.errorTitle"), description: t("saved.toast.deleteError"), variant: "destructive" });
     }
   };
 
@@ -50,10 +52,10 @@ export default function SavedAnalyses() {
     if (analysis.kind === "buyd") {
       return {
         title: analysis.title,
-        description: analysis.description ?? "BUYD scenario snapshot",
+        description: analysis.description ?? t("saved.buydDescription"),
         value: formatCurrency(analysis.data.summary.netWorth),
-        metric: `${(analysis.data.summary.ltv * 100).toFixed(1)}% LTV`,
-        badge: "BUYD Snapshot",
+        metric: t("saved.metric.ltv", { value: (analysis.data.summary.ltv * 100).toFixed(1) }),
+        badge: t("saved.badge.buyd"),
       };
     }
 
@@ -62,14 +64,14 @@ export default function SavedAnalyses() {
       title: analysis.title,
       description: analysis.description ?? "",
       value: formatCurrency(data.purchasePrice),
-      metric: `${formatCurrency(data.monthlyRent)}/mo`,
+      metric: t("saved.metric.monthlyRent", { value: formatCurrency(data.monthlyRent) }),
       badge: null,
     };
   };
 
   const handleExport = () => {
     if (!analyses || analyses.length === 0) {
-      toast({ title: "Nothing to export", description: "No saved analyses found." });
+      toast({ title: t("saved.toast.emptyExportTitle"), description: t("saved.toast.emptyExportBody") });
       return;
     }
 
@@ -92,13 +94,11 @@ export default function SavedAnalyses() {
         <div>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h1 className="text-3xl font-display font-bold">Saved Analyses</h1>
-              <p className="text-muted-foreground mt-1">
-                Review your saved property and BUYD snapshots.
-              </p>
+              <h1 className="text-3xl font-display font-bold">{t("saved.title")}</h1>
+              <p className="text-muted-foreground mt-1">{t("saved.subtitle")}</p>
             </div>
             <Button variant="outline" onClick={handleExport} disabled={!analyses || analyses.length === 0}>
-              Export JSON
+              {t("saved.export")}
             </Button>
           </div>
         </div>
@@ -112,12 +112,10 @@ export default function SavedAnalyses() {
         ) : analyses?.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 border-2 border-dashed border-border rounded-xl bg-muted/20">
             <Building2 className="h-16 w-16 text-muted-foreground mb-4 opacity-50" />
-            <h3 className="text-xl font-semibold mb-2">No Saved Analyses</h3>
-            <p className="text-muted-foreground mb-6">
-              Go to the calculator to create your first analysis.
-            </p>
+            <h3 className="text-xl font-semibold mb-2">{t("saved.emptyTitle")}</h3>
+            <p className="text-muted-foreground mb-6">{t("saved.emptyBody")}</p>
             <Button asChild>
-              <a href="/">Go to Calculator</a>
+              <a href="/">{t("saved.emptyCta")}</a>
             </Button>
           </div>
         ) : (
@@ -125,11 +123,11 @@ export default function SavedAnalyses() {
             <Table>
               <TableHeader className="bg-muted/50">
                 <TableRow>
-                  <TableHead className="w-[300px]">Title</TableHead>
-                  <TableHead>Value</TableHead>
-                  <TableHead>Metric</TableHead>
-                  <TableHead>Date Created</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                  <TableHead className="w-[300px]">{t("saved.table.title")}</TableHead>
+                  <TableHead>{t("saved.table.value")}</TableHead>
+                  <TableHead>{t("saved.table.metric")}</TableHead>
+                  <TableHead>{t("saved.table.date")}</TableHead>
+                  <TableHead className="text-right">{t("saved.table.actions")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -141,15 +139,15 @@ export default function SavedAnalyses() {
                         <div className="flex flex-col">
                           <span className="font-medium text-foreground">{meta.title}</span>
                           <span className="text-xs text-muted-foreground line-clamp-1">
-                            {meta.description}
+                          {meta.description}
+                        </span>
+                        {meta.badge && (
+                          <span className="text-[10px] uppercase tracking-wide text-muted-foreground mt-1">
+                            {t("saved.badge.buyd")}
                           </span>
-                          {meta.badge && (
-                            <span className="text-[10px] uppercase tracking-wide text-muted-foreground mt-1">
-                              {meta.badge}
-                            </span>
-                          )}
-                        </div>
-                      </TableCell>
+                        )}
+                      </div>
+                    </TableCell>
                       <TableCell className="font-mono text-muted-foreground">
                         {meta.value}
                       </TableCell>
@@ -173,18 +171,18 @@ export default function SavedAnalyses() {
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                               <AlertDialogHeader>
-                                <AlertDialogTitle>Delete Analysis?</AlertDialogTitle>
+                                <AlertDialogTitle>{t("saved.delete.title")}</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  This action cannot be undone. This will permanently delete "{meta.title}".
+                                  {t("saved.delete.body", { title: meta.title })}
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogCancel>{t("common.cancel")}</AlertDialogCancel>
                                 <AlertDialogAction
                                   onClick={() => handleDelete(analysis.id)}
                                   className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                                 >
-                                  Delete
+                                  {t("common.delete")}
                                 </AlertDialogAction>
                               </AlertDialogFooter>
                             </AlertDialogContent>

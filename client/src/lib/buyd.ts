@@ -30,6 +30,15 @@ export type BuydInputs = {
   stressExpenseShockPercent: number;
 };
 
+export type BuydRuleBreach = "ltvMax" | "dscrLow" | "bufferDepleted";
+
+export type BuydEvent =
+  | { type: "borrowed"; amount: number }
+  | { type: "assetCrash"; percent: number }
+  | { type: "rateSpike"; percent: number }
+  | { type: "incomeShock"; percent: number }
+  | { type: "expenseShock"; percent: number };
+
 export type BuydYear = {
   year: number;
   assetValue: number;
@@ -41,8 +50,8 @@ export type BuydYear = {
   dscr: number;
   cashBuffer: number;
   bufferMonths: number;
-  ruleBreaches: string[];
-  events: string[];
+  ruleBreaches: BuydRuleBreach[];
+  events: BuydEvent[];
 };
 
 export type BuydResult = {
@@ -77,14 +86,14 @@ export function simulateBuyd(inputs: BuydInputs): BuydResult {
   let breakYear: number | null = null;
 
   for (let year = 1; year <= years; year += 1) {
-    const ruleBreaches: string[] = [];
-    const events: string[] = [];
+    const ruleBreaches: BuydRuleBreach[] = [];
+    const events: BuydEvent[] = [];
 
     assetValue = assetValue * (1 + growthRate);
     if (inputs.stressCrashEnabled && year === inputs.stressCrashYear) {
       const drop = Math.min(100, Math.max(0, inputs.stressCrashDropPercent || 0)) / 100;
       assetValue = assetValue * (1 - drop);
-      events.push(`Asset shock: -${Math.round(drop * 100)}% value drop.`);
+      events.push({ type: "assetCrash", percent: Math.round(drop * 100) });
     }
     incomeYieldBase = incomeYieldBase * (1 + incomeGrowthRate);
     annualExpenses = annualExpenses * (1 + expenseGrowthRate);
@@ -94,14 +103,14 @@ export function simulateBuyd(inputs: BuydInputs): BuydResult {
     if (inputs.stressIncomeShockEnabled && year === inputs.stressIncomeShockYear) {
       const cut = Math.min(100, Math.max(0, inputs.stressIncomeShockPercent || 0)) / 100;
       effectiveIncomeYield = incomeYieldBase * (1 - cut);
-      events.push(`Income shock: -${Math.round(cut * 100)}% yield.`);
+      events.push({ type: "incomeShock", percent: Math.round(cut * 100) });
     }
 
     let effectiveExpenses = annualExpenses;
     if (inputs.stressExpenseShockEnabled && year === inputs.stressExpenseShockYear) {
       const bump = Math.min(100, Math.max(0, inputs.stressExpenseShockPercent || 0)) / 100;
       effectiveExpenses = annualExpenses * (1 + bump);
-      events.push(`Expense shock: +${Math.round(bump * 100)}% expenses.`);
+      events.push({ type: "expenseShock", percent: Math.round(bump * 100) });
     }
 
     let effectiveInterestRate = baseInterestRate;
@@ -111,7 +120,7 @@ export function simulateBuyd(inputs: BuydInputs): BuydResult {
       const ramp = Math.min(2, yearsSinceStart) / 2;
       effectiveInterestRate = baseInterestRate + (increase * ramp);
       if (year === inputs.stressRateSpikeStartYear) {
-        events.push(`Rate spike begins: +${inputs.stressRateSpikeIncreasePercent}% over 2 years.`);
+        events.push({ type: "rateSpike", percent: inputs.stressRateSpikeIncreasePercent || 0 });
       }
     }
 
@@ -127,7 +136,7 @@ export function simulateBuyd(inputs: BuydInputs): BuydResult {
         : Math.min(allowedBorrow, Math.max(0, inputs.yearlySpend || 0));
 
     if (borrow > 0) {
-      events.push(`Borrowed ${Math.round(borrow)} to fund spending.`);
+      events.push({ type: "borrowed", amount: Math.round(borrow) });
     }
 
     debtBalance += borrow;
@@ -140,13 +149,13 @@ export function simulateBuyd(inputs: BuydInputs): BuydResult {
     const bufferMonths = livingExpenses > 0 ? cashBuffer / (livingExpenses / 12) : 0;
 
     if (ltv > lenderMaxLtv) {
-      ruleBreaches.push("LTV above lender max");
+      ruleBreaches.push("ltvMax");
     }
     if (dscr < 1) {
-      ruleBreaches.push("DSCR below 1.0");
+      ruleBreaches.push("dscrLow");
     }
     if (cashBuffer < 0) {
-      ruleBreaches.push("Cash buffer depleted");
+      ruleBreaches.push("bufferDepleted");
     }
 
     if (ruleBreaches.length > 0 && breakYear === null) {

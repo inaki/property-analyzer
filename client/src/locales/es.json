@@ -1,0 +1,512 @@
+{
+  "app": {
+    "title": "Inversiones",
+    "subtitle": "Edición Puerto Rico",
+    "language": "Idioma",
+    "proTipTitle": "Consejo Pro",
+    "proTipBody": "No olvides los impuestos CRIM. En PR usa el valor tasado (~1957), no el valor de mercado."
+  },
+  "nav": {
+    "propertyAnalyser": "Analizador de Propiedades",
+    "buyd": "BUYD",
+    "growthCalculator": "Calculadora de Crecimiento",
+    "savedAnalyses": "Análisis Guardados"
+  },
+  "common": {
+    "saveAnalysis": "Guardar Análisis",
+    "saving": "Guardando...",
+    "cancel": "Cancelar",
+    "delete": "Eliminar"
+  },
+  "property": {
+    "header": {
+      "title": "Calculadora de Inversión",
+      "subtitle": "Analiza flujo de caja, cap rate y ROI al instante."
+    },
+    "actions": {
+      "reset": "Restablecer"
+    },
+    "saveDialog": {
+      "title": "Guardar Análisis",
+      "description": "Ponle un nombre a este calculo para guardarlo en tu historial.",
+      "placeholder": "ej. 123 Calle San Juan"
+    },
+    "toast": {
+      "titleRequiredTitle": "Título requerido",
+      "titleRequiredBody": "Dale un nombre al analisis.",
+      "savedTitle": "Análisis guardado",
+      "savedBody": "Tu analisis se guardo correctamente.",
+      "errorTitle": "Error",
+      "saveErrorBody": "No se pudo guardar el analisis. Intenta de nuevo.",
+      "resetTitle": "Calculadora reiniciada",
+      "resetBody": "Valores restablecidos."
+    },
+    "saveDescription": "Análisis para {{price}}",
+    "glossary": {
+      "title": "Glosario del Analizador",
+      "subtitle": "Definiciones rapidas de entradas y resultados.",
+      "noi": {
+        "title": "NOI",
+        "body": "Ingreso Operativo Neto. Renta menos gastos operativos antes de la deuda."
+      },
+      "capRate": {
+        "title": "Cap Rate",
+        "body": "NOI anual dividido por precio de compra. Retorno sin apalancamiento."
+      },
+      "cashOnCash": {
+        "title": "Cash on Cash",
+        "body": "Flujo anual dividido por efectivo invertido (enganche + cierre + renovacion)."
+      },
+      "vacancy": {
+        "title": "Vacancia",
+        "body": "Porcentaje de tiempo que se espera vacante."
+      },
+      "maintenance": {
+        "title": "Mantenimiento %",
+        "body": "Reserva para reparaciones como porcentaje del ingreso."
+      },
+      "dscr": {
+        "title": "DSCR",
+        "body": "Cobertura del servicio de deuda. NOI dividido por servicio de deuda."
+      }
+    },
+    "form": {
+      "sections": {
+        "purchase": "Detalles de Compra",
+        "financing": "Financiamiento",
+        "incomeExpenses": "Ingresos y Gastos",
+        "detailedExpenses": "Gastos Detallados"
+      },
+      "purchasePrice": "Precio de Compra",
+      "closingCosts": "Costos de Cierre",
+      "renovationCost": "Presupuesto de Renovación",
+      "downPayment": "Pago Inicial",
+      "interestRate": "Tasa de Interés (%)",
+      "loanTerm": "Plazo del Préstamo",
+      "selectTerm": "Selecciona plazo",
+      "loanYears": "{{years}} Años",
+      "monthlyRent": "Renta Mensual",
+      "vacancyRate": "Vacancia (%)",
+      "propertyTaxYearly": "Impuesto CRIM Anual",
+      "insuranceYearly": "Seguro Anual",
+      "hoaMonthly": "HOA Mensual",
+      "maintenancePercent": "Mantenimiento (%)",
+      "managementFeePercent": "Administración (%)",
+      "puertoRico": "Puerto Rico",
+      "propertyTaxHint": "Tasa efectiva PR ~0.39% del valor tasado 1957",
+      "placeholders": {
+        "purchasePrice": "250000",
+        "closingCosts": "8000",
+        "renovationCost": "15000",
+        "interestRate": "6.5",
+        "monthlyRent": "2500",
+        "vacancyRate": "5",
+        "propertyTaxYearly": "1200",
+        "insuranceYearly": "1000",
+        "hoaMonthly": "150",
+        "maintenancePercent": "5",
+        "managementFeePercent": "8"
+      }
+    }
+  },
+  "results": {
+    "investmentScore": {
+      "title": "Puntuacion de Inversión",
+      "subtitle": "Calificacion basada en rendimiento, flujo de caja y retorno.",
+      "grade": "Nota: {{grade}}",
+      "scale": {
+        "poor": "Malo",
+        "fair": "Regular",
+        "good": "Bueno",
+        "excellent": "Excelente"
+      }
+    },
+    "metrics": {
+      "monthlyCashFlow": {
+        "title": "Flujo Mensual",
+        "description": "Ganancia neta despues de gastos"
+      },
+      "capRate": {
+        "title": "Cap Rate",
+        "description": "Retorno sin financiamiento"
+      },
+      "cashOnCash": {
+        "title": "Cash on Cash",
+        "description": "Retorno sobre efectivo invertido"
+      },
+      "initialCash": {
+        "title": "Efectivo Inicial",
+        "description": "Enganche + cierre + renovacion"
+      }
+    },
+    "berkshire": {
+      "title": "Lente Berkshire",
+      "subtitle": "Ganancias del propietario y margen de seguridad (conservador).",
+      "stressStatus": "Prueba de Estrés {{status}}",
+      "pass": "Aprobada",
+      "fail": "Fallida",
+      "ownerEarnings": {
+        "title": "Ganancias del Propietario",
+        "description": "Mensual despues de reserva CapEx"
+      },
+      "earningsYield": {
+        "title": "Rendimiento de Ganancias",
+        "description": "Ganancias / precio"
+      },
+      "intrinsicValue": {
+        "title": "Valor Intrinseco",
+        "description": "DCF 10 años, cap terminal 8%"
+      },
+      "marginOfSafety": {
+        "title": "Margen de Seguridad",
+        "description": "Descuento vs intrinseco"
+      },
+      "stressCashFlow": {
+        "title": "Flujo Estrés",
+        "description": "-20% renta, +15% gastos"
+      },
+      "assumptions": "Asume 5% CapEx, 10% retorno, 10 años, +2% tasa."
+    },
+    "projections": {
+      "title": "Proyecciones Financieras",
+      "tabs": {
+        "longTerm": "Largo Plazo",
+        "amortization": "Amortizacion"
+      },
+      "yearsLabel": "Años",
+      "equityLabel": "Equidad",
+      "cashFlowLabel": "Flujo Acumulado",
+      "interest": "Interés",
+      "principal": "Principal"
+    },
+    "breakdown": {
+      "title": "Desglose Mensual",
+      "noi": "NOI",
+      "mortgage": "Hipoteca",
+      "operatingExpenses": "Gastos Operativos",
+      "netCashFlow": "Flujo Neto"
+    },
+    "amortization": {
+      "title": "Amortizacion (Primeros 5 Años)",
+      "year": "Año",
+      "interestPaid": "Interés Pagado",
+      "principalPaid": "Principal Pagado",
+      "remainingBalance": "Saldo Restante",
+      "yearLabel": "Año {{year}}"
+    }
+  },
+  "saved": {
+    "title": "Análisis Guardados",
+    "subtitle": "Revisa tus analisis guardados y BUYD.",
+    "export": "Exportar JSON",
+    "emptyTitle": "Sin Análisis Guardados",
+    "emptyBody": "Ve a la calculadora para crear tu primer analisis.",
+    "emptyCta": "Ir a la Calculadora",
+    "table": {
+      "title": "Título",
+      "value": "Valor",
+      "metric": "Métrica",
+      "date": "Fecha",
+      "actions": "Acciones"
+    },
+    "badge": {
+      "buyd": "Snapshot BUYD"
+    },
+    "metric": {
+      "ltv": "{{value}}% LTV",
+      "monthlyRent": "{{value}}/mes"
+    },
+    "buydDescription": "Snapshot de escenario BUYD",
+    "delete": {
+      "title": "Eliminar analisis?",
+      "body": "Esta accion no se puede deshacer. Eliminara \"{{title}}\"."
+    },
+    "toast": {
+      "deletedTitle": "Eliminado",
+      "deletedBody": "Análisis eliminado correctamente.",
+      "errorTitle": "Error",
+      "deleteError": "No se pudo eliminar.",
+      "emptyExportTitle": "Nada para exportar",
+      "emptyExportBody": "No hay analisis guardados."
+    }
+  },
+  "buyd": {
+    "header": {
+      "title": "Calculadora BUYD",
+      "subtitle": "Simulador determinista de un activo y deuda a solo interes.",
+      "ltv": "LTV {{value}}"
+    },
+    "save": {
+      "title": "Guardar Snapshot BUYD",
+      "description": "Nombra este escenario BUYD para guardarlo.",
+      "placeholder": "ej. BUYD estandar 30 años",
+      "defaultDescription": "Snapshot BUYD"
+    },
+    "sections": {
+      "portfolio": "Portafolio",
+      "portfolioSubtitle": "Un solo activo, deuda solo interes.",
+      "debt": "Deuda",
+      "strategy": "Estrategia",
+      "stressLab": "Laboratorio de Estrés"
+    },
+    "scenarios": {
+      "title": "Biblioteca de Escenarios",
+      "subtitle": "Casos BUYD predefinidos.",
+      "placeholder": "Selecciona un escenario",
+      "standard": {
+        "name": "BUYD Inmobiliario Estándar",
+        "description": "Crecimiento balanceado, apalancamiento moderado, renta estable."
+      },
+      "conservative": {
+        "name": "Conservador de Flujo",
+        "description": "Menor apalancamiento y mayor buffer."
+      },
+      "rateShock": {
+        "name": "Estrés por Tasas",
+        "description": "Tasa inicial alta y prueba agresiva."
+      },
+      "incomeShock": {
+        "name": "Shock de Ingresos",
+        "description": "Caida de renta y aumento de gastos."
+      }
+    },
+    "inputs": {
+      "assetValue": "Valor del Activo",
+      "growthRate": "Crecimiento (%)",
+      "incomeYield": "Rendimiento (%)",
+      "incomeGrowth": "Crecimiento de Ingresos (%)",
+      "annualExpenses": "Gastos Anuales",
+      "expenseGrowth": "Crecimiento de Gastos (%)",
+      "initialDebt": "Deuda Inicial",
+      "interestRate": "Tasa de Interés (%)",
+      "lenderMaxLtv": "LTV Maximo del Prestamista (%)",
+      "targetLtv": "LTV Objetivo",
+      "borrowMode": "Modo de Préstamo",
+      "borrowModePlaceholder": "Selecciona modo",
+      "borrowModeMaxSafe": "Maximo Seguro",
+      "borrowModeFixed": "Retiro Fijo",
+      "yearlySpend": "Gasto Anual",
+      "livingExpenses": "Gastos Personales / Año",
+      "cashBufferMonths": "Buffer de Caja (meses)",
+      "horizon": "Horizonte (años)"
+    },
+    "tooltips": {
+      "assetValue": "Valor inicial del portafolio.",
+      "growthRate": "Apreciacion anual esperada.",
+      "incomeYield": "Rendimiento neto antes de interes y gastos personales.",
+      "incomeGrowth": "Crecimiento anual del rendimiento.",
+      "annualExpenses": "Costos operativos del activo.",
+      "expenseGrowth": "Incremento anual de gastos.",
+      "initialDebt": "Saldo de deuda al año 0.",
+      "interestRate": "Tasa anual sobre deuda.",
+      "lenderMaxLtv": "Limite que fuerza desapalancamiento.",
+      "targetLtv": "Objetivo de apalancamiento.",
+      "borrowMode": "Maximo Seguro usa el margen disponible.",
+      "yearlySpend": "Necesidad anual financiada con deuda.",
+      "livingExpenses": "Gasto personal despues de deuda.",
+      "cashBufferMonths": "Meses de margen para evitar ventas forzadas."
+    },
+    "stress": {
+      "assetCrash": {
+        "title": "Caida del Activo",
+        "subtitle": "Baja unica de valor.",
+        "year": "Año de Caida",
+        "drop": "Caida (%)"
+      },
+      "rateSpike": {
+        "title": "Subida de Tasas",
+        "subtitle": "Aumento en 2 años.",
+        "startYear": "Año de Inicio",
+        "increase": "Aumento (%)"
+      },
+      "incomeShock": {
+        "title": "Shock de Ingresos",
+        "subtitle": "Baja de rendimiento por 1 año.",
+        "year": "Año del Shock",
+        "drop": "Caida (%)"
+      },
+      "expenseShock": {
+        "title": "Shock de Gastos",
+        "subtitle": "Aumento de gastos por 1 año.",
+        "year": "Año del Shock",
+        "increase": "Aumento (%)"
+      }
+    },
+    "metrics": {
+      "netWorth": {
+        "title": "Patrimonio",
+        "description": "Activos menos deuda"
+      },
+      "cashFlow": {
+        "title": "Flujo de Caja",
+        "description": "Despues de interes y gastos"
+      },
+      "borrowCapacity": {
+        "title": "Capacidad de Préstamo",
+        "description": "Margen hasta LTV objetivo"
+      },
+      "dscr": {
+        "title": "DSCR",
+        "description": "Ingreso / interes"
+      },
+      "cashBuffer": {
+        "title": "Buffer de Caja",
+        "description": "Reserva disponible"
+      },
+      "bufferMonths": {
+        "title": "Meses de Buffer",
+        "description": "Meses de margen"
+      },
+      "breakYear": {
+        "title": "Año de Quiebre",
+        "description": "Primera regla incumplida",
+        "value": "Año {{year}}",
+        "stable": "Estable"
+      },
+      "lenderMaxLtv": {
+        "title": "LTV Maximo",
+        "description": "Limite de apalancamiento"
+      }
+    },
+    "charts": {
+      "assetVsDebt": "Activo vs Deuda",
+      "ltvCashFlow": "LTV y Flujo",
+      "ltv": "LTV",
+      "cashFlow": "Flujo de Caja",
+      "borrowCapacity": "Capacidad de Préstamo",
+      "cashBuffer": "Buffer de Caja"
+    },
+    "rules": {
+      "title": "Estado de Reglas",
+      "ltvSafety": "LTV Seguro",
+      "dscr": "DSCR",
+      "cashBuffer": "Buffer de Caja",
+      "lenderMaxLtv": "LTV Maximo",
+      "breaches": {
+        "ltvMax": "LTV supera el maximo",
+        "dscrLow": "DSCR por debajo de 1.0",
+        "bufferDepleted": "Buffer de caja agotado"
+      }
+    },
+    "events": {
+      "title": "Eventos (Ultimos 8 Años)",
+      "year": "A{{year}}",
+      "none": "Sin eventos importantes.",
+      "borrowed": "Prestado {{amount}} para gastos.",
+      "assetCrash": "Shock de activo: -{{percent}}% de valor.",
+      "rateSpike": "Inicio subida de tasas: +{{percent}}% en 2 años.",
+      "incomeShock": "Shock de ingresos: -{{percent}}% rendimiento.",
+      "expenseShock": "Shock de gastos: +{{percent}}% gastos."
+    },
+    "education": {
+      "title": "Notas Educativas",
+      "body": "Simulador educativo. Asume deuda solo interes y crecimiento determinista. Agrega estres, impuestos y escenarios en la siguiente fase."
+    },
+    "glossary": {
+      "title": "Glosario BUYD",
+      "subtitle": "Términos clave del calculo BUYD.",
+      "ltv": {
+        "title": "LTV",
+        "body": "Loan-to-Value. Deuda dividida entre valor del activo."
+      },
+      "dscr": {
+        "title": "DSCR",
+        "body": "Cobertura de deuda. Ingreso dividido por interes."
+      },
+      "borrowCapacity": {
+        "title": "Capacidad de Préstamo",
+        "body": "Maximo prestable segun LTV objetivo y limite."
+      },
+      "cashBuffer": {
+        "title": "Buffer de Caja",
+        "body": "Reserva para cubrir gastos personales."
+      },
+      "targetLtv": {
+        "title": "LTV Objetivo",
+        "body": "Nivel de apalancamiento deseado."
+      },
+      "stressEvents": {
+        "title": "Eventos de Estrés",
+        "body": "Shocks de valor, ingresos, tasas o gastos."
+      }
+    }
+  },
+  "growth": {
+    "badge": "Crecimiento de Inversión",
+    "title": "Calculadora de Crecimiento",
+    "subtitle": "Planifica tu futuro con interes compuesto.",
+    "inputs": {
+      "startingBalance": "Saldo Inicial",
+      "monthlyInvestment": "Inversión Mensual",
+      "currentAge": "Edad Actual",
+      "inflationRate": "Inflación",
+      "compoundingFrequency": "Frecuencia de Capitalizacion",
+      "saveScenario": "Guardar Escenario"
+    },
+    "placeholders": {
+      "startingBalance": "5000",
+      "monthlyInvestment": "500",
+      "currentAge": "30",
+      "inflationRate": "2.5",
+      "saveScenario": "Plan conservador"
+    },
+    "hints": {
+      "startingBalance": "Inversión inicial",
+      "monthlyInvestment": "Aporte recurrente",
+      "currentAge": "Para edades",
+      "inflationRate": "Inflación anual",
+      "compoundingFrequency": "Cada cuanto se capitaliza",
+      "saveScenario": "Nombre y guarda este ajuste"
+    },
+    "frequencies": {
+      "yearly": "Anual",
+      "quarterly": "Trimestral",
+      "monthly": "Mensual",
+      "daily": "Diario",
+      "placeholder": "Selecciona frecuencia"
+    },
+    "howItWorks": "Como funciona: Con {{startingBalance}} inicial, agregas {{monthlyInvestment}}/mes. La tabla muestra valores nominales y reales a diferentes tasas. El balance crece por aportes e interes compuesto.",
+    "savedScenarios": "Escenarios Guardados",
+    "noScenarios": "No hay escenarios guardados.",
+    "scenarioSummary": "{{amount}}/mes · {{frequency}}x comp",
+    "projections": {
+      "title": "Proyecciones de Inversión",
+      "subtitle": "Verde = Nominal (dolares actuales) · Gris = Real (ajustado por inflacion)",
+      "scenario": "Escenario",
+      "years": "{{years}} Años",
+      "age": "Edad {{age}}",
+      "totalInvested": "Total Invertido",
+      "initialBalanceGrowth": "Crecimiento del Saldo Inicial",
+      "return": "{{rate}}% Retorno",
+      "earnings": "+{{value}} ganancias",
+      "real": "{{value}} real"
+    },
+    "definitions": {
+      "title": "Definiciones",
+      "totalInvested": {
+        "title": "Total Invertido",
+        "body": "Solo aportes mensuales (sin saldo inicial)."
+      },
+      "initialBalanceGrowth": {
+        "title": "Crecimiento del Saldo Inicial",
+        "body": "Saldo inicial al 8% en cada hito."
+      },
+      "nominal": {
+        "title": "Nominal",
+        "body": "Valor futuro sin ajuste por inflacion."
+      },
+      "real": {
+        "title": "Real",
+        "body": "Valor nominal ajustado por inflacion."
+      },
+      "earnings": {
+        "title": "Ganancias",
+        "body": "Nominal menos total invertido."
+      },
+      "age": {
+        "title": "Edad",
+        "body": "Edad actual mas los años del hito."
+      }
+    }
+  }
+}

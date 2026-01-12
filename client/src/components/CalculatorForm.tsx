@@ -1,4 +1,5 @@
 import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { type InsertAnalysis } from "@shared/schema";
 import {
   FormField,
@@ -24,10 +25,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Percent, DollarSign, Info } from "lucide-react";
+import { Percent, DollarSign } from "lucide-react";
 
 export function CalculatorForm() {
   const form = useFormContext<InsertAnalysis>();
+  const { t } = useTranslation();
 
   return (
     <div className="space-y-8 p-1">
@@ -35,7 +37,7 @@ export function CalculatorForm() {
       <section className="space-y-4">
         <h3 className="text-lg font-display font-semibold text-foreground flex items-center gap-2">
           <span className="w-1 h-6 bg-primary rounded-full inline-block"></span>
-          Purchase Details
+          {t("property.form.sections.purchase")}
         </h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -44,7 +46,7 @@ export function CalculatorForm() {
             name="purchasePrice"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Purchase Price</FormLabel>
+                <FormLabel>{t("property.form.purchasePrice")}</FormLabel>
                 <FormControl>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -53,7 +55,7 @@ export function CalculatorForm() {
                       {...field} 
                       onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
                       className="pl-9 font-mono" 
-                      placeholder="250000" 
+                      placeholder={t("property.form.placeholders.purchasePrice")}
                     />
                   </div>
                 </FormControl>
@@ -67,7 +69,7 @@ export function CalculatorForm() {
             name="closingCosts"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Closing Costs</FormLabel>
+                <FormLabel>{t("property.form.closingCosts")}</FormLabel>
                 <FormControl>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -76,7 +78,7 @@ export function CalculatorForm() {
                       {...field} 
                       onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
                       className="pl-9 font-mono" 
-                      placeholder="8000" 
+                      placeholder={t("property.form.placeholders.closingCosts")}
                     />
                   </div>
                 </FormControl>
@@ -90,7 +92,7 @@ export function CalculatorForm() {
             name="renovationCost"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Renovation Budget</FormLabel>
+                <FormLabel>{t("property.form.renovationCost")}</FormLabel>
                 <FormControl>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -99,7 +101,7 @@ export function CalculatorForm() {
                       {...field} 
                       onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
                       className="pl-9 font-mono" 
-                      placeholder="15000" 
+                      placeholder={t("property.form.placeholders.renovationCost")}
                     />
                   </div>
                 </FormControl>
@@ -116,7 +118,7 @@ export function CalculatorForm() {
       <section className="space-y-4">
         <h3 className="text-lg font-display font-semibold text-foreground flex items-center gap-2">
           <span className="w-1 h-6 bg-accent rounded-full inline-block"></span>
-          Financing
+          {t("property.form.sections.financing")}
         </h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -126,7 +128,7 @@ export function CalculatorForm() {
             render={({ field }) => (
               <FormItem className="col-span-1 md:col-span-2">
                 <FormLabel className="flex justify-between">
-                  <span>Down Payment</span>
+                  <span>{t("property.form.downPayment")}</span>
                   <span className="text-primary font-bold">{field.value}%</span>
                 </FormLabel>
                 <FormControl>
@@ -149,7 +151,7 @@ export function CalculatorForm() {
             name="interestRate"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Interest Rate (%)</FormLabel>
+                <FormLabel>{t("property.form.interestRate")}</FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Percent className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -159,7 +161,7 @@ export function CalculatorForm() {
                       {...field} 
                       onChange={(e) => field.onChange(e.target.value === "" ? "" : e.target.value)}
                       className="pl-9 font-mono" 
-                      placeholder="6.5" 
+                      placeholder={t("property.form.placeholders.interestRate")}
                     />
                   </div>
                 </FormControl>
@@ -173,18 +175,18 @@ export function CalculatorForm() {
             name="loanTermYears"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Loan Term</FormLabel>
+                <FormLabel>{t("property.form.loanTerm")}</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={String(field.value)}>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select term" />
+                      <SelectValue placeholder={t("property.form.selectTerm")} />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="30">30 Years</SelectItem>
-                    <SelectItem value="20">20 Years</SelectItem>
-                    <SelectItem value="15">15 Years</SelectItem>
-                    <SelectItem value="10">10 Years</SelectItem>
+                    <SelectItem value="30">{t("property.form.loanYears", { years: 30 })}</SelectItem>
+                    <SelectItem value="20">{t("property.form.loanYears", { years: 20 })}</SelectItem>
+                    <SelectItem value="15">{t("property.form.loanYears", { years: 15 })}</SelectItem>
+                    <SelectItem value="10">{t("property.form.loanYears", { years: 10 })}</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -200,7 +202,7 @@ export function CalculatorForm() {
       <section className="space-y-4">
         <h3 className="text-lg font-display font-semibold text-foreground flex items-center gap-2">
           <span className="w-1 h-6 bg-emerald-500 rounded-full inline-block"></span>
-          Income & Expenses
+          {t("property.form.sections.incomeExpenses")}
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -209,7 +211,7 @@ export function CalculatorForm() {
             name="monthlyRent"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Monthly Rent</FormLabel>
+                <FormLabel>{t("property.form.monthlyRent")}</FormLabel>
                 <FormControl>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -218,7 +220,7 @@ export function CalculatorForm() {
                       {...field} 
                       onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
                       className="pl-9 font-mono bg-emerald-50/50 dark:bg-emerald-950/10 border-emerald-100 dark:border-emerald-900" 
-                      placeholder="2500" 
+                      placeholder={t("property.form.placeholders.monthlyRent")}
                     />
                   </div>
                 </FormControl>
@@ -232,7 +234,7 @@ export function CalculatorForm() {
             name="vacancyRatePercent"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Vacancy Rate (%)</FormLabel>
+                <FormLabel>{t("property.form.vacancyRate")}</FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Percent className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -241,7 +243,7 @@ export function CalculatorForm() {
                       {...field} 
                       onChange={(e) => field.onChange(e.target.value === "" ? "" : e.target.value)}
                       className="pl-9 font-mono" 
-                      placeholder="5" 
+                      placeholder={t("property.form.placeholders.vacancyRate")}
                     />
                   </div>
                 </FormControl>
@@ -254,7 +256,7 @@ export function CalculatorForm() {
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="expenses" className="border-none">
             <AccordionTrigger className="text-sm font-medium text-muted-foreground hover:text-foreground">
-              Detailed Expenses
+              {t("property.form.sections.detailedExpenses")}
             </AccordionTrigger>
             <AccordionContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
@@ -264,8 +266,8 @@ export function CalculatorForm() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="flex items-center gap-2">
-                        Yearly CRIM Property Tax
-                        <Badge variant="outline" className="text-[10px] h-4">Puerto Rico</Badge>
+                        {t("property.form.propertyTaxYearly")}
+                        <Badge variant="outline" className="text-[10px] h-4">{t("property.form.puertoRico")}</Badge>
                       </FormLabel>
                       <FormControl>
                         <div className="relative">
@@ -275,12 +277,12 @@ export function CalculatorForm() {
                             {...field} 
                             onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
                             className="pl-9 font-mono" 
-                            placeholder="1200" 
+                            placeholder={t("property.form.placeholders.propertyTaxYearly")}
                           />
                         </div>
                       </FormControl>
                       <FormDescription className="text-xs">
-                        PR effective rate ~0.39% of 1957 assessed value
+                        {t("property.form.propertyTaxHint")}
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -292,7 +294,7 @@ export function CalculatorForm() {
                   name="insuranceYearly"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Yearly Insurance</FormLabel>
+                      <FormLabel>{t("property.form.insuranceYearly")}</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -301,7 +303,7 @@ export function CalculatorForm() {
                             {...field} 
                             onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
                             className="pl-9 font-mono" 
-                            placeholder="1000" 
+                            placeholder={t("property.form.placeholders.insuranceYearly")}
                           />
                         </div>
                       </FormControl>
@@ -315,7 +317,7 @@ export function CalculatorForm() {
                   name="hoaMonthly"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Monthly HOA</FormLabel>
+                      <FormLabel>{t("property.form.hoaMonthly")}</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -324,7 +326,7 @@ export function CalculatorForm() {
                             {...field} 
                             onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
                             className="pl-9 font-mono" 
-                            placeholder="150" 
+                            placeholder={t("property.form.placeholders.hoaMonthly")}
                           />
                         </div>
                       </FormControl>
@@ -338,7 +340,7 @@ export function CalculatorForm() {
                   name="maintenancePercent"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Maintenance (%)</FormLabel>
+                      <FormLabel>{t("property.form.maintenancePercent")}</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Percent className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -347,7 +349,7 @@ export function CalculatorForm() {
                             {...field} 
                             onChange={(e) => field.onChange(e.target.value === "" ? "" : e.target.value)}
                             className="pl-9 font-mono" 
-                            placeholder="5" 
+                            placeholder={t("property.form.placeholders.maintenancePercent")}
                           />
                         </div>
                       </FormControl>
@@ -361,7 +363,7 @@ export function CalculatorForm() {
                   name="managementFeePercent"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Management Fee (%)</FormLabel>
+                      <FormLabel>{t("property.form.managementFeePercent")}</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Percent className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -370,7 +372,7 @@ export function CalculatorForm() {
                             {...field} 
                             onChange={(e) => field.onChange(e.target.value === "" ? "" : e.target.value)}
                             className="pl-9 font-mono" 
-                            placeholder="8" 
+                            placeholder={t("property.form.placeholders.managementFeePercent")}
                           />
                         </div>
                       </FormControl>

@@ -23,7 +23,6 @@ import {
   Building,
   Activity
 } from "lucide-react";
-import { format } from "date-fns";
 import { 
   Tabs, 
   TabsContent, 
@@ -42,12 +41,14 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { useTranslation } from "react-i18next";
 
 interface ResultsDashboardProps {
   metrics: CalculationResult;
 }
 
 export function ResultsDashboard({ metrics }: ResultsDashboardProps) {
+  const { t } = useTranslation();
   const formatCurrency = (val: number) => 
     new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(val);
   
@@ -56,9 +57,9 @@ export function ResultsDashboard({ metrics }: ResultsDashboardProps) {
 
   // Pie Chart Data
   const expensesData = [
-    { name: "Mortgage", value: metrics.monthlyMortgage },
-    { name: "Expenses", value: metrics.totalMonthlyExpenses },
-    { name: "Cash Flow", value: Math.max(0, metrics.monthlyCashFlow) }
+    { name: t("results.breakdown.mortgage"), value: metrics.monthlyMortgage },
+    { name: t("results.breakdown.operatingExpenses"), value: metrics.totalMonthlyExpenses },
+    { name: t("results.breakdown.netCashFlow"), value: Math.max(0, metrics.monthlyCashFlow) }
   ];
   const COLORS = ["#6366f1", "#e11d48", "#10b981"]; // Indigo, Rose, Emerald
 
@@ -69,13 +70,13 @@ export function ResultsDashboard({ metrics }: ResultsDashboardProps) {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-xl font-display font-bold flex items-center gap-2">
-              Investment Score
+              {t("results.investmentScore.title")}
               <Badge variant={metrics.investmentScore > 60 ? "default" : "destructive"} className="text-lg px-3">
-                Grade: {metrics.investmentGrade}
+                {t("results.investmentScore.grade", { grade: metrics.investmentGrade })}
               </Badge>
             </h3>
             <p className="text-sm text-muted-foreground mt-1">
-              Overall rating based on yield, cash flow, and return on investment.
+              {t("results.investmentScore.subtitle")}
             </p>
           </div>
           <div className="text-right">
@@ -85,35 +86,35 @@ export function ResultsDashboard({ metrics }: ResultsDashboardProps) {
         </div>
         <Progress value={metrics.investmentScore} className="h-3" />
         <div className="flex justify-between mt-2 text-xs text-muted-foreground">
-          <span>Poor</span>
-          <span>Fair</span>
-          <span>Good</span>
-          <span>Excellent</span>
+          <span>{t("results.investmentScore.scale.poor")}</span>
+          <span>{t("results.investmentScore.scale.fair")}</span>
+          <span>{t("results.investmentScore.scale.good")}</span>
+          <span>{t("results.investmentScore.scale.excellent")}</span>
         </div>
       </div>
 
       {/* Top Level Metrics */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard
-          title="Monthly Cash Flow"
+          title={t("results.metrics.monthlyCashFlow.title")}
           value={formatCurrency(metrics.monthlyCashFlow)}
           trend={metrics.monthlyCashFlow > 0 ? "up" : "down"}
-          description="Net profit after all expenses"
+          description={t("results.metrics.monthlyCashFlow.description")}
         />
         <MetricCard
-          title="Cap Rate"
+          title={t("results.metrics.capRate.title")}
           value={formatPercent(metrics.capRate)}
-          description="Return without financing"
+          description={t("results.metrics.capRate.description")}
         />
         <MetricCard
-          title="Cash on Cash"
+          title={t("results.metrics.cashOnCash.title")}
           value={formatPercent(metrics.cashOnCash)}
-          description="Return on cash invested"
+          description={t("results.metrics.cashOnCash.description")}
         />
         <MetricCard
-          title="Initial Cash Needed"
+          title={t("results.metrics.initialCash.title")}
           value={formatCurrency(metrics.totalInitialCash)}
-          description="Down payment + closing + reno"
+          description={t("results.metrics.initialCash.description")}
         />
       </div>
 
@@ -121,48 +122,48 @@ export function ResultsDashboard({ metrics }: ResultsDashboardProps) {
       <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="text-lg font-display font-bold">Berkshire Lens</h3>
+            <h3 className="text-lg font-display font-bold">{t("results.berkshire.title")}</h3>
             <p className="text-sm text-muted-foreground mt-1">
-              Owner earnings and margin-of-safety checks (conservative defaults).
+              {t("results.berkshire.subtitle")}
             </p>
           </div>
           <Badge variant={metrics.stressTestPass ? "default" : "destructive"}>
-            Stress Test {metrics.stressTestPass ? "Pass" : "Fail"}
+            {t("results.berkshire.stressStatus", { status: metrics.stressTestPass ? t("results.berkshire.pass") : t("results.berkshire.fail") })}
           </Badge>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           <MetricCard
-            title="Owner Earnings"
+            title={t("results.berkshire.ownerEarnings.title")}
             value={formatCurrency(metrics.ownerEarningsMonthly)}
             trend={metrics.ownerEarningsMonthly > 0 ? "up" : "down"}
-            description="Monthly after CapEx reserve"
+            description={t("results.berkshire.ownerEarnings.description")}
           />
           <MetricCard
-            title="Earnings Yield"
+            title={t("results.berkshire.earningsYield.title")}
             value={formatPercent(metrics.earningsYield)}
             trend={metrics.earningsYield >= 10 ? "up" : "neutral"}
-            description="Owner earnings / price"
+            description={t("results.berkshire.earningsYield.description")}
           />
           <MetricCard
-            title="Intrinsic Value"
+            title={t("results.berkshire.intrinsicValue.title")}
             value={formatCurrency(metrics.intrinsicValue)}
-            description="10y DCF, 8% terminal cap"
+            description={t("results.berkshire.intrinsicValue.description")}
           />
           <MetricCard
-            title="Margin of Safety"
+            title={t("results.berkshire.marginOfSafety.title")}
             value={formatPercent(metrics.marginOfSafety)}
             trend={metrics.marginOfSafety >= 25 ? "up" : "down"}
-            description="Discount vs intrinsic"
+            description={t("results.berkshire.marginOfSafety.description")}
           />
           <MetricCard
-            title="Stress CF"
+            title={t("results.berkshire.stressCashFlow.title")}
             value={formatCurrency(metrics.stressTestCashFlow)}
             trend={metrics.stressTestCashFlow > 0 ? "up" : "down"}
-            description="20% rent drop, +15% expenses"
+            description={t("results.berkshire.stressCashFlow.description")}
           />
         </div>
         <p className="text-xs text-muted-foreground mt-4">
-          Assumes 5% CapEx reserve, 10% required return, 10-year hold, +2% rate bump.
+          {t("results.berkshire.assumptions")}
         </p>
       </div>
 
@@ -171,10 +172,10 @@ export function ResultsDashboard({ metrics }: ResultsDashboardProps) {
         <div className="lg:col-span-2 bg-card rounded-xl p-6 shadow-sm border border-border">
           <Tabs defaultValue="projections" className="w-full">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-display font-bold">Financial Projections</h3>
+              <h3 className="text-lg font-display font-bold">{t("results.projections.title")}</h3>
               <TabsList className="grid w-full max-w-[300px] grid-cols-2">
-                <TabsTrigger value="projections">Long Term</TabsTrigger>
-                <TabsTrigger value="amortization">Amortization</TabsTrigger>
+                <TabsTrigger value="projections">{t("results.projections.tabs.longTerm")}</TabsTrigger>
+                <TabsTrigger value="amortization">{t("results.projections.tabs.amortization")}</TabsTrigger>
               </TabsList>
             </div>
 
@@ -197,7 +198,7 @@ export function ResultsDashboard({ metrics }: ResultsDashboardProps) {
                     tick={{fontSize: 12, fill: '#888'}} 
                     tickLine={false}
                     axisLine={false}
-                    label={{ value: 'Years', position: 'insideBottomRight', offset: -5 }}
+                    label={{ value: t("results.projections.yearsLabel"), position: 'insideBottomRight', offset: -5 }}
                   />
                   <YAxis 
                     tick={{fontSize: 12, fill: '#888'}} 
@@ -210,8 +211,8 @@ export function ResultsDashboard({ metrics }: ResultsDashboardProps) {
                     contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                   />
                   <Legend />
-                  <Area type="monotone" dataKey="equity" stackId="1" stroke="#6366f1" fill="url(#colorEquity)" name="Equity Built" />
-                  <Area type="monotone" dataKey="cumulativeCashFlow" stackId="2" stroke="#10b981" fill="url(#colorTotal)" name="Cumulative Cash Flow" />
+                  <Area type="monotone" dataKey="equity" stackId="1" stroke="#6366f1" fill="url(#colorEquity)" name={t("results.projections.equityLabel")} />
+                  <Area type="monotone" dataKey="cumulativeCashFlow" stackId="2" stroke="#10b981" fill="url(#colorTotal)" name={t("results.projections.cashFlowLabel")} />
                 </AreaChart>
               </ResponsiveContainer>
             </TabsContent>
@@ -228,8 +229,8 @@ export function ResultsDashboard({ metrics }: ResultsDashboardProps) {
                     contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                   />
                   <Legend />
-                  <Bar dataKey="interestPaid" stackId="a" fill="#e11d48" name="Interest" radius={[0, 0, 4, 4]} />
-                  <Bar dataKey="principalPaid" stackId="a" fill="#6366f1" name="Principal" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="interestPaid" stackId="a" fill="#e11d48" name={t("results.projections.interest")} radius={[0, 0, 4, 4]} />
+                  <Bar dataKey="principalPaid" stackId="a" fill="#6366f1" name={t("results.projections.principal")} radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </TabsContent>
@@ -238,7 +239,7 @@ export function ResultsDashboard({ metrics }: ResultsDashboardProps) {
 
         {/* Breakdown Panel */}
         <div className="bg-card rounded-xl p-6 shadow-sm border border-border flex flex-col">
-          <h3 className="text-lg font-display font-bold mb-4">Monthly Breakdown</h3>
+          <h3 className="text-lg font-display font-bold mb-4">{t("results.breakdown.title")}</h3>
           <div className="flex-1 min-h-[200px] relative">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -261,7 +262,7 @@ export function ResultsDashboard({ metrics }: ResultsDashboardProps) {
             {/* Center Label */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <div className="text-center">
-                <p className="text-xs text-muted-foreground">NOI</p>
+                <p className="text-xs text-muted-foreground">{t("results.breakdown.noi")}</p>
                 <p className="font-bold text-lg">{formatCurrency(metrics.monthlyNOI)}</p>
               </div>
             </div>
@@ -270,21 +271,21 @@ export function ResultsDashboard({ metrics }: ResultsDashboardProps) {
             <div className="flex justify-between items-center text-sm">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-indigo-500" />
-                <span>Mortgage</span>
+                <span>{t("results.breakdown.mortgage")}</span>
               </div>
               <span className="font-mono">{formatCurrency(metrics.monthlyMortgage)}</span>
             </div>
             <div className="flex justify-between items-center text-sm">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-rose-600" />
-                <span>Operating Expenses</span>
+                <span>{t("results.breakdown.operatingExpenses")}</span>
               </div>
               <span className="font-mono">{formatCurrency(metrics.totalMonthlyExpenses)}</span>
             </div>
             <div className="flex justify-between items-center text-sm font-medium pt-2 border-t">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-emerald-500" />
-                <span>Net Cash Flow</span>
+                <span>{t("results.breakdown.netCashFlow")}</span>
               </div>
               <span className={metrics.monthlyCashFlow > 0 ? "text-emerald-600" : "text-rose-600"}>
                 {formatCurrency(metrics.monthlyCashFlow)}
@@ -297,22 +298,24 @@ export function ResultsDashboard({ metrics }: ResultsDashboardProps) {
       {/* Detailed Amortization Table */}
        <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden">
         <div className="p-4 border-b border-border bg-muted/30">
-          <h3 className="font-display font-bold text-sm">Amortization Schedule (First 5 Years)</h3>
+          <h3 className="font-display font-bold text-sm">{t("results.amortization.title")}</h3>
         </div>
         <ScrollArea className="h-[250px]">
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent">
-                <TableHead className="w-[100px]">Year</TableHead>
-                <TableHead className="text-right">Interest Paid</TableHead>
-                <TableHead className="text-right">Principal Paid</TableHead>
-                <TableHead className="text-right">Remaining Balance</TableHead>
+                <TableHead className="w-[100px]">{t("results.amortization.year")}</TableHead>
+                <TableHead className="text-right">{t("results.amortization.interestPaid")}</TableHead>
+                <TableHead className="text-right">{t("results.amortization.principalPaid")}</TableHead>
+                <TableHead className="text-right">{t("results.amortization.remainingBalance")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {metrics.yearlyAmortization.slice(0, 5).map((row) => (
                 <TableRow key={row.year} className="group">
-                  <TableCell className="font-medium group-hover:text-primary transition-colors">Year {row.year}</TableCell>
+                  <TableCell className="font-medium group-hover:text-primary transition-colors">
+                    {t("results.amortization.yearLabel", { year: row.year })}
+                  </TableCell>
                   <TableCell className="text-right font-mono text-muted-foreground">{formatCurrency(row.interestPaid)}</TableCell>
                   <TableCell className="text-right font-mono text-muted-foreground">{formatCurrency(row.principalPaid)}</TableCell>
                   <TableCell className="text-right font-mono font-medium">{formatCurrency(row.balance)}</TableCell>

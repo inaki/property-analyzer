@@ -2,16 +2,16 @@ import { type BuydInputs } from "@/lib/buyd";
 
 export type BuydScenario = {
   id: string;
-  name: string;
-  description: string;
+  nameKey: string;
+  descriptionKey: string;
   inputs: Partial<BuydInputs>;
 };
 
 export const buydScenarios: BuydScenario[] = [
   {
     id: "standard-re",
-    name: "Standard Real Estate BUYD",
-    description: "Balanced growth, moderate leverage, steady rent growth.",
+    nameKey: "buyd.scenarios.standard.name",
+    descriptionKey: "buyd.scenarios.standard.description",
     inputs: {
       initialAssetValue: 450000,
       growthRatePercent: 3,
@@ -38,8 +38,8 @@ export const buydScenarios: BuydScenario[] = [
   },
   {
     id: "conservative",
-    name: "Conservative Cash-Flow First",
-    description: "Lower leverage and higher buffer to prioritize safety.",
+    nameKey: "buyd.scenarios.conservative.name",
+    descriptionKey: "buyd.scenarios.conservative.description",
     inputs: {
       initialAssetValue: 400000,
       growthRatePercent: 2.5,
@@ -64,8 +64,8 @@ export const buydScenarios: BuydScenario[] = [
   },
   {
     id: "rate-shock",
-    name: "Rising Rates Stress",
-    description: "Higher starting rate and aggressive spike test.",
+    nameKey: "buyd.scenarios.rateShock.name",
+    descriptionKey: "buyd.scenarios.rateShock.description",
     inputs: {
       initialAssetValue: 380000,
       growthRatePercent: 3,
@@ -90,8 +90,8 @@ export const buydScenarios: BuydScenario[] = [
   },
   {
     id: "income-shock",
-    name: "Income Shock",
-    description: "Rent drop + expense spike to test resilience.",
+    nameKey: "buyd.scenarios.incomeShock.name",
+    descriptionKey: "buyd.scenarios.incomeShock.description",
     inputs: {
       initialAssetValue: 420000,
       growthRatePercent: 2.8,

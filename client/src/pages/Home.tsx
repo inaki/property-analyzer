@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { insertAnalysisSchema, type InsertAnalysis } from "@shared/schema";
 import { useCreateAnalysis } from "@/hooks/use-analyses";
 import { useToast } from "@/hooks/use-toast";
 import { calculateMetrics } from "@/lib/financials";
+import { useTranslation } from "react-i18next";
 
 import { Layout } from "@/components/Layout";
 import { CalculatorForm } from "@/components/CalculatorForm";
@@ -43,6 +44,7 @@ const defaultValues: InsertAnalysis = {
 };
 
 export default function Home() {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [saveDialogOpen, setSaveDialogOpen] = useState(false);
   const [title, setTitle] = useState("");
@@ -62,8 +64,8 @@ export default function Home() {
   const handleSave = async () => {
     if (!title) {
       toast({
-        title: "Title Required",
-        description: "Please give your analysis a name.",
+        title: t("property.toast.titleRequiredTitle"),
+        description: t("property.toast.titleRequiredBody"),
         variant: "destructive"
       });
       return;
@@ -73,19 +75,23 @@ export default function Home() {
       await createMutation.mutateAsync({
         ...values,
         title,
-        description: `Analysis for ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Number(values.purchasePrice))}`
+        description: t("property.saveDescription", {
+          price: new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(
+            Number(values.purchasePrice),
+          ),
+        }),
       });
       
       toast({
-        title: "Analysis Saved",
-        description: "Your property analysis has been saved successfully.",
+        title: t("property.toast.savedTitle"),
+        description: t("property.toast.savedBody"),
       });
       setSaveDialogOpen(false);
       setTitle("");
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to save analysis. Please try again.",
+        title: t("property.toast.errorTitle"),
+        description: t("property.toast.saveErrorBody"),
         variant: "destructive"
       });
     }
@@ -93,7 +99,7 @@ export default function Home() {
 
   const handleReset = () => {
     form.reset(defaultValues);
-    toast({ title: "Calculator Reset", description: "Values returned to defaults." });
+    toast({ title: t("property.toast.resetTitle"), description: t("property.toast.resetBody") });
   };
 
   return (
@@ -103,46 +109,46 @@ export default function Home() {
         {/* Header Actions */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
-            <h1 className="text-3xl font-display font-bold text-foreground">Investment Calculator</h1>
-            <p className="text-muted-foreground mt-1">Analyze cash flow, cap rate, and ROI instantly.</p>
+            <h1 className="text-3xl font-display font-bold text-foreground">{t("property.header.title")}</h1>
+            <p className="text-muted-foreground mt-1">{t("property.header.subtitle")}</p>
           </div>
           
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" onClick={handleReset} className="h-10">
               <RefreshCw className="mr-2 h-4 w-4" />
-              Reset
+              {t("property.actions.reset")}
             </Button>
             
             <Dialog open={saveDialogOpen} onOpenChange={setSaveDialogOpen}>
               <DialogTrigger asChild>
                 <Button size="sm" className="h-10 bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20">
                   <Save className="mr-2 h-4 w-4" />
-                  Save Analysis
+                  {t("common.saveAnalysis")}
                 </Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>Save Analysis</DialogTitle>
+                  <DialogTitle>{t("property.saveDialog.title")}</DialogTitle>
                   <DialogDescription>
-                    Give this calculation a name to save it to your history.
+                    {t("property.saveDialog.description")}
                   </DialogDescription>
                 </DialogHeader>
                 <div className="py-4">
                   <Input 
-                    placeholder="e.g. 123 Calle San Juan" 
+                    placeholder={t("property.saveDialog.placeholder")}
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
                 </div>
                 <DialogFooter>
-                  <Button variant="outline" onClick={() => setSaveDialogOpen(false)}>Cancel</Button>
+                  <Button variant="outline" onClick={() => setSaveDialogOpen(false)}>{t("common.cancel")}</Button>
                   <Button onClick={handleSave} disabled={createMutation.isPending}>
                     {createMutation.isPending ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Saving...
+                        {t("common.saving")}
                       </>
-                    ) : "Save Analysis"}
+                    ) : t("common.saveAnalysis")}
                   </Button>
                 </DialogFooter>
               </DialogContent>
@@ -170,41 +176,33 @@ export default function Home() {
         </div>
 
         <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
-          <h2 className="text-xl font-display font-semibold">Property Analyser Glossary</h2>
-          <p className="text-sm text-muted-foreground mt-1">
-            Quick definitions for the calculator inputs and outputs.
-          </p>
+          <h2 className="text-xl font-display font-semibold">{t("property.glossary.title")}</h2>
+          <p className="text-sm text-muted-foreground mt-1">{t("property.glossary.subtitle")}</p>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
             {[
               {
-                term: "NOI",
-                definition:
-                  "Net Operating Income. Rent minus operating expenses before debt service.",
+                term: t("property.glossary.noi.title"),
+                definition: t("property.glossary.noi.body"),
               },
               {
-                term: "Cap Rate",
-                definition:
-                  "Annual NOI divided by purchase price. Shows unlevered return.",
+                term: t("property.glossary.capRate.title"),
+                definition: t("property.glossary.capRate.body"),
               },
               {
-                term: "Cash on Cash",
-                definition:
-                  "Annual cash flow divided by cash invested (down payment + closing + reno).",
+                term: t("property.glossary.cashOnCash.title"),
+                definition: t("property.glossary.cashOnCash.body"),
               },
               {
-                term: "Vacancy Rate",
-                definition:
-                  "Percent of time the property is expected to be unoccupied.",
+                term: t("property.glossary.vacancy.title"),
+                definition: t("property.glossary.vacancy.body"),
               },
               {
-                term: "Maintenance %",
-                definition:
-                  "Reserve for repairs and replacements as a percent of income.",
+                term: t("property.glossary.maintenance.title"),
+                definition: t("property.glossary.maintenance.body"),
               },
               {
-                term: "DSCR",
-                definition:
-                  "Debt Service Coverage Ratio. NOI divided by debt service.",
+                term: t("property.glossary.dscr.title"),
+                definition: t("property.glossary.dscr.body"),
               },
             ].map((item) => (
               <div key={item.term} className="rounded-lg border border-border/60 p-4">

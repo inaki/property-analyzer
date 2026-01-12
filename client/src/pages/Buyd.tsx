@@ -8,6 +8,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCreateBuydAnalysis } from "@/hooks/use-analyses";
+import { useTranslation } from "react-i18next";
 import {
   Select,
   SelectContent,
@@ -82,6 +83,7 @@ function formatPercent(value: number) {
 }
 
 export default function Buyd() {
+  const { t } = useTranslation();
   const initialScenario = buydScenarios[0];
   const initialState = { ...defaultState, ...(initialScenario?.inputs ?? {}) };
   const [state, setState] = useState<BuydInputs>(initialState);
@@ -133,7 +135,7 @@ export default function Buyd() {
 
     await createMutation.mutateAsync({
       title: title.trim(),
-      description: selectedScenario?.name ?? "BUYD snapshot",
+      description: selectedScenario ? t(selectedScenario.nameKey) : t("buyd.save.defaultDescription"),
       data: {
         inputs: state,
         summary,
@@ -149,48 +151,46 @@ export default function Buyd() {
       <div className="p-4 md:p-8 max-w-[1600px] mx-auto space-y-8">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-3xl font-display font-bold">BUYD Calculator</h1>
-            <p className="text-muted-foreground mt-1">
-              Borrow-until-you-die simulator with deterministic, single-asset rules.
-            </p>
+            <h1 className="text-3xl font-display font-bold">{t("buyd.header.title")}</h1>
+            <p className="text-muted-foreground mt-1">{t("buyd.header.subtitle")}</p>
           </div>
           <div className="flex items-center gap-3">
             <Badge variant={results.currentLtv <= 0.4 ? "default" : "destructive"}>
-              LTV {formatPercent(results.currentLtv)}
+              {t("buyd.header.ltv", { value: formatPercent(results.currentLtv) })}
             </Badge>
             <Dialog open={saveDialogOpen} onOpenChange={setSaveDialogOpen}>
               <DialogTrigger asChild>
                 <Button size="sm" className="h-9">
                   <Save className="mr-2 h-4 w-4" />
-                  Save Analysis
+                  {t("common.saveAnalysis")}
                 </Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>Save BUYD Snapshot</DialogTitle>
+                  <DialogTitle>{t("buyd.save.title")}</DialogTitle>
                   <DialogDescription>
-                    Name this BUYD scenario to keep it in your saved list.
+                    {t("buyd.save.description")}
                   </DialogDescription>
                 </DialogHeader>
                 <div className="py-4">
                   <Input
-                    placeholder="e.g. Standard BUYD 30-year"
+                    placeholder={t("buyd.save.placeholder")}
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
                 </div>
                 <DialogFooter>
                   <Button variant="outline" onClick={() => setSaveDialogOpen(false)}>
-                    Cancel
+                    {t("common.cancel")}
                   </Button>
                   <Button onClick={handleSave} disabled={createMutation.isPending || !title.trim()}>
                     {createMutation.isPending ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Saving...
+                        {t("common.saving")}
                       </>
                     ) : (
-                      "Save Analysis"
+                      t("common.saveAnalysis")
                     )}
                   </Button>
                 </DialogFooter>
@@ -203,41 +203,41 @@ export default function Buyd() {
           <div className="xl:col-span-4 space-y-6">
             <div className="bg-card rounded-xl shadow-sm border border-border p-6 space-y-6">
               <div>
-                <h2 className="font-display font-semibold text-lg">Portfolio</h2>
+                <h2 className="font-display font-semibold text-lg">{t("buyd.sections.portfolio")}</h2>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Single-asset MVP, interest-only debt.
+                  {t("buyd.sections.portfolioSubtitle")}
                 </p>
               </div>
 
               <div className="space-y-3 rounded-lg border border-border/60 bg-muted/30 p-3">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium">Scenario Library</p>
-                    <p className="text-xs text-muted-foreground">Prebuilt BUYD cases.</p>
+                    <p className="text-sm font-medium">{t("buyd.scenarios.title")}</p>
+                    <p className="text-xs text-muted-foreground">{t("buyd.scenarios.subtitle")}</p>
                   </div>
                 </div>
                 <Select value={scenarioId} onValueChange={loadScenario}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select scenario" />
+                    <SelectValue placeholder={t("buyd.scenarios.placeholder")} />
                   </SelectTrigger>
                   <SelectContent>
                     {buydScenarios.map((scenario) => (
                       <SelectItem key={scenario.id} value={scenario.id}>
-                        {scenario.name}
+                        {t(scenario.nameKey)}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
                 {selectedScenario && (
-                  <p className="text-xs text-muted-foreground">{selectedScenario.description}</p>
+                  <p className="text-xs text-muted-foreground">{t(selectedScenario.descriptionKey)}</p>
                 )}
               </div>
 
               <div className="grid grid-cols-1 gap-4">
                 <label className="space-y-2 text-sm">
                   <span className="text-muted-foreground flex items-center gap-2">
-                    Asset Value
-                    <InfoTip text="Starting portfolio value for the strategy." />
+                    {t("buyd.inputs.assetValue")}
+                    <InfoTip text={t("buyd.tooltips.assetValue")} />
                   </span>
                   <Input
                     type="number"
@@ -247,8 +247,8 @@ export default function Buyd() {
                 </label>
                 <label className="space-y-2 text-sm">
                   <span className="text-muted-foreground flex items-center gap-2">
-                    Growth Rate (%)
-                    <InfoTip text="Expected annual asset appreciation." />
+                    {t("buyd.inputs.growthRate")}
+                    <InfoTip text={t("buyd.tooltips.growthRate")} />
                   </span>
                   <Input
                     type="number"
@@ -259,8 +259,8 @@ export default function Buyd() {
                 </label>
                 <label className="space-y-2 text-sm">
                   <span className="text-muted-foreground flex items-center gap-2">
-                    Income Yield (%)
-                    <InfoTip text="Net income yield before interest and living expenses." />
+                    {t("buyd.inputs.incomeYield")}
+                    <InfoTip text={t("buyd.tooltips.incomeYield")} />
                   </span>
                   <Input
                     type="number"
@@ -271,8 +271,8 @@ export default function Buyd() {
                 </label>
                 <label className="space-y-2 text-sm">
                   <span className="text-muted-foreground flex items-center gap-2">
-                    Income Growth (%)
-                    <InfoTip text="Annual growth rate for income yield." />
+                    {t("buyd.inputs.incomeGrowth")}
+                    <InfoTip text={t("buyd.tooltips.incomeGrowth")} />
                   </span>
                   <Input
                     type="number"
@@ -283,8 +283,8 @@ export default function Buyd() {
                 </label>
                 <label className="space-y-2 text-sm">
                   <span className="text-muted-foreground flex items-center gap-2">
-                    Annual Expenses
-                    <InfoTip text="Operating costs tied to the asset (taxes, upkeep, fees)." />
+                    {t("buyd.inputs.annualExpenses")}
+                    <InfoTip text={t("buyd.tooltips.annualExpenses")} />
                   </span>
                   <Input
                     type="number"
@@ -294,8 +294,8 @@ export default function Buyd() {
                 </label>
                 <label className="space-y-2 text-sm">
                   <span className="text-muted-foreground flex items-center gap-2">
-                    Expense Growth (%)
-                    <InfoTip text="Annual increase in operating expenses." />
+                    {t("buyd.inputs.expenseGrowth")}
+                    <InfoTip text={t("buyd.tooltips.expenseGrowth")} />
                   </span>
                   <Input
                     type="number"
@@ -307,12 +307,12 @@ export default function Buyd() {
               </div>
 
               <div className="pt-2 border-t border-border/60">
-                <h3 className="font-display font-semibold text-base mb-3">Debt</h3>
+                <h3 className="font-display font-semibold text-base mb-3">{t("buyd.sections.debt")}</h3>
                 <div className="grid grid-cols-1 gap-4">
                   <label className="space-y-2 text-sm">
                     <span className="text-muted-foreground flex items-center gap-2">
-                      Starting Debt
-                      <InfoTip text="Existing borrow balance at year 0." />
+                      {t("buyd.inputs.initialDebt")}
+                      <InfoTip text={t("buyd.tooltips.initialDebt")} />
                     </span>
                     <Input
                       type="number"
@@ -322,8 +322,8 @@ export default function Buyd() {
                   </label>
                   <label className="space-y-2 text-sm">
                     <span className="text-muted-foreground flex items-center gap-2">
-                      Interest Rate (%)
-                      <InfoTip text="Annual interest rate on outstanding debt." />
+                      {t("buyd.inputs.interestRate")}
+                      <InfoTip text={t("buyd.tooltips.interestRate")} />
                     </span>
                     <Input
                       type="number"
@@ -334,8 +334,8 @@ export default function Buyd() {
                   </label>
                   <label className="space-y-2 text-sm">
                     <span className="text-muted-foreground flex items-center gap-2">
-                      Lender Max LTV (%)
-                      <InfoTip text="Hard cap that triggers forced deleveraging." />
+                      {t("buyd.inputs.lenderMaxLtv")}
+                      <InfoTip text={t("buyd.tooltips.lenderMaxLtv")} />
                     </span>
                     <Input
                       type="number"
@@ -348,11 +348,11 @@ export default function Buyd() {
               </div>
 
               <div className="pt-2 border-t border-border/60">
-                <h3 className="font-display font-semibold text-base mb-3">Strategy</h3>
+                <h3 className="font-display font-semibold text-base mb-3">{t("buyd.sections.strategy")}</h3>
                 <label className="space-y-2 text-sm">
                   <span className="text-muted-foreground flex items-center gap-2">
-                    Target LTV
-                    <InfoTip text="Desired leverage target for safe borrowing." />
+                    {t("buyd.inputs.targetLtv")}
+                    <InfoTip text={t("buyd.tooltips.targetLtv")} />
                   </span>
                   <div className="flex items-center gap-3">
                     <Slider
@@ -372,8 +372,8 @@ export default function Buyd() {
                 <div className="grid grid-cols-1 gap-4 mt-4">
                   <label className="space-y-2 text-sm">
                     <span className="text-muted-foreground flex items-center gap-2">
-                      Borrow Mode
-                      <InfoTip text="Max Safe Draw uses available headroom each year." />
+                      {t("buyd.inputs.borrowMode")}
+                      <InfoTip text={t("buyd.tooltips.borrowMode")} />
                     </span>
                     <Select
                       value={state.borrowMode}
@@ -385,18 +385,18 @@ export default function Buyd() {
                       }
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select mode" />
+                        <SelectValue placeholder={t("buyd.inputs.borrowModePlaceholder")} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="maxSafe">Max Safe Draw</SelectItem>
-                        <SelectItem value="fixed">Fixed Draw</SelectItem>
+                        <SelectItem value="maxSafe">{t("buyd.inputs.borrowModeMaxSafe")}</SelectItem>
+                        <SelectItem value="fixed">{t("buyd.inputs.borrowModeFixed")}</SelectItem>
                       </SelectContent>
                     </Select>
                   </label>
                   <label className="space-y-2 text-sm">
                     <span className="text-muted-foreground flex items-center gap-2">
-                      Yearly Spend
-                      <InfoTip text="Annual cash need funded from borrowing." />
+                      {t("buyd.inputs.yearlySpend")}
+                      <InfoTip text={t("buyd.tooltips.yearlySpend")} />
                     </span>
                     <Input
                       type="number"
@@ -407,8 +407,8 @@ export default function Buyd() {
                   </label>
                   <label className="space-y-2 text-sm">
                     <span className="text-muted-foreground flex items-center gap-2">
-                      Living Expenses / Year
-                      <InfoTip text="Personal spending after debt service." />
+                      {t("buyd.inputs.livingExpenses")}
+                      <InfoTip text={t("buyd.tooltips.livingExpenses")} />
                     </span>
                     <Input
                       type="number"
@@ -418,8 +418,8 @@ export default function Buyd() {
                   </label>
                   <label className="space-y-2 text-sm">
                     <span className="text-muted-foreground flex items-center gap-2">
-                      Cash Buffer (months)
-                      <InfoTip text="Months of personal runway to avoid forced selling." />
+                      {t("buyd.inputs.cashBufferMonths")}
+                      <InfoTip text={t("buyd.tooltips.cashBufferMonths")} />
                     </span>
                     <Input
                       type="number"
@@ -428,7 +428,7 @@ export default function Buyd() {
                     />
                   </label>
                   <label className="space-y-2 text-sm">
-                    <span className="text-muted-foreground">Horizon (years)</span>
+                    <span className="text-muted-foreground">{t("buyd.inputs.horizon")}</span>
                     <Input
                       type="number"
                       value={state.years}
@@ -441,12 +441,12 @@ export default function Buyd() {
               </div>
 
               <div className="pt-2 border-t border-border/60">
-                <h3 className="font-display font-semibold text-base mb-3">Stress Lab</h3>
+                <h3 className="font-display font-semibold text-base mb-3">{t("buyd.sections.stressLab")}</h3>
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium">Asset Crash</p>
-                      <p className="text-xs text-muted-foreground">One-time value drop.</p>
+                      <p className="text-sm font-medium">{t("buyd.stress.assetCrash.title")}</p>
+                      <p className="text-xs text-muted-foreground">{t("buyd.stress.assetCrash.subtitle")}</p>
                     </div>
                     <Switch
                       checked={state.stressCrashEnabled}
@@ -457,7 +457,7 @@ export default function Buyd() {
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <label className="space-y-2 text-xs">
-                      <span className="text-muted-foreground">Crash Year</span>
+                      <span className="text-muted-foreground">{t("buyd.stress.assetCrash.year")}</span>
                       <Input
                         type="number"
                         value={state.stressCrashYear}
@@ -465,7 +465,7 @@ export default function Buyd() {
                       />
                     </label>
                     <label className="space-y-2 text-xs">
-                      <span className="text-muted-foreground">Drop (%)</span>
+                      <span className="text-muted-foreground">{t("buyd.stress.assetCrash.drop")}</span>
                       <Input
                         type="number"
                         value={state.stressCrashDropPercent}
@@ -476,8 +476,8 @@ export default function Buyd() {
 
                   <div className="flex items-center justify-between pt-2 border-t border-border/40">
                     <div>
-                      <p className="text-sm font-medium">Rate Spike</p>
-                      <p className="text-xs text-muted-foreground">Increase over 2 years.</p>
+                      <p className="text-sm font-medium">{t("buyd.stress.rateSpike.title")}</p>
+                      <p className="text-xs text-muted-foreground">{t("buyd.stress.rateSpike.subtitle")}</p>
                     </div>
                     <Switch
                       checked={state.stressRateSpikeEnabled}
@@ -488,7 +488,7 @@ export default function Buyd() {
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <label className="space-y-2 text-xs">
-                      <span className="text-muted-foreground">Start Year</span>
+                      <span className="text-muted-foreground">{t("buyd.stress.rateSpike.startYear")}</span>
                       <Input
                         type="number"
                         value={state.stressRateSpikeStartYear}
@@ -496,7 +496,7 @@ export default function Buyd() {
                       />
                     </label>
                     <label className="space-y-2 text-xs">
-                      <span className="text-muted-foreground">Increase (%)</span>
+                      <span className="text-muted-foreground">{t("buyd.stress.rateSpike.increase")}</span>
                       <Input
                         type="number"
                         value={state.stressRateSpikeIncreasePercent}
@@ -507,8 +507,8 @@ export default function Buyd() {
 
                   <div className="flex items-center justify-between pt-2 border-t border-border/40">
                     <div>
-                      <p className="text-sm font-medium">Income Shock</p>
-                      <p className="text-xs text-muted-foreground">Yield drop for one year.</p>
+                      <p className="text-sm font-medium">{t("buyd.stress.incomeShock.title")}</p>
+                      <p className="text-xs text-muted-foreground">{t("buyd.stress.incomeShock.subtitle")}</p>
                     </div>
                     <Switch
                       checked={state.stressIncomeShockEnabled}
@@ -519,7 +519,7 @@ export default function Buyd() {
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <label className="space-y-2 text-xs">
-                      <span className="text-muted-foreground">Shock Year</span>
+                      <span className="text-muted-foreground">{t("buyd.stress.incomeShock.year")}</span>
                       <Input
                         type="number"
                         value={state.stressIncomeShockYear}
@@ -527,7 +527,7 @@ export default function Buyd() {
                       />
                     </label>
                     <label className="space-y-2 text-xs">
-                      <span className="text-muted-foreground">Drop (%)</span>
+                      <span className="text-muted-foreground">{t("buyd.stress.incomeShock.drop")}</span>
                       <Input
                         type="number"
                         value={state.stressIncomeShockPercent}
@@ -538,8 +538,8 @@ export default function Buyd() {
 
                   <div className="flex items-center justify-between pt-2 border-t border-border/40">
                     <div>
-                      <p className="text-sm font-medium">Expense Shock</p>
-                      <p className="text-xs text-muted-foreground">Expense spike for one year.</p>
+                      <p className="text-sm font-medium">{t("buyd.stress.expenseShock.title")}</p>
+                      <p className="text-xs text-muted-foreground">{t("buyd.stress.expenseShock.subtitle")}</p>
                     </div>
                     <Switch
                       checked={state.stressExpenseShockEnabled}
@@ -550,7 +550,7 @@ export default function Buyd() {
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <label className="space-y-2 text-xs">
-                      <span className="text-muted-foreground">Shock Year</span>
+                      <span className="text-muted-foreground">{t("buyd.stress.expenseShock.year")}</span>
                       <Input
                         type="number"
                         value={state.stressExpenseShockYear}
@@ -558,7 +558,7 @@ export default function Buyd() {
                       />
                     </label>
                     <label className="space-y-2 text-xs">
-                      <span className="text-muted-foreground">Increase (%)</span>
+                      <span className="text-muted-foreground">{t("buyd.stress.expenseShock.increase")}</span>
                       <Input
                         type="number"
                         value={state.stressExpenseShockPercent}
@@ -574,58 +574,62 @@ export default function Buyd() {
           <div className="xl:col-span-8 space-y-6">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               <MetricCard
-                title="Net Worth"
+                title={t("buyd.metrics.netWorth.title")}
                 value={formatCurrency(results.currentNetWorth)}
-                description="Assets minus debt"
+                description={t("buyd.metrics.netWorth.description")}
               />
               <MetricCard
-                title="Cash Flow"
+                title={t("buyd.metrics.cashFlow.title")}
                 value={formatCurrency(results.currentCashFlow)}
-                description="After interest & expenses"
+                description={t("buyd.metrics.cashFlow.description")}
                 trend={results.currentCashFlow >= 0 ? "up" : "down"}
               />
               <MetricCard
-                title="Borrow Capacity"
+                title={t("buyd.metrics.borrowCapacity.title")}
                 value={formatCurrency(results.currentBorrowCapacity)}
-                description="Room to target LTV"
+                description={t("buyd.metrics.borrowCapacity.description")}
               />
               <MetricCard
-                title="DSCR"
+                title={t("buyd.metrics.dscr.title")}
                 value={results.currentDscr.toFixed(2)}
-                description="Income / interest"
+                description={t("buyd.metrics.dscr.description")}
                 trend={results.currentDscr >= 1.25 ? "up" : "down"}
               />
             </div>
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               <MetricCard
-                title="Cash Buffer"
+                title={t("buyd.metrics.cashBuffer.title")}
                 value={formatCurrency(results.currentCashBuffer)}
-                description="Reserves available"
+                description={t("buyd.metrics.cashBuffer.description")}
                 trend={results.currentCashBuffer >= 0 ? "up" : "down"}
               />
               <MetricCard
-                title="Buffer Months"
+                title={t("buyd.metrics.bufferMonths.title")}
                 value={results.currentBufferMonths.toFixed(1)}
-                description="Months of runway"
+                description={t("buyd.metrics.bufferMonths.description")}
                 trend={results.currentBufferMonths >= state.cashBufferMonths ? "up" : "down"}
               />
               <MetricCard
-                title="Break Year"
-                value={results.breakYear ? `Year ${results.breakYear}` : "Stable"}
-                description="First rule breach"
+                title={t("buyd.metrics.breakYear.title")}
+                value={
+                  results.breakYear
+                    ? t("buyd.metrics.breakYear.value", { year: results.breakYear })
+                    : t("buyd.metrics.breakYear.stable")
+                }
+                description={t("buyd.metrics.breakYear.description")}
                 trend={results.breakYear ? "down" : "up"}
               />
               <MetricCard
-                title="Lender Max LTV"
+                title={t("buyd.metrics.lenderMaxLtv.title")}
                 value={`${state.lenderMaxLtvPercent}%`}
-                description="Hard leverage cap"
+                description={t("buyd.metrics.lenderMaxLtv.description")}
               />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
-                <h3 className="font-display font-semibold mb-4">Asset vs Debt</h3>
+                <h3 className="font-display font-semibold mb-4">{t("buyd.charts.assetVsDebt")}</h3>
                 <div className="h-[280px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={results.years}>
@@ -649,7 +653,7 @@ export default function Buyd() {
                 </div>
               </div>
               <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
-                <h3 className="font-display font-semibold mb-4">LTV & Cash Flow</h3>
+                <h3 className="font-display font-semibold mb-4">{t("buyd.charts.ltvCashFlow")}</h3>
                 <div className="h-[280px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={results.years}>
@@ -684,7 +688,7 @@ export default function Buyd() {
                         stroke="#0f766e"
                         strokeWidth={2}
                         dot={false}
-                        name="LTV"
+                        name={t("buyd.charts.ltv")}
                       />
                       <Line
                         yAxisId="right"
@@ -693,7 +697,7 @@ export default function Buyd() {
                         stroke="#f59e0b"
                         strokeWidth={2}
                         dot={false}
-                        name="Cash Flow"
+                        name={t("buyd.charts.cashFlow")}
                       />
                     </LineChart>
                   </ResponsiveContainer>
@@ -703,7 +707,7 @@ export default function Buyd() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
-                <h3 className="font-display font-semibold mb-4">Borrow Capacity</h3>
+                <h3 className="font-display font-semibold mb-4">{t("buyd.charts.borrowCapacity")}</h3>
                 <div className="h-[260px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={results.years}>
@@ -725,7 +729,7 @@ export default function Buyd() {
                 </div>
               </div>
               <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
-                <h3 className="font-display font-semibold mb-4">Cash Buffer</h3>
+                <h3 className="font-display font-semibold mb-4">{t("buyd.charts.cashBuffer")}</h3>
                 <div className="h-[260px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={results.years}>
@@ -750,10 +754,10 @@ export default function Buyd() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
-                <h3 className="font-display font-semibold mb-4">Rule Status</h3>
+                <h3 className="font-display font-semibold mb-4">{t("buyd.rules.title")}</h3>
                 <div className="space-y-3 text-sm">
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">LTV Safety</span>
+                    <span className="text-muted-foreground">{t("buyd.rules.ltvSafety")}</span>
                     <Badge
                       variant={
                         results.currentLtv <= 0.4
@@ -767,7 +771,7 @@ export default function Buyd() {
                     </Badge>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">DSCR</span>
+                    <span className="text-muted-foreground">{t("buyd.rules.dscr")}</span>
                     <Badge
                       variant={
                         results.currentDscr >= 1.25
@@ -781,7 +785,7 @@ export default function Buyd() {
                     </Badge>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Cash Buffer</span>
+                    <span className="text-muted-foreground">{t("buyd.rules.cashBuffer")}</span>
                     <Badge
                       variant={
                         results.currentBufferMonths >= state.cashBufferMonths
@@ -795,7 +799,7 @@ export default function Buyd() {
                     </Badge>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Lender Max LTV</span>
+                    <span className="text-muted-foreground">{t("buyd.rules.lenderMaxLtv")}</span>
                     <Badge
                       variant={
                         results.currentLtv <= state.lenderMaxLtvPercent / 100
@@ -809,21 +813,54 @@ export default function Buyd() {
                 </div>
               </div>
               <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
-                <h3 className="font-display font-semibold mb-4">Events (Last 8 Years)</h3>
+                <h3 className="font-display font-semibold mb-4">{t("buyd.events.title")}</h3>
                 <div className="space-y-2 text-sm text-muted-foreground max-h-[220px] overflow-y-auto pr-1">
                   {results.years.slice(-8).map((year) => (
                     <div key={year.year} className="flex items-start gap-3">
-                      <span className="text-xs font-mono text-foreground">Y{year.year}</span>
+                      <span className="text-xs font-mono text-foreground">{t("buyd.events.year", { year: year.year })}</span>
                       <div className="space-y-1">
                         {year.events.length === 0 && year.ruleBreaches.length === 0 && (
-                          <p>No major events.</p>
+                          <p>{t("buyd.events.none")}</p>
                         )}
-                        {year.events.map((event, idx) => (
-                          <p key={`${year.year}-event-${idx}`}>{event}</p>
-                        ))}
+                        {year.events.map((event, idx) => {
+                          const key = `${year.year}-event-${idx}`;
+                          if (event.type === "borrowed") {
+                            return (
+                              <p key={key}>
+                                {t("buyd.events.borrowed", { amount: formatCurrency(event.amount) })}
+                              </p>
+                            );
+                          }
+                          if (event.type === "assetCrash") {
+                            return (
+                              <p key={key}>
+                                {t("buyd.events.assetCrash", { percent: event.percent })}
+                              </p>
+                            );
+                          }
+                          if (event.type === "rateSpike") {
+                            return (
+                              <p key={key}>
+                                {t("buyd.events.rateSpike", { percent: event.percent })}
+                              </p>
+                            );
+                          }
+                          if (event.type === "incomeShock") {
+                            return (
+                              <p key={key}>
+                                {t("buyd.events.incomeShock", { percent: event.percent })}
+                              </p>
+                            );
+                          }
+                          return (
+                            <p key={key}>
+                              {t("buyd.events.expenseShock", { percent: event.percent })}
+                            </p>
+                          );
+                        })}
                         {year.ruleBreaches.map((rule, idx) => (
                           <p key={`${year.year}-rule-${idx}`} className="text-rose-600">
-                            {rule}
+                            {t(`buyd.rules.breaches.${rule}`)}
                           </p>
                         ))}
                       </div>
@@ -834,50 +871,40 @@ export default function Buyd() {
             </div>
 
             <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
-              <h3 className="font-display font-semibold mb-2">Education Notes</h3>
+              <h3 className="font-display font-semibold mb-2">{t("buyd.education.title")}</h3>
               <p className="text-sm text-muted-foreground">
-                This is an educational simulator. It assumes interest-only debt and
-                deterministic growth. Add stress testing, taxes, and scenario analysis
-                in the next phase.
+                {t("buyd.education.body")}
               </p>
             </div>
 
             <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
-              <h2 className="text-xl font-display font-semibold">BUYD Glossary</h2>
-              <p className="text-sm text-muted-foreground mt-1">
-                Key terms used in the BUYD calculator.
-              </p>
+              <h2 className="text-xl font-display font-semibold">{t("buyd.glossary.title")}</h2>
+              <p className="text-sm text-muted-foreground mt-1">{t("buyd.glossary.subtitle")}</p>
               <div className="mt-4 grid gap-4 md:grid-cols-2">
                 {[
                   {
-                    term: "LTV",
-                    definition:
-                      "Loan-to-Value. Debt balance divided by asset value.",
+                    term: t("buyd.glossary.ltv.title"),
+                    definition: t("buyd.glossary.ltv.body"),
                   },
                   {
-                    term: "DSCR",
-                    definition:
-                      "Debt Service Coverage Ratio. Income divided by interest cost.",
+                    term: t("buyd.glossary.dscr.title"),
+                    definition: t("buyd.glossary.dscr.body"),
                   },
                   {
-                    term: "Borrow Capacity",
-                    definition:
-                      "Maximum borrowing allowed this year under target and lender LTV.",
+                    term: t("buyd.glossary.borrowCapacity.title"),
+                    definition: t("buyd.glossary.borrowCapacity.body"),
                   },
                   {
-                    term: "Cash Buffer",
-                    definition:
-                      "Reserve cash used to cover living expenses during downturns.",
+                    term: t("buyd.glossary.cashBuffer.title"),
+                    definition: t("buyd.glossary.cashBuffer.body"),
                   },
                   {
-                    term: "Target LTV",
-                    definition:
-                      "Desired leverage level used to cap new borrowing.",
+                    term: t("buyd.glossary.targetLtv.title"),
+                    definition: t("buyd.glossary.targetLtv.body"),
                   },
                   {
-                    term: "Stress Events",
-                    definition:
-                      "Shocks to asset value, income, interest rates, or expenses.",
+                    term: t("buyd.glossary.stressEvents.title"),
+                    definition: t("buyd.glossary.stressEvents.body"),
                   },
                 ].map((item) => (
                   <div key={item.term} className="rounded-lg border border-border/60 p-4">

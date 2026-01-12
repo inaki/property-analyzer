@@ -1,0 +1,512 @@
+{
+  "app": {
+    "title": "Investments",
+    "subtitle": "Puerto Rico Edition",
+    "language": "Language",
+    "proTipTitle": "Pro Tip",
+    "proTipBody": "Don't forget CRIM property taxes. In PR, use assessed value (~1957 value), not market value."
+  },
+  "nav": {
+    "propertyAnalyser": "Property Analyser",
+    "buyd": "BUYD",
+    "growthCalculator": "Growth Calculator",
+    "savedAnalyses": "Saved Analyses"
+  },
+  "common": {
+    "saveAnalysis": "Save Analysis",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
+  "property": {
+    "header": {
+      "title": "Investment Calculator",
+      "subtitle": "Analyze cash flow, cap rate, and ROI instantly."
+    },
+    "actions": {
+      "reset": "Reset"
+    },
+    "saveDialog": {
+      "title": "Save Analysis",
+      "description": "Give this calculation a name to save it to your history.",
+      "placeholder": "e.g. 123 Calle San Juan"
+    },
+    "toast": {
+      "titleRequiredTitle": "Title Required",
+      "titleRequiredBody": "Please give your analysis a name.",
+      "savedTitle": "Analysis Saved",
+      "savedBody": "Your property analysis has been saved successfully.",
+      "errorTitle": "Error",
+      "saveErrorBody": "Failed to save analysis. Please try again.",
+      "resetTitle": "Calculator Reset",
+      "resetBody": "Values returned to defaults."
+    },
+    "saveDescription": "Analysis for {{price}}",
+    "glossary": {
+      "title": "Property Analyser Glossary",
+      "subtitle": "Quick definitions for the calculator inputs and outputs.",
+      "noi": {
+        "title": "NOI",
+        "body": "Net Operating Income. Rent minus operating expenses before debt service."
+      },
+      "capRate": {
+        "title": "Cap Rate",
+        "body": "Annual NOI divided by purchase price. Shows unlevered return."
+      },
+      "cashOnCash": {
+        "title": "Cash on Cash",
+        "body": "Annual cash flow divided by cash invested (down payment + closing + reno)."
+      },
+      "vacancy": {
+        "title": "Vacancy Rate",
+        "body": "Percent of time the property is expected to be unoccupied."
+      },
+      "maintenance": {
+        "title": "Maintenance %",
+        "body": "Reserve for repairs and replacements as a percent of income."
+      },
+      "dscr": {
+        "title": "DSCR",
+        "body": "Debt Service Coverage Ratio. NOI divided by debt service."
+      }
+    },
+    "form": {
+      "sections": {
+        "purchase": "Purchase Details",
+        "financing": "Financing",
+        "incomeExpenses": "Income & Expenses",
+        "detailedExpenses": "Detailed Expenses"
+      },
+      "purchasePrice": "Purchase Price",
+      "closingCosts": "Closing Costs",
+      "renovationCost": "Renovation Budget",
+      "downPayment": "Down Payment",
+      "interestRate": "Interest Rate (%)",
+      "loanTerm": "Loan Term",
+      "selectTerm": "Select term",
+      "loanYears": "{{years}} Years",
+      "monthlyRent": "Monthly Rent",
+      "vacancyRate": "Vacancy Rate (%)",
+      "propertyTaxYearly": "Yearly CRIM Property Tax",
+      "insuranceYearly": "Yearly Insurance",
+      "hoaMonthly": "Monthly HOA",
+      "maintenancePercent": "Maintenance (%)",
+      "managementFeePercent": "Management Fee (%)",
+      "puertoRico": "Puerto Rico",
+      "propertyTaxHint": "PR effective rate ~0.39% of 1957 assessed value",
+      "placeholders": {
+        "purchasePrice": "250000",
+        "closingCosts": "8000",
+        "renovationCost": "15000",
+        "interestRate": "6.5",
+        "monthlyRent": "2500",
+        "vacancyRate": "5",
+        "propertyTaxYearly": "1200",
+        "insuranceYearly": "1000",
+        "hoaMonthly": "150",
+        "maintenancePercent": "5",
+        "managementFeePercent": "8"
+      }
+    }
+  },
+  "results": {
+    "investmentScore": {
+      "title": "Investment Score",
+      "subtitle": "Overall rating based on yield, cash flow, and return on investment.",
+      "grade": "Grade: {{grade}}",
+      "scale": {
+        "poor": "Poor",
+        "fair": "Fair",
+        "good": "Good",
+        "excellent": "Excellent"
+      }
+    },
+    "metrics": {
+      "monthlyCashFlow": {
+        "title": "Monthly Cash Flow",
+        "description": "Net profit after all expenses"
+      },
+      "capRate": {
+        "title": "Cap Rate",
+        "description": "Return without financing"
+      },
+      "cashOnCash": {
+        "title": "Cash on Cash",
+        "description": "Return on cash invested"
+      },
+      "initialCash": {
+        "title": "Initial Cash Needed",
+        "description": "Down payment + closing + reno"
+      }
+    },
+    "berkshire": {
+      "title": "Berkshire Lens",
+      "subtitle": "Owner earnings and margin-of-safety checks (conservative defaults).",
+      "stressStatus": "Stress Test {{status}}",
+      "pass": "Pass",
+      "fail": "Fail",
+      "ownerEarnings": {
+        "title": "Owner Earnings",
+        "description": "Monthly after CapEx reserve"
+      },
+      "earningsYield": {
+        "title": "Earnings Yield",
+        "description": "Owner earnings / price"
+      },
+      "intrinsicValue": {
+        "title": "Intrinsic Value",
+        "description": "10y DCF, 8% terminal cap"
+      },
+      "marginOfSafety": {
+        "title": "Margin of Safety",
+        "description": "Discount vs intrinsic"
+      },
+      "stressCashFlow": {
+        "title": "Stress CF",
+        "description": "20% rent drop, +15% expenses"
+      },
+      "assumptions": "Assumes 5% CapEx reserve, 10% required return, 10-year hold, +2% rate bump."
+    },
+    "projections": {
+      "title": "Financial Projections",
+      "tabs": {
+        "longTerm": "Long Term",
+        "amortization": "Amortization"
+      },
+      "yearsLabel": "Years",
+      "equityLabel": "Equity Built",
+      "cashFlowLabel": "Cumulative Cash Flow",
+      "interest": "Interest",
+      "principal": "Principal"
+    },
+    "breakdown": {
+      "title": "Monthly Breakdown",
+      "noi": "NOI",
+      "mortgage": "Mortgage",
+      "operatingExpenses": "Operating Expenses",
+      "netCashFlow": "Net Cash Flow"
+    },
+    "amortization": {
+      "title": "Amortization Schedule (First 5 Years)",
+      "year": "Year",
+      "interestPaid": "Interest Paid",
+      "principalPaid": "Principal Paid",
+      "remainingBalance": "Remaining Balance",
+      "yearLabel": "Year {{year}}"
+    }
+  },
+  "saved": {
+    "title": "Saved Analyses",
+    "subtitle": "Review your saved property and BUYD snapshots.",
+    "export": "Export JSON",
+    "emptyTitle": "No Saved Analyses",
+    "emptyBody": "Go to the calculator to create your first analysis.",
+    "emptyCta": "Go to Calculator",
+    "table": {
+      "title": "Title",
+      "value": "Value",
+      "metric": "Metric",
+      "date": "Date Created",
+      "actions": "Actions"
+    },
+    "badge": {
+      "buyd": "BUYD Snapshot"
+    },
+    "metric": {
+      "ltv": "{{value}}% LTV",
+      "monthlyRent": "{{value}}/mo"
+    },
+    "buydDescription": "BUYD scenario snapshot",
+    "delete": {
+      "title": "Delete Analysis?",
+      "body": "This action cannot be undone. This will permanently delete \"{{title}}\"."
+    },
+    "toast": {
+      "deletedTitle": "Deleted",
+      "deletedBody": "Analysis removed successfully.",
+      "errorTitle": "Error",
+      "deleteError": "Failed to delete.",
+      "emptyExportTitle": "Nothing to export",
+      "emptyExportBody": "No saved analyses found."
+    }
+  },
+  "buyd": {
+    "header": {
+      "title": "BUYD Calculator",
+      "subtitle": "Borrow-until-you-die simulator with deterministic, single-asset rules.",
+      "ltv": "LTV {{value}}"
+    },
+    "save": {
+      "title": "Save BUYD Snapshot",
+      "description": "Name this BUYD scenario to keep it in your saved list.",
+      "placeholder": "e.g. Standard BUYD 30-year",
+      "defaultDescription": "BUYD snapshot"
+    },
+    "sections": {
+      "portfolio": "Portfolio",
+      "portfolioSubtitle": "Single-asset MVP, interest-only debt.",
+      "debt": "Debt",
+      "strategy": "Strategy",
+      "stressLab": "Stress Lab"
+    },
+    "scenarios": {
+      "title": "Scenario Library",
+      "subtitle": "Prebuilt BUYD cases.",
+      "placeholder": "Select scenario",
+      "standard": {
+        "name": "Standard Real Estate BUYD",
+        "description": "Balanced growth, moderate leverage, steady rent growth."
+      },
+      "conservative": {
+        "name": "Conservative Cash-Flow First",
+        "description": "Lower leverage and higher buffer to prioritize safety."
+      },
+      "rateShock": {
+        "name": "Rising Rates Stress",
+        "description": "Higher starting rate and aggressive spike test."
+      },
+      "incomeShock": {
+        "name": "Income Shock",
+        "description": "Rent drop + expense spike to test resilience."
+      }
+    },
+    "inputs": {
+      "assetValue": "Asset Value",
+      "growthRate": "Growth Rate (%)",
+      "incomeYield": "Income Yield (%)",
+      "incomeGrowth": "Income Growth (%)",
+      "annualExpenses": "Annual Expenses",
+      "expenseGrowth": "Expense Growth (%)",
+      "initialDebt": "Starting Debt",
+      "interestRate": "Interest Rate (%)",
+      "lenderMaxLtv": "Lender Max LTV (%)",
+      "targetLtv": "Target LTV",
+      "borrowMode": "Borrow Mode",
+      "borrowModePlaceholder": "Select mode",
+      "borrowModeMaxSafe": "Max Safe Draw",
+      "borrowModeFixed": "Fixed Draw",
+      "yearlySpend": "Yearly Spend",
+      "livingExpenses": "Living Expenses / Year",
+      "cashBufferMonths": "Cash Buffer (months)",
+      "horizon": "Horizon (years)"
+    },
+    "tooltips": {
+      "assetValue": "Starting portfolio value for the strategy.",
+      "growthRate": "Expected annual asset appreciation.",
+      "incomeYield": "Net income yield before interest and living expenses.",
+      "incomeGrowth": "Annual growth rate for income yield.",
+      "annualExpenses": "Operating costs tied to the asset (taxes, upkeep, fees).",
+      "expenseGrowth": "Annual increase in operating expenses.",
+      "initialDebt": "Existing borrow balance at year 0.",
+      "interestRate": "Annual interest rate on outstanding debt.",
+      "lenderMaxLtv": "Hard cap that triggers forced deleveraging.",
+      "targetLtv": "Desired leverage target for safe borrowing.",
+      "borrowMode": "Max Safe Draw uses available headroom each year.",
+      "yearlySpend": "Annual cash need funded from borrowing.",
+      "livingExpenses": "Personal spending after debt service.",
+      "cashBufferMonths": "Months of personal runway to avoid forced selling."
+    },
+    "stress": {
+      "assetCrash": {
+        "title": "Asset Crash",
+        "subtitle": "One-time value drop.",
+        "year": "Crash Year",
+        "drop": "Drop (%)"
+      },
+      "rateSpike": {
+        "title": "Rate Spike",
+        "subtitle": "Increase over 2 years.",
+        "startYear": "Start Year",
+        "increase": "Increase (%)"
+      },
+      "incomeShock": {
+        "title": "Income Shock",
+        "subtitle": "Yield drop for one year.",
+        "year": "Shock Year",
+        "drop": "Drop (%)"
+      },
+      "expenseShock": {
+        "title": "Expense Shock",
+        "subtitle": "Expense spike for one year.",
+        "year": "Shock Year",
+        "increase": "Increase (%)"
+      }
+    },
+    "metrics": {
+      "netWorth": {
+        "title": "Net Worth",
+        "description": "Assets minus debt"
+      },
+      "cashFlow": {
+        "title": "Cash Flow",
+        "description": "After interest & expenses"
+      },
+      "borrowCapacity": {
+        "title": "Borrow Capacity",
+        "description": "Room to target LTV"
+      },
+      "dscr": {
+        "title": "DSCR",
+        "description": "Income / interest"
+      },
+      "cashBuffer": {
+        "title": "Cash Buffer",
+        "description": "Reserves available"
+      },
+      "bufferMonths": {
+        "title": "Buffer Months",
+        "description": "Months of runway"
+      },
+      "breakYear": {
+        "title": "Break Year",
+        "description": "First rule breach",
+        "value": "Year {{year}}",
+        "stable": "Stable"
+      },
+      "lenderMaxLtv": {
+        "title": "Lender Max LTV",
+        "description": "Hard leverage cap"
+      }
+    },
+    "charts": {
+      "assetVsDebt": "Asset vs Debt",
+      "ltvCashFlow": "LTV & Cash Flow",
+      "ltv": "LTV",
+      "cashFlow": "Cash Flow",
+      "borrowCapacity": "Borrow Capacity",
+      "cashBuffer": "Cash Buffer"
+    },
+    "rules": {
+      "title": "Rule Status",
+      "ltvSafety": "LTV Safety",
+      "dscr": "DSCR",
+      "cashBuffer": "Cash Buffer",
+      "lenderMaxLtv": "Lender Max LTV",
+      "breaches": {
+        "ltvMax": "LTV above lender max",
+        "dscrLow": "DSCR below 1.0",
+        "bufferDepleted": "Cash buffer depleted"
+      }
+    },
+    "events": {
+      "title": "Events (Last 8 Years)",
+      "year": "Y{{year}}",
+      "none": "No major events.",
+      "borrowed": "Borrowed {{amount}} to fund spending.",
+      "assetCrash": "Asset shock: -{{percent}}% value drop.",
+      "rateSpike": "Rate spike begins: +{{percent}}% over 2 years.",
+      "incomeShock": "Income shock: -{{percent}}% yield.",
+      "expenseShock": "Expense shock: +{{percent}}% expenses."
+    },
+    "education": {
+      "title": "Education Notes",
+      "body": "This is an educational simulator. It assumes interest-only debt and deterministic growth. Add stress testing, taxes, and scenario analysis in the next phase."
+    },
+    "glossary": {
+      "title": "BUYD Glossary",
+      "subtitle": "Key terms used in the BUYD calculator.",
+      "ltv": {
+        "title": "LTV",
+        "body": "Loan-to-Value. Debt balance divided by asset value."
+      },
+      "dscr": {
+        "title": "DSCR",
+        "body": "Debt Service Coverage Ratio. Income divided by interest cost."
+      },
+      "borrowCapacity": {
+        "title": "Borrow Capacity",
+        "body": "Maximum borrowing allowed this year under target and lender LTV."
+      },
+      "cashBuffer": {
+        "title": "Cash Buffer",
+        "body": "Reserve cash used to cover living expenses during downturns."
+      },
+      "targetLtv": {
+        "title": "Target LTV",
+        "body": "Desired leverage level used to cap new borrowing."
+      },
+      "stressEvents": {
+        "title": "Stress Events",
+        "body": "Shocks to asset value, income, interest rates, or expenses."
+      }
+    }
+  },
+  "growth": {
+    "badge": "Investment Growth",
+    "title": "Investment Growth Calculator",
+    "subtitle": "Plan your financial future with compound interest projections.",
+    "inputs": {
+      "startingBalance": "Starting Balance",
+      "monthlyInvestment": "Monthly Investment",
+      "currentAge": "Current Age",
+      "inflationRate": "Inflation Rate",
+      "compoundingFrequency": "Compounding Frequency",
+      "saveScenario": "Save Scenario"
+    },
+    "placeholders": {
+      "startingBalance": "5000",
+      "monthlyInvestment": "500",
+      "currentAge": "30",
+      "inflationRate": "2.5",
+      "saveScenario": "Conservative plan"
+    },
+    "hints": {
+      "startingBalance": "Initial investment",
+      "monthlyInvestment": "Recurring contribution",
+      "currentAge": "For age tracking",
+      "inflationRate": "Annual inflation rate",
+      "compoundingFrequency": "How often interest compounds",
+      "saveScenario": "Name and save this setup"
+    },
+    "frequencies": {
+      "yearly": "Yearly",
+      "quarterly": "Quarterly",
+      "monthly": "Monthly",
+      "daily": "Daily",
+      "placeholder": "Select frequency"
+    },
+    "howItWorks": "How it works: Starting with {{startingBalance}}, you'll add {{monthlyInvestment}}/month. The table shows nominal and inflation-adjusted returns at different rates. Your balance grows through contributions and compound interest.",
+    "savedScenarios": "Saved Scenarios",
+    "noScenarios": "No scenarios saved yet.",
+    "scenarioSummary": "{{amount}}/mo · {{frequency}}x comp",
+    "projections": {
+      "title": "Investment Projections",
+      "subtitle": "Green = Nominal (actual dollars) · Gray = Real value (adjusted for inflation)",
+      "scenario": "Scenario",
+      "years": "{{years}} Years",
+      "age": "Age {{age}}",
+      "totalInvested": "Total Invested",
+      "initialBalanceGrowth": "Initial Balance Growth",
+      "return": "{{rate}}% Return",
+      "earnings": "+{{value}} earnings",
+      "real": "{{value}} real"
+    },
+    "definitions": {
+      "title": "Definitions",
+      "totalInvested": {
+        "title": "Total Invested",
+        "body": "Monthly contributions only (starting balance excluded)."
+      },
+      "initialBalanceGrowth": {
+        "title": "Initial Balance Growth",
+        "body": "Starting balance compounded at 8% for each milestone."
+      },
+      "nominal": {
+        "title": "Nominal",
+        "body": "Future value in today's dollars without inflation adjustment."
+      },
+      "real": {
+        "title": "Real",
+        "body": "Nominal value adjusted for inflation."
+      },
+      "earnings": {
+        "title": "Earnings",
+        "body": "Nominal balance minus total invested contributions."
+      },
+      "age": {
+        "title": "Age",
+        "body": "Current age plus the milestone year."
+      }
+    }
+  }
+}
