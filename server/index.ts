@@ -95,7 +95,7 @@ app.use((req, res, next) => {
 (async () => {
   await registerRoutes(httpServer, app);
 
-  app.use((err: unknown, _req: Request, res: Response) => {
+  app.use((err: unknown, _req: Request, res: Response, _next: express.NextFunction) => {
     const status =
       typeof err === "object" &&
       err !== null &&
@@ -112,7 +112,7 @@ app.use((req, res, next) => {
       err instanceof Error ? err.message : "Internal Server Error";
 
     res.status(status).json({ message });
-    throw err;
+    void _next;
   });
 
   // importantly only setup vite in development and after
