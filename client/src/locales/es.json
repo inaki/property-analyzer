@@ -13,6 +13,7 @@
     "propertyAnalyser": "Analizador de Propiedades",
     "buyd": "BUYD",
     "growthCalculator": "Calculadora de Crecimiento",
+    "debt": "Deudas",
     "savedAnalyses": "Análisis Guardados"
   },
   "common": {
@@ -509,6 +510,86 @@
       "age": {
         "title": "Edad",
         "body": "Edad actual mas los años del hito."
+      }
+    }
+  },
+  "debt": {
+    "title": "Simulador de Pago de Deuda",
+    "subtitle": "Visualiza como las estrategias cambian el tiempo y el costo de intereses.",
+    "defaultDebtName": "Nueva Deuda",
+    "controls": {
+      "strategy": "Estrategia",
+      "strategyPlaceholder": "Selecciona estrategia",
+      "extraPayment": "Pago Extra Mensual",
+      "hybridThreshold": "Umbral Hibrido (%)"
+    },
+    "strategies": {
+      "avalanche": "Avalancha",
+      "snowball": "Bola de Nieve",
+      "hybrid": "Hibrida (Guardrails)"
+    },
+    "strategyNotes": {
+      "avalanche": "Paga minimos y ataca primero la deuda con mayor APR.",
+      "snowball": "Paga minimos y elimina primero el balance mas pequeño.",
+      "hybrid": "Prioriza deudas arriba del umbral; luego balances pequeños."
+    },
+    "debts": {
+      "title": "Tus Deudas",
+      "add": "Agregar Deuda",
+      "columns": {
+        "name": "Deuda",
+        "balance": "Saldo",
+        "apr": "APR (%)",
+        "minPayment": "Pago Minimo",
+        "actions": "Acciones"
+      }
+    },
+    "metrics": {
+      "totalBalance": {
+        "title": "Saldo Total",
+        "description": "Deuda actual total"
+      },
+      "totalInterest": {
+        "title": "Interes Total",
+        "description": "Interes proyectado"
+      },
+      "months": {
+        "title": "Meses para Pagar",
+        "description": "Tiempo hasta cero"
+      },
+      "extra": {
+        "title": "Pago Extra",
+        "description": "Principal adicional mensual"
+      }
+    },
+    "chart": {
+      "title": "Saldo Total en el Tiempo"
+    },
+    "summary": {
+      "title": "Resumen de Pago",
+      "columns": {
+        "name": "Deuda",
+        "months": "Meses",
+        "interest": "Interes Pagado"
+      }
+    },
+    "glossary": {
+      "title": "Guia de Estrategias",
+      "avalanche": {
+        "title": "Avalancha",
+        "body": "Mayor APR primero. Minimiza el interes total."
+      },
+      "snowball": {
+        "title": "Bola de Nieve",
+        "body": "Balance mas pequeño primero. Mejora la motivacion."
+      },
+      "hybrid": {
+        "title": "Hibrida",
+        "body": "Ataca APR alto sobre un umbral y luego balances pequeños."
+      },
+      "opportunity": {
+        "title": "Costo de Oportunidad",
+        "body": "Compara APR de deuda vs retorno esperado antes de acelerar."
       }
     }
   }

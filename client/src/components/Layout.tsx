@@ -8,6 +8,7 @@ import {
   PieChart, 
   TrendingUp,
   ArrowUpRight,
+  CreditCard,
   Moon,
   Sun
 } from "lucide-react";
@@ -28,6 +29,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     { href: "/", label: t("nav.propertyAnalyser"), icon: Calculator },
     { href: "/buyd", label: t("nav.buyd"), icon: PieChart },
     { href: "/growth", label: t("nav.growthCalculator"), icon: TrendingUp },
+    { href: "/debt", label: t("nav.debt"), icon: CreditCard },
     { href: "/saved", label: t("nav.savedAnalyses"), icon: History },
   ];
 

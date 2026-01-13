@@ -13,6 +13,7 @@
     "propertyAnalyser": "Property Analyser",
     "buyd": "BUYD",
     "growthCalculator": "Growth Calculator",
+    "debt": "Debt",
     "savedAnalyses": "Saved Analyses"
   },
   "common": {
@@ -509,6 +510,86 @@
       "age": {
         "title": "Age",
         "body": "Current age plus the milestone year."
+      }
+    }
+  },
+  "debt": {
+    "title": "Debt Payoff Simulator",
+    "subtitle": "Visualize how different payoff strategies change your timeline and interest cost.",
+    "defaultDebtName": "New Debt",
+    "controls": {
+      "strategy": "Strategy",
+      "strategyPlaceholder": "Select strategy",
+      "extraPayment": "Extra Monthly Payment",
+      "hybridThreshold": "Hybrid Threshold (%)"
+    },
+    "strategies": {
+      "avalanche": "Debt Avalanche",
+      "snowball": "Debt Snowball",
+      "hybrid": "Hybrid (Guardrails)"
+    },
+    "strategyNotes": {
+      "avalanche": "Pay minimums, then attack the highest APR first to minimize interest.",
+      "snowball": "Pay minimums, then clear the smallest balances first to build momentum.",
+      "hybrid": "Prioritize debts above the threshold rate. Otherwise, clear the smallest balance."
+    },
+    "debts": {
+      "title": "Your Debts",
+      "add": "Add Debt",
+      "columns": {
+        "name": "Debt",
+        "balance": "Balance",
+        "apr": "APR (%)",
+        "minPayment": "Min Payment",
+        "actions": "Actions"
+      }
+    },
+    "metrics": {
+      "totalBalance": {
+        "title": "Total Balance",
+        "description": "Current total debt"
+      },
+      "totalInterest": {
+        "title": "Total Interest",
+        "description": "Projected interest paid"
+      },
+      "months": {
+        "title": "Months to Payoff",
+        "description": "Time until debt-free"
+      },
+      "extra": {
+        "title": "Extra Payment",
+        "description": "Additional monthly principal"
+      }
+    },
+    "chart": {
+      "title": "Total Balance Over Time"
+    },
+    "summary": {
+      "title": "Payoff Summary",
+      "columns": {
+        "name": "Debt",
+        "months": "Months",
+        "interest": "Interest Paid"
+      }
+    },
+    "glossary": {
+      "title": "Debt Strategy Guide",
+      "avalanche": {
+        "title": "Debt Avalanche",
+        "body": "Highest APR first. Mathematically minimizes total interest."
+      },
+      "snowball": {
+        "title": "Debt Snowball",
+        "body": "Smallest balance first. Optimizes motivation and quick wins."
+      },
+      "hybrid": {
+        "title": "Hybrid",
+        "body": "Attack high-rate debt above a threshold, then smallest balances."
+      },
+      "opportunity": {
+        "title": "Opportunity Cost",
+        "body": "Compare debt APR to expected investment return before rushing payoff."
       }
     }
   }
