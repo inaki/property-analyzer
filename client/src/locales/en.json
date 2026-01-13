@@ -560,6 +560,7 @@
         "name": "Debt",
         "balance": "Balance",
         "apr": "APR (%)",
+        "aprTag": "APR Tier",
         "minPayment": "Min Payment",
         "priority": "Priority",
         "actions": "Actions"

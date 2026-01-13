@@ -560,6 +560,7 @@
         "name": "Deuda",
         "balance": "Saldo",
         "apr": "APR (%)",
+        "aprTag": "Nivel APR",
         "minPayment": "Pago Minimo",
         "priority": "Prioridad",
         "actions": "Acciones"

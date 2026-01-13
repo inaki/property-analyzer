@@ -441,6 +441,7 @@ export default function Debt() {
                   <TableHead>{t("debt.debts.columns.name")}</TableHead>
                   <TableHead>{t("debt.debts.columns.balance")}</TableHead>
                   <TableHead>{t("debt.debts.columns.apr")}</TableHead>
+                  <TableHead>{t("debt.debts.columns.aprTag")}</TableHead>
                   <TableHead>{t("debt.debts.columns.minPayment")}</TableHead>
                   <TableHead>{t("debt.debts.columns.priority")}</TableHead>
                   <TableHead className="text-right">{t("debt.debts.columns.actions")}</TableHead>
@@ -468,23 +469,23 @@ export default function Debt() {
                         value={debt.apr}
                         onChange={(event) => handleDebtChange(debt.id, "apr", event.target.value)}
                       />
-                      <div className="mt-2 text-xs">
-                        <span
-                          className={`rounded-full px-2 py-0.5 ${
-                            debt.apr >= 15
-                              ? "bg-rose-100 text-rose-700"
-                              : debt.apr >= 8
-                              ? "bg-amber-100 text-amber-700"
-                              : "bg-emerald-100 text-emerald-700"
-                          }`}
-                        >
-                          {debt.apr >= 15
-                            ? t("debt.aprLabels.high")
+                    </TableCell>
+                    <TableCell>
+                      <span
+                        className={`inline-flex min-w-[84px] items-center justify-center whitespace-nowrap rounded-full px-3 py-1 text-xs ${
+                          debt.apr >= 15
+                            ? "bg-rose-100 text-rose-700"
                             : debt.apr >= 8
-                            ? t("debt.aprLabels.medium")
-                            : t("debt.aprLabels.low")}
-                        </span>
-                      </div>
+                            ? "bg-amber-100 text-amber-700"
+                            : "bg-emerald-100 text-emerald-700"
+                        }`}
+                      >
+                        {debt.apr >= 15
+                          ? t("debt.aprLabels.high")
+                          : debt.apr >= 8
+                          ? t("debt.aprLabels.medium")
+                          : t("debt.aprLabels.low")}
+                      </span>
                     </TableCell>
                     <TableCell>
                       <div className="relative">
