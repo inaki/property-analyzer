@@ -1,10 +1,11 @@
 import { cn } from "@/lib/utils";
+import { type ReactNode } from "react";
 import { type LucideIcon } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface MetricCardProps {
   title: string;
-  value: string | number;
+  value: ReactNode;
   subValue?: string;
   icon?: LucideIcon;
   trend?: "up" | "down" | "neutral";

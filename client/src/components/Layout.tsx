@@ -108,14 +108,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </Button>
         </div>
 
-        <div className="p-4 border-t border-border/50">
-          <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl p-4 text-white shadow-xl">
-            <h4 className="font-display font-bold text-sm mb-1">{t("app.proTipTitle")}</h4>
-            <p className="text-xs text-slate-300 opacity-90 leading-relaxed">
-              {t("app.proTipBody")}
-            </p>
-          </div>
-        </div>
       </aside>
 
       {/* Main Content */}

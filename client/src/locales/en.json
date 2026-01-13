@@ -518,10 +518,19 @@
     "subtitle": "Visualize how different payoff strategies change your timeline and interest cost.",
     "defaultDebtName": "New Debt",
     "controls": {
+      "title": "Controls",
+      "subtitle": "Tune your strategy and payments",
       "strategy": "Strategy",
       "strategyPlaceholder": "Select strategy",
       "extraPayment": "Extra Monthly Payment",
-      "hybridThreshold": "Hybrid Threshold (%)"
+      "hybridThreshold": "Hybrid Threshold (%)",
+      "reset": "Reset defaults"
+    },
+    "extraImpact": "Extra payment saves {{interest}} and {{months}} months.",
+    "aprLabels": {
+      "high": "High APR",
+      "medium": "Medium APR",
+      "low": "Low APR"
     },
     "strategies": {
       "avalanche": "Debt Avalanche",
@@ -533,6 +542,17 @@
       "snowball": "Pay minimums, then clear the smallest balances first to build momentum.",
       "hybrid": "Prioritize debts above the threshold rate. Otherwise, clear the smallest balance."
     },
+    "strategyWhy": {
+      "title": "Why this order?",
+      "matches": "Hybrid matches avalanche",
+      "deviates": "Hybrid deviates from avalanche"
+    },
+    "strategyReasons": {
+      "highestApr": "Highest APR at {{apr}}%.",
+      "smallestBalance": "Smallest balance at {{balance}}.",
+      "aboveThreshold": "APR {{apr}}% is above {{threshold}}% threshold.",
+      "belowThreshold": "Below threshold, sorted by balance ({{balance}})."
+    },
     "debts": {
       "title": "Your Debts",
       "add": "Add Debt",
@@ -541,6 +561,7 @@
         "balance": "Balance",
         "apr": "APR (%)",
         "minPayment": "Min Payment",
+        "priority": "Priority",
         "actions": "Actions"
       }
     },
@@ -563,7 +584,15 @@
       }
     },
     "chart": {
-      "title": "Total Balance Over Time"
+      "title": "Total Balance Over Time",
+      "total": "Total",
+      "stacked": "Stacked by Debt"
+    },
+    "milestones": {
+      "first": "First debt cleared",
+      "halfway": "Halfway to zero",
+      "debtFree": "Debt-free",
+      "monthLabel": "Month {{month}}"
     },
     "summary": {
       "title": "Payoff Summary",
@@ -571,6 +600,23 @@
         "name": "Debt",
         "months": "Months",
         "interest": "Interest Paid"
+      }
+    },
+    "whatIf": {
+      "title": "What If Scenarios",
+      "subtitle": "Stress-test changes to your plan",
+      "delta": "Change vs current",
+      "rateSpike": {
+        "title": "Rates +3%",
+        "description": "All APRs rise by 3 percentage points."
+      },
+      "incomeDrop": {
+        "title": "Income drop",
+        "description": "Extra payment reduced by $100."
+      },
+      "pauseExtra": {
+        "title": "Pause extra",
+        "description": "Only minimum payments for now."
       }
     },
     "glossary": {
@@ -591,6 +637,17 @@
         "title": "Opportunity Cost",
         "body": "Compare debt APR to expected investment return before rushing payoff."
       }
+    },
+    "comparison": {
+      "selected": "Selected",
+      "bestFor": {
+        "avalanche": "Best for lowest cost",
+        "snowball": "Best for early wins",
+        "hybrid": "Best for balance"
+      },
+      "delta": "Delta vs selected",
+      "baseline": "Baseline",
+      "monthsShort": "mo"
     }
   }
 }

@@ -1,5 +1,6 @@
 import { CalculationResult } from "@/lib/financials";
 import { MetricCard } from "./MetricCard";
+import { AnimatedNumber } from "./AnimatedNumber";
 import { 
   PieChart, 
   Pie, 
@@ -89,23 +90,23 @@ export function ResultsDashboard({ metrics }: ResultsDashboardProps) {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard
           title={t("results.metrics.monthlyCashFlow.title")}
-          value={formatCurrency(metrics.monthlyCashFlow)}
+          value={<AnimatedNumber value={metrics.monthlyCashFlow} format={formatCurrency} />}
           trend={metrics.monthlyCashFlow > 0 ? "up" : "down"}
           description={t("results.metrics.monthlyCashFlow.description")}
         />
         <MetricCard
           title={t("results.metrics.capRate.title")}
-          value={formatPercent(metrics.capRate)}
+          value={<AnimatedNumber value={metrics.capRate} format={formatPercent} />}
           description={t("results.metrics.capRate.description")}
         />
         <MetricCard
           title={t("results.metrics.cashOnCash.title")}
-          value={formatPercent(metrics.cashOnCash)}
+          value={<AnimatedNumber value={metrics.cashOnCash} format={formatPercent} />}
           description={t("results.metrics.cashOnCash.description")}
         />
         <MetricCard
           title={t("results.metrics.initialCash.title")}
-          value={formatCurrency(metrics.totalInitialCash)}
+          value={<AnimatedNumber value={metrics.totalInitialCash} format={formatCurrency} />}
           description={t("results.metrics.initialCash.description")}
         />
       </div>
@@ -126,30 +127,30 @@ export function ResultsDashboard({ metrics }: ResultsDashboardProps) {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           <MetricCard
             title={t("results.berkshire.ownerEarnings.title")}
-            value={formatCurrency(metrics.ownerEarningsMonthly)}
+            value={<AnimatedNumber value={metrics.ownerEarningsMonthly} format={formatCurrency} />}
             trend={metrics.ownerEarningsMonthly > 0 ? "up" : "down"}
             description={t("results.berkshire.ownerEarnings.description")}
           />
           <MetricCard
             title={t("results.berkshire.earningsYield.title")}
-            value={formatPercent(metrics.earningsYield)}
+            value={<AnimatedNumber value={metrics.earningsYield} format={formatPercent} />}
             trend={metrics.earningsYield >= 10 ? "up" : "neutral"}
             description={t("results.berkshire.earningsYield.description")}
           />
           <MetricCard
             title={t("results.berkshire.intrinsicValue.title")}
-            value={formatCurrency(metrics.intrinsicValue)}
+            value={<AnimatedNumber value={metrics.intrinsicValue} format={formatCurrency} />}
             description={t("results.berkshire.intrinsicValue.description")}
           />
           <MetricCard
             title={t("results.berkshire.marginOfSafety.title")}
-            value={formatPercent(metrics.marginOfSafety)}
+            value={<AnimatedNumber value={metrics.marginOfSafety} format={formatPercent} />}
             trend={metrics.marginOfSafety >= 25 ? "up" : "down"}
             description={t("results.berkshire.marginOfSafety.description")}
           />
           <MetricCard
             title={t("results.berkshire.stressCashFlow.title")}
-            value={formatCurrency(metrics.stressTestCashFlow)}
+            value={<AnimatedNumber value={metrics.stressTestCashFlow} format={formatCurrency} />}
             trend={metrics.stressTestCashFlow > 0 ? "up" : "down"}
             description={t("results.berkshire.stressCashFlow.description")}
           />

@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Layout } from "@/components/Layout";
 import { Slider } from "@/components/ui/slider";
 import { MetricCard } from "@/components/MetricCard";
+import { AnimatedNumber } from "@/components/AnimatedNumber";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -575,23 +576,23 @@ export default function Buyd() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               <MetricCard
                 title={t("buyd.metrics.netWorth.title")}
-                value={formatCurrency(results.currentNetWorth)}
+                value={<AnimatedNumber value={results.currentNetWorth} format={formatCurrency} />}
                 description={t("buyd.metrics.netWorth.description")}
               />
               <MetricCard
                 title={t("buyd.metrics.cashFlow.title")}
-                value={formatCurrency(results.currentCashFlow)}
+                value={<AnimatedNumber value={results.currentCashFlow} format={formatCurrency} />}
                 description={t("buyd.metrics.cashFlow.description")}
                 trend={results.currentCashFlow >= 0 ? "up" : "down"}
               />
               <MetricCard
                 title={t("buyd.metrics.borrowCapacity.title")}
-                value={formatCurrency(results.currentBorrowCapacity)}
+                value={<AnimatedNumber value={results.currentBorrowCapacity} format={formatCurrency} />}
                 description={t("buyd.metrics.borrowCapacity.description")}
               />
               <MetricCard
                 title={t("buyd.metrics.dscr.title")}
-                value={results.currentDscr.toFixed(2)}
+                value={<AnimatedNumber value={results.currentDscr} format={(val) => val.toFixed(2)} />}
                 description={t("buyd.metrics.dscr.description")}
                 trend={results.currentDscr >= 1.25 ? "up" : "down"}
               />
@@ -600,13 +601,13 @@ export default function Buyd() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               <MetricCard
                 title={t("buyd.metrics.cashBuffer.title")}
-                value={formatCurrency(results.currentCashBuffer)}
+                value={<AnimatedNumber value={results.currentCashBuffer} format={formatCurrency} />}
                 description={t("buyd.metrics.cashBuffer.description")}
                 trend={results.currentCashBuffer >= 0 ? "up" : "down"}
               />
               <MetricCard
                 title={t("buyd.metrics.bufferMonths.title")}
-                value={results.currentBufferMonths.toFixed(1)}
+                value={<AnimatedNumber value={results.currentBufferMonths} format={(val) => val.toFixed(1)} />}
                 description={t("buyd.metrics.bufferMonths.description")}
                 trend={results.currentBufferMonths >= state.cashBufferMonths ? "up" : "down"}
               />
@@ -622,7 +623,7 @@ export default function Buyd() {
               />
               <MetricCard
                 title={t("buyd.metrics.lenderMaxLtv.title")}
-                value={`${state.lenderMaxLtvPercent}%`}
+                value={<AnimatedNumber value={state.lenderMaxLtvPercent} format={(val) => `${val}%`} />}
                 description={t("buyd.metrics.lenderMaxLtv.description")}
               />
             </div>

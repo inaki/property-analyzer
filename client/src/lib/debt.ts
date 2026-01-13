@@ -12,6 +12,8 @@ export type DebtPayoffRow = {
   month: number;
   totalBalance: number;
   totalInterestPaid: number;
+  interestThisMonth: number;
+  balances: Record<string, number>;
 };
 
 export type DebtPayoffSummary = {
@@ -51,6 +53,14 @@ function pickPriority(
   return [...debts].sort((a, b) => a.balance - b.balance || b.apr - a.apr);
 }
 
+export function getPriorityOrder(params: {
+  debts: DebtInput[];
+  strategy: DebtStrategy;
+  hybridThreshold: number;
+}): DebtInput[] {
+  return pickPriority(params.debts, params.strategy, params.hybridThreshold);
+}
+
 export function simulateDebtPayoff(params: {
   debts: DebtInput[];
   extraPayment: number;
@@ -63,6 +73,8 @@ export function simulateDebtPayoff(params: {
   const debts: WorkingDebt[] = params.debts
     .filter((debt) => debt.balance > 0)
     .map((debt) => ({ ...debt, interestPaid: 0 }));
+  const allDebtIds = params.debts.map((debt) => debt.id);
+  const baseMinimum = params.debts.reduce((sum, debt) => sum + debt.minPayment, 0);
   const payoffSummaries: Record<string, DebtPayoffSummary> = {};
   const schedule: DebtPayoffRow[] = [];
   let totalInterestPaid = 0;
@@ -72,7 +84,8 @@ export function simulateDebtPayoff(params: {
       break;
     }
 
-    let availableExtra = Math.max(0, params.extraPayment);
+    const monthlyBudget = Math.max(0, params.extraPayment) + baseMinimum;
+    let interestThisMonth = 0;
 
     for (const debt of debts) {
       const monthlyRate = debt.apr / 100 / 12;
@@ -80,13 +93,17 @@ export function simulateDebtPayoff(params: {
       debt.balance += interest;
       debt.interestPaid += interest;
       totalInterestPaid += interest;
+      interestThisMonth += interest;
     }
 
+    let usedBudget = 0;
     for (const debt of debts) {
       const payment = Math.min(debt.minPayment, debt.balance);
       debt.balance -= payment;
+      usedBudget += payment;
     }
 
+    let availableExtra = Math.max(0, monthlyBudget - usedBudget);
     const priority = pickPriority(debts, params.strategy, params.hybridThreshold);
     for (const debt of priority) {
       if (availableExtra <= 0) break;
@@ -111,10 +128,17 @@ export function simulateDebtPayoff(params: {
     }
 
     const totalBalance = debts.reduce((sum, debt) => sum + debt.balance, 0);
+    const balances: Record<string, number> = {};
+    for (const id of allDebtIds) {
+      const match = debts.find((debt) => debt.id === id);
+      balances[id] = match ? Math.max(0, match.balance) : 0;
+    }
     schedule.push({
       month,
       totalBalance,
       totalInterestPaid,
+      interestThisMonth,
+      balances,
     });
   }
 
