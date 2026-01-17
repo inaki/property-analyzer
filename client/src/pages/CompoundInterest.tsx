@@ -334,8 +334,11 @@ export default function CompoundInterest() {
                 <TableCell className="font-medium text-foreground">
                   {t("growth.projections.totalInvested")}
                 </TableCell>
-                {totalInvested.map((value) => (
-                  <TableCell key={value} className="text-right font-mono text-muted-foreground">
+                {totalInvested.map((value, index) => (
+                  <TableCell
+                    key={`total-${milestoneYears[index]}`}
+                    className="text-right font-mono text-muted-foreground"
+                  >
                     {formatCurrency(value)}
                   </TableCell>
                 ))}
@@ -344,8 +347,11 @@ export default function CompoundInterest() {
                 <TableCell className="font-medium text-foreground">
                   {t("growth.projections.initialBalanceGrowth")}
                 </TableCell>
-                {initialBalanceGrowth.map((value) => (
-                  <TableCell key={value} className="text-right font-mono text-primary">
+                {initialBalanceGrowth.map((value, index) => (
+                  <TableCell
+                    key={`initial-${milestoneYears[index]}`}
+                    className="text-right font-mono text-primary"
+                  >
                     {formatCurrency(value)}
                   </TableCell>
                 ))}
