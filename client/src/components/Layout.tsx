@@ -10,7 +10,8 @@ import {
   ArrowUpRight,
   CreditCard,
   Moon,
-  Sun
+  Sun,
+  Wallet
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
@@ -29,6 +30,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     { href: "/", label: t("nav.propertyAnalyser"), icon: Calculator },
     { href: "/buyd", label: t("nav.buyd"), icon: PieChart },
     { href: "/growth", label: t("nav.growthCalculator"), icon: TrendingUp },
+    { href: "/balance-sheet", label: t("nav.balanceSheet"), icon: Wallet },
     { href: "/debt", label: t("nav.debt"), icon: CreditCard },
     { href: "/saved", label: t("nav.savedAnalyses"), icon: History },
   ];

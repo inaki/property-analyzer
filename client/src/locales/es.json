@@ -13,6 +13,7 @@
     "propertyAnalyser": "Analizador de Propiedades",
     "buyd": "BUYD",
     "growthCalculator": "Calculadora de Crecimiento",
+    "balanceSheet": "Balance General",
     "debt": "Deudas",
     "savedAnalyses": "Análisis Guardados"
   },
@@ -648,6 +649,56 @@
       },
       "delta": "Diferencia vs seleccionado",
       "baseline": "Base",
+      "monthsShort": "meses"
+    }
+  },
+  "balanceSheet": {
+    "badge": "Balance General",
+    "title": "Balance General",
+    "subtitle": "Ve lo que tienes, lo que debes y cuanto dura tu efectivo.",
+    "sections": {
+      "assets": "Activos",
+      "liabilities": "Pasivos",
+      "expenses": "Gastos Mensuales"
+    },
+    "inputs": {
+      "cash": "Efectivo y Cuenta",
+      "investments": "Inversiones",
+      "realEstate": "Bienes Raices",
+      "otherAssets": "Otros Activos",
+      "creditCards": "Tarjetas de Credito",
+      "loans": "Prestamos",
+      "mortgage": "Hipoteca",
+      "otherLiabilities": "Otros Pasivos",
+      "monthlyExpenses": "Gastos Mensuales"
+    },
+    "placeholders": {
+      "cash": "12000",
+      "investments": "35000",
+      "realEstate": "180000",
+      "otherAssets": "5000",
+      "creditCards": "2500",
+      "loans": "8000",
+      "mortgage": "150000",
+      "otherLiabilities": "0",
+      "monthlyExpenses": "3500"
+    },
+    "metrics": {
+      "netWorth": "Patrimonio Neto",
+      "totalAssets": "Total Activos",
+      "totalLiabilities": "Total Pasivos",
+      "liquidityRunway": "Colchon de Liquidez",
+      "debtRatio": "Ratio de deuda: {{value}}"
+    },
+    "summary": {
+      "subtitle": "Usa esta foto para entender donde estas hoy."
+    },
+    "breakdown": {
+      "assets": "Detalle de Activos",
+      "liabilities": "Detalle de Pasivos",
+      "total": "Total"
+    },
+    "units": {
       "monthsShort": "meses"
     }
   }

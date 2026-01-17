@@ -9,6 +9,7 @@ import SavedAnalyses from "@/pages/SavedAnalyses";
 import Buyd from "@/pages/Buyd";
 import CompoundInterest from "@/pages/CompoundInterest";
 import Debt from "@/pages/Debt";
+import BalanceSheet from "@/pages/BalanceSheet";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -18,6 +19,7 @@ function Router() {
       <Route path="/saved" component={SavedAnalyses} />
       <Route path="/buyd" component={Buyd} />
       <Route path="/growth" component={CompoundInterest} />
+      <Route path="/balance-sheet" component={BalanceSheet} />
       <Route path="/debt" component={Debt} />
       <Route component={NotFound} />
     </Switch>

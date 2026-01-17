@@ -13,6 +13,7 @@
     "propertyAnalyser": "Property Analyser",
     "buyd": "BUYD",
     "growthCalculator": "Growth Calculator",
+    "balanceSheet": "Balance Sheet",
     "debt": "Debt",
     "savedAnalyses": "Saved Analyses"
   },
@@ -648,6 +649,56 @@
       },
       "delta": "Delta vs selected",
       "baseline": "Baseline",
+      "monthsShort": "mo"
+    }
+  },
+  "balanceSheet": {
+    "badge": "Balance Sheet",
+    "title": "Balance Sheet",
+    "subtitle": "See what you own, what you owe, and how long cash lasts.",
+    "sections": {
+      "assets": "Assets",
+      "liabilities": "Liabilities",
+      "expenses": "Monthly Expenses"
+    },
+    "inputs": {
+      "cash": "Cash & Checking",
+      "investments": "Investments",
+      "realEstate": "Real Estate",
+      "otherAssets": "Other Assets",
+      "creditCards": "Credit Cards",
+      "loans": "Loans",
+      "mortgage": "Mortgage",
+      "otherLiabilities": "Other Liabilities",
+      "monthlyExpenses": "Monthly Expenses"
+    },
+    "placeholders": {
+      "cash": "12000",
+      "investments": "35000",
+      "realEstate": "180000",
+      "otherAssets": "5000",
+      "creditCards": "2500",
+      "loans": "8000",
+      "mortgage": "150000",
+      "otherLiabilities": "0",
+      "monthlyExpenses": "3500"
+    },
+    "metrics": {
+      "netWorth": "Net Worth",
+      "totalAssets": "Total Assets",
+      "totalLiabilities": "Total Liabilities",
+      "liquidityRunway": "Liquidity Runway",
+      "debtRatio": "Debt ratio: {{value}}"
+    },
+    "summary": {
+      "subtitle": "Use this snapshot to understand where you stand today."
+    },
+    "breakdown": {
+      "assets": "Asset Breakdown",
+      "liabilities": "Liability Breakdown",
+      "total": "Total"
+    },
+    "units": {
       "monthsShort": "mo"
     }
   }
