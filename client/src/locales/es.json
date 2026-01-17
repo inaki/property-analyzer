@@ -14,6 +14,7 @@
     "buyd": "BUYD",
     "growthCalculator": "Calculadora de Crecimiento",
     "balanceSheet": "Balance General",
+    "personalFinance": "Guia de Gasto",
     "debt": "Deudas",
     "savedAnalyses": "Análisis Guardados"
   },
@@ -693,6 +694,24 @@
     "summary": {
       "subtitle": "Usa esta foto para entender donde estas hoy."
     },
+    "insights": {
+      "title": "Que significa",
+      "nextNudgeLabel": "Siguiente paso:",
+      "netWorthContext": {
+        "negative": "Etapa inicial. No es fracaso.",
+        "earlyPositive": "Positivo y creciendo. Sigue asi.",
+        "growing": "Buen impulso. Se constante.",
+        "strong": "Base fuerte. Protege y crece."
+      },
+      "netWorthNudge": {
+        "negative": "Crea un colchon pequeño y baja el saldo mas grande.",
+        "earlyPositive": "Lleva el efectivo a 3 meses mientras sumas activos.",
+        "growing": "Mantén la deuda estable y sigue invirtiendo.",
+        "strong": "Protege la liquidez y deja que componga."
+      },
+      "negativeSummary": "{{liability}} explica la mayor parte de la deuda ({{share}}). Las inversiones ya cubren {{coverage}}. Estas mas cerca de lo que parece.",
+      "positiveSummary": "{{asset}} es tu activo mas grande. Los pasivos son cerca de {{ratio}} de los activos. Buena base."
+    },
     "breakdown": {
       "assets": "Detalle de Activos",
       "liabilities": "Detalle de Pasivos",
@@ -700,6 +719,61 @@
     },
     "units": {
       "monthsShort": "meses"
+    }
+  },
+  "personalFinance": {
+    "badge": "Pagate Primero",
+    "title": "Guia de Gasto",
+    "subtitle": "Primero el futuro, luego gasta sin culpa.",
+    "inputs": {
+      "netIncome": "Ingreso Neto Mensual",
+      "savingsMode": "Modo de Ahorro",
+      "savingsRate": "Porciento de Ahorro (%)",
+      "savingsAmount": "Monto de Ahorro",
+      "goalAmount": "Meta de Ahorro",
+      "goalMonths": "Meses a la Meta",
+      "fixedExpenses": "Gastos Fijos"
+    },
+    "placeholders": {
+      "netIncome": "5000",
+      "savingsMode": "Selecciona modo",
+      "savingsRate": "20",
+      "savingsAmount": "1000",
+      "goalAmount": "6000",
+      "goalMonths": "12",
+      "fixedExpenses": "2400"
+    },
+    "hints": {
+      "netIncome": "Despues de impuestos y deducciones.",
+      "savingsMode": "Escoge porciento o monto fijo.",
+      "savingsRate": "Rango tipico es 10-30%.",
+      "savingsAmount": "Define un objetivo mensual.",
+      "goalAmount": "Total que quieres ahorrar.",
+      "goalMonths": "Tiempo que quieres tomar.",
+      "fixedExpenses": "Renta, utilidades, seguro, minimos."
+    },
+    "savingsModes": {
+      "percent": "Porciento del ingreso",
+      "amount": "Monto fijo",
+      "goal": "Por meta"
+    },
+    "summary": "Puedes gastar hasta {{guiltFree}} al mes sin afectar tus metas.",
+    "metrics": {
+      "guiltFree": "Gasto sin Culpa",
+      "guiltFreeHint": "Gasto mensual aprobado.",
+      "savingsAmount": "Pagate Primero",
+      "savingsRate": "Porciento: {{value}}",
+      "goalPlan": "Meta: {{amount}} en {{months}} meses",
+      "fixedExpenses": "Gastos Fijos",
+      "fixedRatio": "Proporcion: {{value}}",
+      "netIncome": "Ingreso Neto"
+    },
+    "warnings": {
+      "title": "Chequeos de Seguridad",
+      "none": "Todo bien. Tu plan se ve sostenible.",
+      "overBudget": "El estilo de vida excede el ingreso. Baja gastos o ahorro para volver a cero.",
+      "lowSavings": "El ahorro esta por debajo de 10%. El progreso puede ser lento.",
+      "highFixed": "Los gastos fijos superan 60% del ingreso. La flexibilidad es baja."
     }
   }
 }

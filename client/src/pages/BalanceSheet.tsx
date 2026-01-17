@@ -69,6 +69,44 @@ export default function BalanceSheet() {
   const liquidityMonths = parsedMonthlyExpenses > 0 ? assetValues.cash / parsedMonthlyExpenses : 0;
   const debtRatio = totalAssets > 0 ? totalLiabilities / totalAssets : 0;
   const monthsLabel = t("balanceSheet.units.monthsShort");
+  const netWorthRatio = totalAssets > 0 ? netWorth / totalAssets : 0;
+
+  const assetLabels: Record<AssetKey, string> = {
+    cash: t("balanceSheet.inputs.cash"),
+    investments: t("balanceSheet.inputs.investments"),
+    realEstate: t("balanceSheet.inputs.realEstate"),
+    otherAssets: t("balanceSheet.inputs.otherAssets"),
+  };
+
+  const liabilityLabels: Record<LiabilityKey, string> = {
+    creditCards: t("balanceSheet.inputs.creditCards"),
+    loans: t("balanceSheet.inputs.loans"),
+    mortgage: t("balanceSheet.inputs.mortgage"),
+    otherLiabilities: t("balanceSheet.inputs.otherLiabilities"),
+  };
+
+  const largestAssetEntry = (Object.entries(assetValues) as [AssetKey, number][])
+    .sort((a, b) => b[1] - a[1])[0];
+  const largestLiabilityEntry = (Object.entries(liabilityValues) as [LiabilityKey, number][])
+    .sort((a, b) => b[1] - a[1])[0];
+
+  const largestAssetLabel = largestAssetEntry ? assetLabels[largestAssetEntry[0]] : "";
+  const largestLiabilityLabel = largestLiabilityEntry ? liabilityLabels[largestLiabilityEntry[0]] : "";
+  const largestLiabilityShare =
+    totalLiabilities > 0 ? largestLiabilityEntry[1] / totalLiabilities : 0;
+  const investmentCoverage =
+    totalLiabilities > 0 ? assetValues.investments / totalLiabilities : 0;
+
+  const netWorthState =
+    netWorth < 0
+      ? "negative"
+      : netWorth < 25000 || netWorthRatio < 0.25
+        ? "earlyPositive"
+        : netWorth < 150000 || netWorthRatio < 0.6
+          ? "growing"
+          : "strong";
+  const netWorthContextKey = `balanceSheet.insights.netWorthContext.${netWorthState}`;
+  const netWorthNudgeKey = `balanceSheet.insights.netWorthNudge.${netWorthState}`;
 
   const handleAssetChange = (key: AssetKey) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setAssets((prev) => ({ ...prev, [key]: event.target.value }));
@@ -196,6 +234,7 @@ export default function BalanceSheet() {
             title={t("balanceSheet.metrics.netWorth")}
             value={<AnimatedNumber value={netWorth} format={formatCurrency} />}
             trend={netWorth >= 0 ? "up" : "down"}
+            description={t(netWorthContextKey)}
           />
           <MetricCard
             title={t("balanceSheet.metrics.totalAssets")}
@@ -215,6 +254,32 @@ export default function BalanceSheet() {
               />
             }
           />
+        </div>
+
+        <div className="bg-card rounded-xl border border-border shadow-sm p-6 space-y-3">
+          <h3 className="font-display font-semibold">{t("balanceSheet.insights.title")}</h3>
+          {netWorth < 0 ? (
+            <p className="text-sm text-muted-foreground">
+              {t("balanceSheet.insights.negativeSummary", {
+                liability: largestLiabilityLabel,
+                share: formatPercent(largestLiabilityShare),
+                coverage: formatPercent(investmentCoverage),
+              })}
+            </p>
+          ) : (
+            <p className="text-sm text-muted-foreground">
+              {t("balanceSheet.insights.positiveSummary", {
+                asset: largestAssetLabel,
+                ratio: formatPercent(debtRatio),
+              })}
+            </p>
+          )}
+          <p className="text-sm text-muted-foreground">
+            <span className="font-medium text-foreground">
+              {t("balanceSheet.insights.nextNudgeLabel")}
+            </span>{" "}
+            {t(netWorthNudgeKey)}
+          </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">

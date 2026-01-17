@@ -11,7 +11,8 @@ import {
   CreditCard,
   Moon,
   Sun,
-  Wallet
+  Wallet,
+  PiggyBank
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
@@ -31,6 +32,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     { href: "/buyd", label: t("nav.buyd"), icon: PieChart },
     { href: "/growth", label: t("nav.growthCalculator"), icon: TrendingUp },
     { href: "/balance-sheet", label: t("nav.balanceSheet"), icon: Wallet },
+    { href: "/personal-finance", label: t("nav.personalFinance"), icon: PiggyBank },
     { href: "/debt", label: t("nav.debt"), icon: CreditCard },
     { href: "/saved", label: t("nav.savedAnalyses"), icon: History },
   ];

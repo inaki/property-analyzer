@@ -14,6 +14,7 @@
     "buyd": "BUYD",
     "growthCalculator": "Growth Calculator",
     "balanceSheet": "Balance Sheet",
+    "personalFinance": "Spending Guide",
     "debt": "Debt",
     "savedAnalyses": "Saved Analyses"
   },
@@ -693,6 +694,24 @@
     "summary": {
       "subtitle": "Use this snapshot to understand where you stand today."
     },
+    "insights": {
+      "title": "What this means",
+      "nextNudgeLabel": "Next nudge:",
+      "netWorthContext": {
+        "negative": "Early stage. Not a failure.",
+        "earlyPositive": "Positive and building. Keep going.",
+        "growing": "Momentum is real. Stay consistent.",
+        "strong": "Strong base. Protect and grow."
+      },
+      "netWorthNudge": {
+        "negative": "Build a small cash buffer and reduce the biggest balance.",
+        "earlyPositive": "Push cash toward a 3-month runway while adding assets.",
+        "growing": "Keep debt flat and keep investing on schedule.",
+        "strong": "Protect liquidity and keep compounding."
+      },
+      "negativeSummary": "{{liability}} drives most of the debt ({{share}}). Investments already cover {{coverage}}. You are closer than it feels.",
+      "positiveSummary": "{{asset}} is your biggest asset. Liabilities are about {{ratio}} of assets. Solid footing."
+    },
     "breakdown": {
       "assets": "Asset Breakdown",
       "liabilities": "Liability Breakdown",
@@ -700,6 +719,61 @@
     },
     "units": {
       "monthsShort": "mo"
+    }
+  },
+  "personalFinance": {
+    "badge": "Pay Yourself First",
+    "title": "Spending Guide",
+    "subtitle": "Fund the future first, then spend without guilt.",
+    "inputs": {
+      "netIncome": "Net Monthly Income",
+      "savingsMode": "Savings Mode",
+      "savingsRate": "Savings Rate (%)",
+      "savingsAmount": "Savings Amount",
+      "goalAmount": "Savings Goal",
+      "goalMonths": "Months to Goal",
+      "fixedExpenses": "Fixed Expenses"
+    },
+    "placeholders": {
+      "netIncome": "5000",
+      "savingsMode": "Select mode",
+      "savingsRate": "20",
+      "savingsAmount": "1000",
+      "goalAmount": "6000",
+      "goalMonths": "12",
+      "fixedExpenses": "2400"
+    },
+    "hints": {
+      "netIncome": "After tax and deductions.",
+      "savingsMode": "Choose percent or fixed amount.",
+      "savingsRate": "Typical range is 10-30%.",
+      "savingsAmount": "Set a fixed monthly target.",
+      "goalAmount": "Total you want to save.",
+      "goalMonths": "How long you want to take.",
+      "fixedExpenses": "Rent, utilities, insurance, minimum debt."
+    },
+    "savingsModes": {
+      "percent": "Percent of income",
+      "amount": "Fixed amount",
+      "goal": "Goal-based"
+    },
+    "summary": "You can spend up to {{guiltFree}} per month without harming your goals.",
+    "metrics": {
+      "guiltFree": "Guilt-Free Spending",
+      "guiltFreeHint": "Approved monthly spend.",
+      "savingsAmount": "Pay Yourself First",
+      "savingsRate": "Rate: {{value}}",
+      "goalPlan": "Goal: {{amount}} in {{months}} mo",
+      "fixedExpenses": "Fixed Expenses",
+      "fixedRatio": "Share: {{value}}",
+      "netIncome": "Net Income"
+    },
+    "warnings": {
+      "title": "Safety Checks",
+      "none": "All clear. Your plan looks sustainable.",
+      "overBudget": "Lifestyle exceeds income. Reduce expenses or savings to get back to zero.",
+      "lowSavings": "Savings rate is under 10%. Future progress may be slow.",
+      "highFixed": "Fixed expenses are above 60% of income. Flexibility is low."
     }
   }
 }
