@@ -16,6 +16,7 @@
     "balanceSheet": "Balance Sheet",
     "personalFinance": "Spending Guide",
     "advisoryFees": "Advisory Fees",
+    "formulas": "Formulas",
     "debt": "Debt",
     "savedAnalyses": "Saved Analyses"
   },
@@ -925,6 +926,135 @@
         "platformFees": "Are there platform, custody, or program fees on top of the advisory fee?",
         "performanceFees": "Are any performance fees or incentive fees charged?",
         "termination": "If I leave mid-period, how is the fee prorated?"
+      }
+    }
+  },
+  "formulas": {
+    "badge": "Advisor Toolkit",
+    "title": "Formulas",
+    "subtitle": "Learn the formulas that make advice fast, clear, and confident.",
+    "actions": {
+      "example": "Example"
+    },
+    "sections": {
+      "mustMemorize": "Must-memorize formulas",
+      "recognize": "Know and recognize",
+      "valuation": "Stock and business metrics",
+      "portfolio": "Portfolio and risk",
+      "realEstate": "Real estate metrics",
+      "advisorMindset": "Advisor mindset",
+      "cheatSheet": "One-page cheat list"
+    },
+    "items": {
+      "roi": {
+        "title": "Return on Investment (ROI)",
+        "formula": "ROI = (Gain - Cost) / Cost",
+        "use": "Compare opportunities and explain performance.",
+        "example": "Example\nYou buy at $10,000 and sell at $12,000.\nGain is $2,000 on a $10,000 cost.\nROI = (12,000 - 10,000) / 10,000 = 20%."
+      },
+      "compound": {
+        "title": "Compound interest",
+        "formula": "FV = PV * (1 + r)^n",
+        "use": "Retirement planning and long-term growth.",
+        "example": "Example\nYou invest $10,000 at 7% for 10 years.\nGrowth compounds each year.\nFV = 10,000 * (1.07)^10 = ~$19,672."
+      },
+      "rule72": {
+        "title": "Rule of 72",
+        "formula": "Years to double = 72 / rate",
+        "use": "Quick intuition for client conversations.",
+        "example": "Example\nAt 8% return, 72 / 8 = 9.\nThat is about 9 years to double."
+      },
+      "debtEquity": {
+        "title": "Debt-to-equity",
+        "formula": "D/E = Total Debt / Equity",
+        "use": "Gauge leverage and financial risk.",
+        "example": "Example\nDebt $200,000 and equity $100,000.\nD/E = 200,000 / 100,000 = 2.0.\nThat means $2 of debt for every $1 of equity."
+      },
+      "dti": {
+        "title": "Debt-to-income (DTI)",
+        "formula": "DTI = Monthly Debt / Monthly Income",
+        "use": "Mortgage readiness and personal health.",
+        "example": "Example\nDebt $1,200 and income $4,000.\nDTI = 1,200 / 4,000 = 30%.\nLenders use this to judge affordability."
+      },
+      "savingsRate": {
+        "title": "Savings rate",
+        "formula": "Savings Rate = Savings / Income",
+        "use": "Predicts progress before returns matter.",
+        "example": "Example\nSave $800 from $4,000 income.\nSavings rate = 800 / 4,000 = 20%.\nEarly on, this matters more than return."
+      },
+      "cashFlow": {
+        "title": "Cash flow",
+        "formula": "Cash Flow = Income - Expenses",
+        "use": "Core survival metric; negative is a warning.",
+        "example": "Example\nIncome $5,000 minus expenses $4,200.\nCash flow = $800.\nPositive cash flow keeps you in the game."
+      },
+      "presentValue": {
+        "title": "Present value",
+        "formula": "PV = FV / (1 + r)^n",
+        "use": "Compare future money to today.",
+        "example": "Example\n$10,000 in 3 years at 5%.\nPV = 10,000 / (1.05)^3 = ~$8,638.\nFuture dollars are worth less today."
+      },
+      "irr": {
+        "title": "Internal rate of return (IRR)",
+        "formula": "IRR is the rate where NPV = 0",
+        "use": "Compare long-term projects and deals.",
+        "example": "Example\nInvest $10,000 today, receive $4,000 for 3 years.\nIRR is the rate that makes the NPV equal zero.\nHere the IRR is about 9.7%."
+      },
+      "npv": {
+        "title": "Net present value (NPV)",
+        "formula": "NPV = Sum(CF_t / (1 + r)^t) - Initial",
+        "use": "Decide if a project is worth doing.",
+        "example": "Example\nInvest $50,000, receive $15,000 for 4 years at 8%.\nNPV = discounted cash flows minus initial cost.\nNPV ~ -$314, so it is slightly negative."
+      },
+      "eps": {
+        "title": "Earnings per share (EPS)",
+        "formula": "EPS = Net Income / Shares",
+        "use": "Company profitability per share.",
+        "example": "Example\nNet income $2,000,000 and 1,000,000 shares.\nEPS = 2,000,000 / 1,000,000 = $2.00."
+      },
+      "pe": {
+        "title": "Price-to-earnings (P/E)",
+        "formula": "P/E = Price / EPS",
+        "use": "Quick valuation comparison.",
+        "example": "Example\nPrice $40 and EPS $2.\nP/E = 40 / 2 = 20.\nThis is 20 times earnings."
+      },
+      "expectedReturn": {
+        "title": "Expected return",
+        "formula": "E(R) = Sum(w_i * r_i)",
+        "use": "Portfolio-level return estimate.",
+        "example": "Example\n60% at 8% and 40% at 4%.\nE(R) = 0.6*8% + 0.4*4% = 6.4%.\nWeighted averages tell the story."
+      },
+      "stdev": {
+        "title": "Standard deviation",
+        "formula": "Volatility of returns",
+        "use": "Communicate risk, not just performance.",
+        "example": "Example\nReturns of 2%, 8%, 10% move more than 5%, 6%, 7%.\nMore spread means higher standard deviation."
+      },
+      "capRate": {
+        "title": "Cap rate",
+        "formula": "Cap Rate = NOI / Property Value",
+        "use": "Real estate valuation and comparisons.",
+        "example": "Example\nNOI $24,000 and value $400,000.\nCap rate = 24,000 / 400,000 = 6%.\nHigher cap rate can mean more risk."
+      },
+      "coc": {
+        "title": "Cash-on-cash return",
+        "formula": "CoC = Annual Cash Flow / Cash Invested",
+        "use": "Investor return on cash invested.",
+        "example": "Example\nCash flow $12,000 on $100,000 invested.\nCoC = 12,000 / 100,000 = 12%.\nThis ignores appreciation and loan paydown."
+      }
+    },
+    "mindset": {
+      "body": "Clients do not hire formulas. They hire clarity, judgment, and tradeoff decisions."
+    },
+    "cheatSheet": {
+      "subtitle": "Memorize these. Use tools for the rest.",
+      "items": {
+        "roi": "ROI",
+        "compound": "FV = PV * (1 + r)^n",
+        "rule72": "Rule of 72",
+        "debtEquity": "Debt-to-equity",
+        "cashFlow": "Cash Flow",
+        "savingsRate": "Savings Rate"
       }
     }
   }

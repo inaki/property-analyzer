@@ -16,6 +16,7 @@
     "balanceSheet": "Balance General",
     "personalFinance": "Guia de Gasto",
     "advisoryFees": "Honorarios de Asesoria",
+    "formulas": "Formulas",
     "debt": "Deudas",
     "savedAnalyses": "Análisis Guardados"
   },
@@ -925,6 +926,135 @@
         "platformFees": "Hay tarifas de plataforma, custodia o programa adicionales?",
         "performanceFees": "Se cobran honorarios por desempeno o incentivos?",
         "termination": "Si me voy a mitad de periodo, como se prorratea la tarifa?"
+      }
+    }
+  },
+  "formulas": {
+    "badge": "Toolkit del Asesor",
+    "title": "Formulas",
+    "subtitle": "Aprende las formulas que hacen el consejo rapido y claro.",
+    "actions": {
+      "example": "Ejemplo"
+    },
+    "sections": {
+      "mustMemorize": "Formulas para memorizar",
+      "recognize": "Conoce y reconoce",
+      "valuation": "Metricas de acciones y negocios",
+      "portfolio": "Portafolio y riesgo",
+      "realEstate": "Metricas de bienes raices",
+      "advisorMindset": "Mentalidad del asesor",
+      "cheatSheet": "Lista rapida"
+    },
+    "items": {
+      "roi": {
+        "title": "Retorno sobre inversion (ROI)",
+        "formula": "ROI = (Ganancia - Costo) / Costo",
+        "use": "Comparar oportunidades y explicar rendimiento.",
+        "example": "Ejemplo\nCompra en $10,000 y vende en $12,000.\nLa ganancia es $2,000 sobre $10,000.\nROI = (12,000 - 10,000) / 10,000 = 20%."
+      },
+      "compound": {
+        "title": "Interes compuesto",
+        "formula": "FV = PV * (1 + r)^n",
+        "use": "Planificacion de retiro y crecimiento.",
+        "example": "Ejemplo\nInviertes $10,000 al 7% por 10 anos.\nEl crecimiento se compone cada ano.\nFV = 10,000 * (1.07)^10 = ~$19,672."
+      },
+      "rule72": {
+        "title": "Regla del 72",
+        "formula": "Anios para duplicar = 72 / tasa",
+        "use": "Intuicion rapida para clientes.",
+        "example": "Ejemplo\nA 8% de retorno, 72 / 8 = 9.\nEso es cerca de 9 anos para duplicar."
+      },
+      "debtEquity": {
+        "title": "Deuda a patrimonio",
+        "formula": "D/E = Deuda total / Patrimonio",
+        "use": "Mide apalancamiento y riesgo.",
+        "example": "Ejemplo\nDeuda $200,000 y patrimonio $100,000.\nD/E = 200,000 / 100,000 = 2.0.\nEso es $2 de deuda por cada $1 propio."
+      },
+      "dti": {
+        "title": "Deuda a ingreso (DTI)",
+        "formula": "DTI = Deuda mensual / Ingreso mensual",
+        "use": "Listo para hipoteca y salud financiera.",
+        "example": "Ejemplo\nDeuda $1,200 e ingreso $4,000.\nDTI = 1,200 / 4,000 = 30%.\nLos bancos lo usan para evaluar riesgo."
+      },
+      "savingsRate": {
+        "title": "Tasa de ahorro",
+        "formula": "Tasa de Ahorro = Ahorro / Ingreso",
+        "use": "Predice progreso antes de rendimientos.",
+        "example": "Ejemplo\nAhorra $800 de $4,000.\nTasa de ahorro = 800 / 4,000 = 20%.\nEn etapas tempranas, pesa mas que el retorno."
+      },
+      "cashFlow": {
+        "title": "Flujo de caja",
+        "formula": "Flujo = Ingreso - Gastos",
+        "use": "Metrica vital; negativo es alerta.",
+        "example": "Ejemplo\nIngreso $5,000 menos gastos $4,200.\nFlujo = $800.\nFlujo positivo mantiene el plan vivo."
+      },
+      "presentValue": {
+        "title": "Valor presente",
+        "formula": "PV = FV / (1 + r)^n",
+        "use": "Comparar dinero futuro con hoy.",
+        "example": "Ejemplo\n$10,000 en 3 anos al 5%.\nPV = 10,000 / (1.05)^3 = ~$8,638.\nEl dinero futuro vale menos hoy."
+      },
+      "irr": {
+        "title": "Tasa interna de retorno (IRR)",
+        "formula": "IRR es la tasa donde NPV = 0",
+        "use": "Comparar proyectos y deals.",
+        "example": "Ejemplo\nInviertes $10,000 hoy y recibes $4,000 por 3 anos.\nIRR es la tasa que hace el NPV cero.\nAqui la IRR es ~9.7%."
+      },
+      "npv": {
+        "title": "Valor presente neto (NPV)",
+        "formula": "NPV = Suma(CF_t / (1 + r)^t) - Inicial",
+        "use": "Decidir si un proyecto vale la pena.",
+        "example": "Ejemplo\nInvierte $50,000 y recibe $15,000 por 4 anos al 8%.\nNPV = flujos descontados menos la inversion.\nNPV ~ -$314, es ligeramente negativo."
+      },
+      "eps": {
+        "title": "Ganancia por accion (EPS)",
+        "formula": "EPS = Ingreso neto / Acciones",
+        "use": "Rentabilidad por accion.",
+        "example": "Ejemplo\nIngreso neto $2,000,000 y 1,000,000 acciones.\nEPS = 2,000,000 / 1,000,000 = $2.00."
+      },
+      "pe": {
+        "title": "Precio a ganancias (P/E)",
+        "formula": "P/E = Precio / EPS",
+        "use": "Comparacion de valoracion.",
+        "example": "Ejemplo\nPrecio $40 y EPS $2.\nP/E = 40 / 2 = 20.\nEsto es 20 veces ganancias."
+      },
+      "expectedReturn": {
+        "title": "Retorno esperado",
+        "formula": "E(R) = Suma(w_i * r_i)",
+        "use": "Estimado de retorno del portafolio.",
+        "example": "Ejemplo\n60% al 8% y 40% al 4%.\nE(R) = 0.6*8% + 0.4*4% = 6.4%.\nPromedio ponderado."
+      },
+      "stdev": {
+        "title": "Desviacion estandar",
+        "formula": "Volatilidad de retornos",
+        "use": "Explicar riesgo, no solo retorno.",
+        "example": "Ejemplo\nRetornos 2%, 8%, 10% se mueven mas que 5%, 6%, 7%.\nMas dispersion = mayor desviacion."
+      },
+      "capRate": {
+        "title": "Cap rate",
+        "formula": "Cap Rate = NOI / Valor de propiedad",
+        "use": "Valoracion en bienes raices.",
+        "example": "Ejemplo\nNOI $24,000 y valor $400,000.\nCap rate = 24,000 / 400,000 = 6%.\nCap rate mas alto puede implicar mas riesgo."
+      },
+      "coc": {
+        "title": "Cash-on-cash",
+        "formula": "CoC = Flujo anual / Efectivo invertido",
+        "use": "Retorno sobre efectivo invertido.",
+        "example": "Ejemplo\nFlujo $12,000 sobre $100,000 invertidos.\nCoC = 12,000 / 100,000 = 12%.\nNo incluye apreciacion ni amortizacion."
+      }
+    },
+    "mindset": {
+      "body": "Los clientes no contratan formulas. Contratan claridad y criterio."
+    },
+    "cheatSheet": {
+      "subtitle": "Memoriza estas. Usa herramientas para lo demas.",
+      "items": {
+        "roi": "ROI",
+        "compound": "FV = PV * (1 + r)^n",
+        "rule72": "Regla del 72",
+        "debtEquity": "Deuda a patrimonio",
+        "cashFlow": "Flujo de caja",
+        "savingsRate": "Tasa de ahorro"
       }
     }
   }

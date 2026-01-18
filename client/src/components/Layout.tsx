@@ -13,7 +13,8 @@ import {
   Sun,
   Wallet,
   PiggyBank,
-  BadgeDollarSign
+  BadgeDollarSign,
+  BookOpen
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
@@ -35,6 +36,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     { href: "/balance-sheet", label: t("nav.balanceSheet"), icon: Wallet },
     { href: "/personal-finance", label: t("nav.personalFinance"), icon: PiggyBank },
     { href: "/advisory-fees", label: t("nav.advisoryFees"), icon: BadgeDollarSign },
+    { href: "/formulas", label: t("nav.formulas"), icon: BookOpen },
     { href: "/debt", label: t("nav.debt"), icon: CreditCard },
     { href: "/saved", label: t("nav.savedAnalyses"), icon: History },
   ];
