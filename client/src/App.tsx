@@ -11,6 +11,7 @@ import CompoundInterest from "@/pages/CompoundInterest";
 import Debt from "@/pages/Debt";
 import BalanceSheet from "@/pages/BalanceSheet";
 import PersonalFinance from "@/pages/PersonalFinance";
+import AdvisoryFees from "@/pages/AdvisoryFees";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -22,6 +23,7 @@ function Router() {
       <Route path="/growth" component={CompoundInterest} />
       <Route path="/balance-sheet" component={BalanceSheet} />
       <Route path="/personal-finance" component={PersonalFinance} />
+      <Route path="/advisory-fees" component={AdvisoryFees} />
       <Route path="/debt" component={Debt} />
       <Route component={NotFound} />
     </Switch>

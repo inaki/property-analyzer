@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { MetricCard } from "@/components/MetricCard";
+import { Button } from "@/components/ui/button";
 import { AnimatedNumber } from "@/components/AnimatedNumber";
 import { PiggyBank } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -51,6 +52,42 @@ export default function PersonalFinance() {
   const guiltFreeSpending = parsedIncome - savingsAmount - parsedFixed;
   const savingsRate = parsedIncome > 0 ? savingsAmount / parsedIncome : 0;
   const fixedRatio = parsedIncome > 0 ? parsedFixed / parsedIncome : 0;
+  const incomeTotal = Math.max(parsedIncome, 0);
+  const savingsShare = incomeTotal > 0 ? Math.min(savingsAmount / incomeTotal, 1) : 0;
+  const fixedShare = incomeTotal > 0 ? Math.min(parsedFixed / incomeTotal, 1) : 0;
+  const spendShare =
+    incomeTotal > 0 ? Math.max(0, Math.min(guiltFreeSpending / incomeTotal, 1)) : 0;
+  const overShare = incomeTotal > 0 ? Math.max(0, -guiltFreeSpending / incomeTotal) : 0;
+  const statusKey =
+    guiltFreeSpending < 0
+      ? "over"
+      : guiltFreeSpending / Math.max(parsedIncome, 1) < 0.15
+        ? "tight"
+        : "ok";
+  const statusLabel = t(`personalFinance.status.${statusKey}`);
+
+  const goalMonthly =
+    savingsMode === "goal" && parsedGoalMonths > 0 ? savingsAmount : 0;
+  const nudge = useMemo(() => {
+    if (guiltFreeSpending < 0) {
+      return t("personalFinance.nudges.overBudget", {
+        amount: formatCurrency(Math.abs(guiltFreeSpending)),
+      });
+    }
+    if (savingsRate > 0 && savingsRate < 0.1) {
+      const target = parsedIncome * 0.1 - savingsAmount;
+      return t("personalFinance.nudges.lowSavings", {
+        amount: formatCurrency(Math.max(0, target)),
+      });
+    }
+    if (fixedRatio > 0.6 && parsedIncome > 0) {
+      const target = parsedFixed - parsedIncome * 0.6;
+      return t("personalFinance.nudges.highFixed", {
+        amount: formatCurrency(Math.max(0, target)),
+      });
+    }
+    return t("personalFinance.nudges.steady");
+  }, [fixedRatio, guiltFreeSpending, parsedFixed, parsedIncome, savingsAmount, savingsRate, t]);
 
   const warnings = [
     guiltFreeSpending < 0
@@ -77,6 +114,25 @@ export default function PersonalFinance() {
         </div>
 
         <div className="bg-card rounded-xl border border-border shadow-sm p-6 space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="font-display font-semibold">{t("personalFinance.sections.inputs")}</h3>
+              <p className="text-sm text-muted-foreground">{t("personalFinance.sections.inputsHint")}</p>
+            </div>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setNetIncome("5000");
+                setSavingsMode("percent");
+                setSavingsValue("20");
+                setGoalAmount("6000");
+                setGoalMonths("12");
+                setFixedExpenses("2400");
+              }}
+            >
+              {t("personalFinance.actions.reset")}
+            </Button>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <label className="space-y-2 text-sm">
               <span className="text-muted-foreground">{t("personalFinance.inputs.netIncome")}</span>
@@ -174,6 +230,60 @@ export default function PersonalFinance() {
               guiltFree: formatCurrency(guiltFreeSpending),
             })}
           </div>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between text-xs text-muted-foreground">
+              <span>{t("personalFinance.breakdown.title")}</span>
+              <span className="font-medium text-foreground">
+                {t("personalFinance.status.label")}: {statusLabel}
+              </span>
+            </div>
+            <div className="h-3 w-full rounded-full overflow-hidden bg-muted flex">
+              <div
+                className="bg-primary"
+                style={{ width: `${Math.min(100, savingsShare * 100)}%` }}
+              />
+              <div
+                className="bg-amber-400/80"
+                style={{ width: `${Math.min(100, fixedShare * 100)}%` }}
+              />
+              <div
+                className="bg-emerald-500/80"
+                style={{ width: `${Math.min(100, spendShare * 100)}%` }}
+              />
+              {overShare > 0 && (
+                <div
+                  className="bg-rose-500/80"
+                  style={{ width: `${Math.min(100, overShare * 100)}%` }}
+                />
+              )}
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-primary" />
+                <span>{t("personalFinance.breakdown.savings")}</span>
+                <span className="ml-auto font-mono text-foreground">{formatCurrency(savingsAmount)}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-amber-400/80" />
+                <span>{t("personalFinance.breakdown.fixed")}</span>
+                <span className="ml-auto font-mono text-foreground">{formatCurrency(parsedFixed)}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-emerald-500/80" />
+                <span>{t("personalFinance.breakdown.guiltFree")}</span>
+                <span className="ml-auto font-mono text-foreground">
+                  {formatCurrency(Math.max(0, guiltFreeSpending))}
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-rose-500/80" />
+                <span>{t("personalFinance.breakdown.over")}</span>
+                <span className="ml-auto font-mono text-foreground">
+                  {formatCurrency(Math.max(0, -guiltFreeSpending))}
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -220,6 +330,18 @@ export default function PersonalFinance() {
                 <p key={warning}>{warning}</p>
               ))}
             </div>
+          )}
+        </div>
+
+        <div className="bg-card rounded-xl border border-border shadow-sm p-6 space-y-2">
+          <h3 className="font-display font-semibold">{t("personalFinance.nudges.title")}</h3>
+          <p className="text-sm text-muted-foreground">{nudge}</p>
+          {savingsMode === "goal" && parsedGoalMonths > 0 && (
+            <p className="text-xs text-muted-foreground">
+              {t("personalFinance.nudges.goalMonthly", {
+                amount: formatCurrency(goalMonthly),
+              })}
+            </p>
           )}
         </div>
       </div>

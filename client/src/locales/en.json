@@ -15,6 +15,7 @@
     "growthCalculator": "Growth Calculator",
     "balanceSheet": "Balance Sheet",
     "personalFinance": "Spending Guide",
+    "advisoryFees": "Advisory Fees",
     "debt": "Debt",
     "savedAnalyses": "Saved Analyses"
   },
@@ -725,6 +726,13 @@
     "badge": "Pay Yourself First",
     "title": "Spending Guide",
     "subtitle": "Fund the future first, then spend without guilt.",
+    "sections": {
+      "inputs": "Inputs",
+      "inputsHint": "Set your income, savings plan, and fixed costs."
+    },
+    "actions": {
+      "reset": "Reset example"
+    },
     "inputs": {
       "netIncome": "Net Monthly Income",
       "savingsMode": "Savings Mode",
@@ -758,6 +766,19 @@
       "goal": "Goal-based"
     },
     "summary": "You can spend up to {{guiltFree}} per month without harming your goals.",
+    "breakdown": {
+      "title": "Monthly flow",
+      "savings": "Savings",
+      "fixed": "Fixed",
+      "guiltFree": "Guilt-free",
+      "over": "Over"
+    },
+    "status": {
+      "label": "Plan status",
+      "ok": "OK",
+      "tight": "Tight",
+      "over": "Over"
+    },
     "metrics": {
       "guiltFree": "Guilt-Free Spending",
       "guiltFreeHint": "Approved monthly spend.",
@@ -768,12 +789,143 @@
       "fixedRatio": "Share: {{value}}",
       "netIncome": "Net Income"
     },
+    "nudges": {
+      "title": "Next step",
+      "overBudget": "Close the gap now: cut expenses or savings by {{amount}}.",
+      "lowSavings": "Raise savings by {{amount}} per month to hit 10%.",
+      "highFixed": "Reduce fixed costs by {{amount}} to get under 60%.",
+      "steady": "Stay on track. Put any extra toward savings or goals.",
+      "goalMonthly": "Required savings per month: {{amount}}."
+    },
     "warnings": {
       "title": "Safety Checks",
       "none": "All clear. Your plan looks sustainable.",
       "overBudget": "Lifestyle exceeds income. Reduce expenses or savings to get back to zero.",
       "lowSavings": "Savings rate is under 10%. Future progress may be slow.",
       "highFixed": "Fixed expenses are above 60% of income. Flexibility is low."
+    }
+  },
+  "advisoryFees": {
+    "badge": "Fee Transparency",
+    "title": "Advisory Fees",
+    "subtitle": "Calculate what you pay and what the advisor earns.",
+    "sections": {
+      "inputs": "Inputs",
+      "inputsHint": "Use your advisor's proposal or fee schedule."
+    },
+    "actions": {
+      "reset": "Reset example"
+    },
+    "inputs": {
+      "aum": "Assets Under Management (AUM)",
+      "feeRate": "Advisory Fee Rate (%)",
+      "billing": "Billing Frequency",
+      "payoutRate": "Advisor Payout (%)",
+      "fundExpense": "Fund Expense Ratio (%)",
+      "platformFee": "Platform Fee (annual)",
+      "performanceGain": "Performance Gain (optional)",
+      "performanceRate": "Performance Fee (%)",
+      "tiered": "Tiered pricing",
+      "tier1Rate": "Tier 1 Rate (%)",
+      "tier1Cap": "Tier 1 Cap",
+      "tier2Rate": "Tier 2 Rate (%)",
+      "tier2Cap": "Tier 2 Cap",
+      "tier3Rate": "Tier 3 Rate (%)"
+    },
+    "placeholders": {
+      "aum": "400000",
+      "feeRate": "1.0",
+      "billing": "Select frequency",
+      "payoutRate": "40",
+      "fundExpense": "0.20",
+      "platformFee": "0",
+      "performanceGain": "0",
+      "performanceRate": "0",
+      "tier1Rate": "1.25",
+      "tier1Cap": "500000",
+      "tier2Rate": "1.00",
+      "tier2Cap": "1000000",
+      "tier3Rate": "0.75"
+    },
+    "hints": {
+      "tiered": "Lower rates apply as assets increase."
+    },
+    "billing": {
+      "monthly": "Monthly",
+      "quarterly": "Quarterly",
+      "annual": "Annual"
+    },
+    "summary": "Estimated fee per period: {{perPeriod}}. Annual advisory fee: {{annual}}.",
+    "metrics": {
+      "annualFee": "Annual Advisory Fee",
+      "effectiveRate": "Effective rate: {{value}}",
+      "perPeriod": "Fee per Period",
+      "billingLabel": "{{periods}} periods per year",
+      "advisorGross": "Advisor Earnings",
+      "allIn": "All-in Annual Cost",
+      "allInRate": "All-in rate: {{value}}"
+    },
+    "breakdown": {
+      "title": "All-in breakdown",
+      "advisory": "Advisory fee",
+      "fund": "Fund expenses",
+      "platform": "Platform fees",
+      "performance": "Performance fee",
+      "total": "Total"
+    },
+    "disclosure": {
+      "title": "Ask this question",
+      "body": "Ask for your effective all-in fee, including advisory, platform, and fund expenses.",
+      "question": "What is my all-in fee and what portion is paid to the advisor?"
+    },
+    "glossary": {
+      "title": "Advisory Fee Glossary",
+      "subtitle": "Quick definitions for the most common fee terms.",
+      "aum": {
+        "title": "AUM (Assets Under Management)",
+        "body": "The total value of assets the advisor manages for you."
+      },
+      "feeRate": {
+        "title": "Advisory Fee Rate",
+        "body": "The annual percent charged on AUM for advice and management."
+      },
+      "billing": {
+        "title": "Billing Frequency",
+        "body": "How often fees are charged (monthly, quarterly, or annually)."
+      },
+      "payout": {
+        "title": "Advisor Payout",
+        "body": "The share of the fee paid to the advisor by the firm."
+      },
+      "tiers": {
+        "title": "Tiered Pricing",
+        "body": "Lower rates that apply as assets grow through defined tiers."
+      },
+      "fund": {
+        "title": "Fund Expense Ratio",
+        "body": "Underlying fund costs charged inside ETFs or mutual funds."
+      },
+      "platform": {
+        "title": "Platform Fee",
+        "body": "Additional program or custody fees charged by the firm."
+      },
+      "performance": {
+        "title": "Performance Fee",
+        "body": "A fee based on gains, often used in private or hedge strategies."
+      }
+    },
+    "questions": {
+      "title": "Questions to ask an advisor",
+      "subtitle": "Use these to get full fee transparency before you sign.",
+      "items": {
+        "allInFee": "What is my effective all-in fee, including advisory, platform, and fund expenses?",
+        "billingMethod": "How is the fee calculated: daily average, end-of-period, or beginning balance?",
+        "payout": "What portion of my fee is paid to you personally?",
+        "fundCosts": "What are the fund expense ratios inside my portfolio?",
+        "platformFees": "Are there platform, custody, or program fees on top of the advisory fee?",
+        "performanceFees": "Are any performance fees or incentive fees charged?",
+        "termination": "If I leave mid-period, how is the fee prorated?"
+      }
     }
   }
 }

@@ -12,7 +12,8 @@ import {
   Moon,
   Sun,
   Wallet,
-  PiggyBank
+  PiggyBank,
+  BadgeDollarSign
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
@@ -33,6 +34,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     { href: "/growth", label: t("nav.growthCalculator"), icon: TrendingUp },
     { href: "/balance-sheet", label: t("nav.balanceSheet"), icon: Wallet },
     { href: "/personal-finance", label: t("nav.personalFinance"), icon: PiggyBank },
+    { href: "/advisory-fees", label: t("nav.advisoryFees"), icon: BadgeDollarSign },
     { href: "/debt", label: t("nav.debt"), icon: CreditCard },
     { href: "/saved", label: t("nav.savedAnalyses"), icon: History },
   ];
@@ -79,37 +81,40 @@ export function Layout({ children }: { children: React.ReactNode }) {
         </nav>
 
         <div className="px-4 pb-4">
-          <p className="text-xs text-muted-foreground mb-2">{t("app.language")}</p>
-          <div className="flex gap-2">
-            <Button
-              variant={i18n.language === "en" ? "default" : "outline"}
-              size="sm"
-              onClick={() => handleLanguageChange("en")}
-            >
-              EN
-            </Button>
-            <Button
-              variant={i18n.language === "es" ? "default" : "outline"}
-              size="sm"
-              onClick={() => handleLanguageChange("es")}
-            >
-              ES
-            </Button>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <p className="text-xs text-muted-foreground mb-2">{t("app.language")}</p>
+              <div className="flex gap-2">
+                <Button
+                  variant={i18n.language === "en" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => handleLanguageChange("en")}
+                >
+                  EN
+                </Button>
+                <Button
+                  variant={i18n.language === "es" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => handleLanguageChange("es")}
+                >
+                  ES
+                </Button>
+              </div>
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground mb-2">{t("app.theme")}</p>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="w-full justify-between"
+                disabled={!mounted}
+              >
+                <span>{t(theme === "dark" ? "app.themeDark" : "app.themeLight")}</span>
+                {theme === "dark" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+              </Button>
+            </div>
           </div>
-        </div>
-
-        <div className="px-4 pb-4">
-          <p className="text-xs text-muted-foreground mb-2">{t("app.theme")}</p>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="w-full justify-between"
-            disabled={!mounted}
-          >
-            <span>{t(theme === "dark" ? "app.themeDark" : "app.themeLight")}</span>
-            {theme === "dark" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
-          </Button>
         </div>
 
       </aside>

@@ -15,6 +15,7 @@
     "growthCalculator": "Calculadora de Crecimiento",
     "balanceSheet": "Balance General",
     "personalFinance": "Guia de Gasto",
+    "advisoryFees": "Honorarios de Asesoria",
     "debt": "Deudas",
     "savedAnalyses": "Análisis Guardados"
   },
@@ -725,6 +726,13 @@
     "badge": "Pagate Primero",
     "title": "Guia de Gasto",
     "subtitle": "Primero el futuro, luego gasta sin culpa.",
+    "sections": {
+      "inputs": "Entradas",
+      "inputsHint": "Define ingreso, ahorro y gastos fijos."
+    },
+    "actions": {
+      "reset": "Restablecer ejemplo"
+    },
     "inputs": {
       "netIncome": "Ingreso Neto Mensual",
       "savingsMode": "Modo de Ahorro",
@@ -758,6 +766,19 @@
       "goal": "Por meta"
     },
     "summary": "Puedes gastar hasta {{guiltFree}} al mes sin afectar tus metas.",
+    "breakdown": {
+      "title": "Flujo mensual",
+      "savings": "Ahorro",
+      "fixed": "Fijos",
+      "guiltFree": "Sin culpa",
+      "over": "Exceso"
+    },
+    "status": {
+      "label": "Estado del plan",
+      "ok": "OK",
+      "tight": "Ajustado",
+      "over": "Pasado"
+    },
     "metrics": {
       "guiltFree": "Gasto sin Culpa",
       "guiltFreeHint": "Gasto mensual aprobado.",
@@ -768,12 +789,143 @@
       "fixedRatio": "Proporcion: {{value}}",
       "netIncome": "Ingreso Neto"
     },
+    "nudges": {
+      "title": "Siguiente paso",
+      "overBudget": "Cierra la brecha ya: baja gastos o ahorro en {{amount}}.",
+      "lowSavings": "Sube el ahorro en {{amount}} al mes para llegar a 10%.",
+      "highFixed": "Reduce fijos en {{amount}} para bajar de 60%.",
+      "steady": "Sigue firme. Cualquier extra va a ahorro o metas.",
+      "goalMonthly": "Ahorro requerido por mes: {{amount}}."
+    },
     "warnings": {
       "title": "Chequeos de Seguridad",
       "none": "Todo bien. Tu plan se ve sostenible.",
       "overBudget": "El estilo de vida excede el ingreso. Baja gastos o ahorro para volver a cero.",
       "lowSavings": "El ahorro esta por debajo de 10%. El progreso puede ser lento.",
       "highFixed": "Los gastos fijos superan 60% del ingreso. La flexibilidad es baja."
+    }
+  },
+  "advisoryFees": {
+    "badge": "Transparencia de Honorarios",
+    "title": "Honorarios de Asesoria",
+    "subtitle": "Calcula lo que pagas y lo que gana el asesor.",
+    "sections": {
+      "inputs": "Entradas",
+      "inputsHint": "Usa la propuesta o tabla de honorarios."
+    },
+    "actions": {
+      "reset": "Restablecer ejemplo"
+    },
+    "inputs": {
+      "aum": "Activos Bajo Manejo (AUM)",
+      "feeRate": "Honorario de Asesoria (%)",
+      "billing": "Frecuencia de Cobro",
+      "payoutRate": "Pago al Asesor (%)",
+      "fundExpense": "Gastos de Fondos (%)",
+      "platformFee": "Tarifa de Plataforma (anual)",
+      "performanceGain": "Ganancia (opcional)",
+      "performanceRate": "Honorario de Desempeno (%)",
+      "tiered": "Tarifas por tramos",
+      "tier1Rate": "Tasa Tramo 1 (%)",
+      "tier1Cap": "Tope Tramo 1",
+      "tier2Rate": "Tasa Tramo 2 (%)",
+      "tier2Cap": "Tope Tramo 2",
+      "tier3Rate": "Tasa Tramo 3 (%)"
+    },
+    "placeholders": {
+      "aum": "400000",
+      "feeRate": "1.0",
+      "billing": "Selecciona frecuencia",
+      "payoutRate": "40",
+      "fundExpense": "0.20",
+      "platformFee": "0",
+      "performanceGain": "0",
+      "performanceRate": "0",
+      "tier1Rate": "1.25",
+      "tier1Cap": "500000",
+      "tier2Rate": "1.00",
+      "tier2Cap": "1000000",
+      "tier3Rate": "0.75"
+    },
+    "hints": {
+      "tiered": "La tasa baja a medida que suben los activos."
+    },
+    "billing": {
+      "monthly": "Mensual",
+      "quarterly": "Trimestral",
+      "annual": "Anual"
+    },
+    "summary": "Tarifa estimada por periodo: {{perPeriod}}. Honorario anual: {{annual}}.",
+    "metrics": {
+      "annualFee": "Honorario Anual",
+      "effectiveRate": "Tasa efectiva: {{value}}",
+      "perPeriod": "Honorario por Periodo",
+      "billingLabel": "{{periods}} periodos al ano",
+      "advisorGross": "Ganancia del Asesor",
+      "allIn": "Costo Anual Total",
+      "allInRate": "Tasa total: {{value}}"
+    },
+    "breakdown": {
+      "title": "Detalle total",
+      "advisory": "Honorarios de asesoria",
+      "fund": "Gastos de fondos",
+      "platform": "Tarifas de plataforma",
+      "performance": "Honorario de desempeno",
+      "total": "Total"
+    },
+    "disclosure": {
+      "title": "Pregunta clave",
+      "body": "Pide tu tarifa total incluyendo asesor, plataforma y fondos.",
+      "question": "Cual es mi tarifa total y que parte recibe el asesor?"
+    },
+    "glossary": {
+      "title": "Glosario de Honorarios",
+      "subtitle": "Definiciones rapidas de los terminos mas comunes.",
+      "aum": {
+        "title": "AUM (Activos Bajo Manejo)",
+        "body": "Valor total de los activos que maneja el asesor."
+      },
+      "feeRate": {
+        "title": "Honorario de Asesoria",
+        "body": "Porciento anual cobrado sobre AUM por asesorar y manejar."
+      },
+      "billing": {
+        "title": "Frecuencia de Cobro",
+        "body": "Cada cuanto se cobran las tarifas (mensual, trimestral o anual)."
+      },
+      "payout": {
+        "title": "Pago al Asesor",
+        "body": "Porcion del honorario que recibe el asesor del firm."
+      },
+      "tiers": {
+        "title": "Tarifas por Tramos",
+        "body": "Tasas mas bajas aplican a medida que crecen los activos."
+      },
+      "fund": {
+        "title": "Gastos de Fondos",
+        "body": "Costos internos de ETFs o fondos mutuos."
+      },
+      "platform": {
+        "title": "Tarifa de Plataforma",
+        "body": "Costos adicionales del programa o custodia."
+      },
+      "performance": {
+        "title": "Honorario de Desempeno",
+        "body": "Tarifa basada en ganancias, comun en estrategias privadas."
+      }
+    },
+    "questions": {
+      "title": "Preguntas para el asesor",
+      "subtitle": "Usa estas preguntas para tener transparencia total antes de firmar.",
+      "items": {
+        "allInFee": "Cual es mi tarifa total incluyendo asesoria, plataforma y fondos?",
+        "billingMethod": "Como se calcula la tarifa: promedio diario, saldo inicial o saldo final?",
+        "payout": "Que parte de mi tarifa recibes tu personalmente?",
+        "fundCosts": "Cuales son los gastos de los fondos dentro de mi portafolio?",
+        "platformFees": "Hay tarifas de plataforma, custodia o programa adicionales?",
+        "performanceFees": "Se cobran honorarios por desempeno o incentivos?",
+        "termination": "Si me voy a mitad de periodo, como se prorratea la tarifa?"
+      }
     }
   }
 }
