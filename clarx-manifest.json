@@ -1,0 +1,12 @@
+{
+  "generated": [
+    "dist",
+    "server/public"
+  ],
+  "highFanOut": [
+    "client/src/App.tsx"
+  ],
+  "vendorFiles": [
+    "client/src/components/ui/sidebar.tsx"
+  ]
+}
