@@ -448,6 +448,7 @@
       "monthlyInvestment": "Monthly Investment",
       "currentAge": "Current Age",
       "inflationRate": "Inflation Rate",
+      "withdrawalRate": "Withdrawal Rate",
       "compoundingFrequency": "Compounding Frequency",
       "saveScenario": "Save Scenario"
     },
@@ -456,6 +457,7 @@
       "monthlyInvestment": "500",
       "currentAge": "30",
       "inflationRate": "2.5",
+      "withdrawalRate": "0",
       "saveScenario": "Conservative plan"
     },
     "hints": {
@@ -463,6 +465,7 @@
       "monthlyInvestment": "Recurring contribution",
       "currentAge": "For age tracking",
       "inflationRate": "Annual inflation rate",
+      "withdrawalRate": "Annual portfolio withdrawal",
       "compoundingFrequency": "How often interest compounds",
       "saveScenario": "Name and save this setup"
     },
@@ -477,6 +480,21 @@
     "savedScenarios": "Saved Scenarios",
     "noScenarios": "No scenarios saved yet.",
     "scenarioSummary": "{{amount}}/mo · {{frequency}}x comp",
+    "budget": {
+      "title": "Monthly Budget",
+      "subtitle": "Projected income from a {{rate}}% annual withdrawal. Green = net after PR tax · Gray = inflation-adjusted.",
+      "netMonthlyLabel": "Net Monthly",
+      "weeklyLabel": "Weekly Budget",
+      "dailyLabel": "Daily Budget",
+      "taxLabel": "Annual Tax (PR)",
+      "referenceNote": "Based on {{rate}}% return at {{years}} years",
+      "monthly": "/mo",
+      "annual": "/yr",
+      "gross": "gross {{value}}/mo",
+      "balanceLabel": "bal. {{value}}",
+      "yearCol": "Year",
+      "balanceCol": "Balance"
+    },
     "projections": {
       "title": "Investment Projections",
       "subtitle": "Green = Nominal (actual dollars) · Gray = Real value (adjusted for inflation)",
@@ -487,7 +505,8 @@
       "initialBalanceGrowth": "Initial Balance Growth",
       "return": "{{rate}}% Return",
       "earnings": "+{{value}} earnings",
-      "real": "{{value}} real"
+      "real": "{{value}} real",
+      "withdrawn": "-{{value}} withdrawn"
     },
     "definitions": {
       "title": "Definitions",
@@ -514,6 +533,10 @@
       "age": {
         "title": "Age",
         "body": "Current age plus the milestone year."
+      },
+      "withdrawalRate": {
+        "title": "Withdrawal Rate",
+        "body": "Annual percentage withdrawn from portfolio value for income."
       }
     }
   },
@@ -933,9 +956,6 @@
     "badge": "Advisor Toolkit",
     "title": "Formulas",
     "subtitle": "Learn the formulas that make advice fast, clear, and confident.",
-    "actions": {
-      "example": "Example"
-    },
     "sections": {
       "mustMemorize": "Must-memorize formulas",
       "recognize": "Know and recognize",

@@ -448,6 +448,7 @@
       "monthlyInvestment": "Inversión Mensual",
       "currentAge": "Edad Actual",
       "inflationRate": "Inflación",
+      "withdrawalRate": "Tasa de Retiro",
       "compoundingFrequency": "Frecuencia de Capitalizacion",
       "saveScenario": "Guardar Escenario"
     },
@@ -456,6 +457,7 @@
       "monthlyInvestment": "500",
       "currentAge": "30",
       "inflationRate": "2.5",
+      "withdrawalRate": "0",
       "saveScenario": "Plan conservador"
     },
     "hints": {
@@ -463,6 +465,7 @@
       "monthlyInvestment": "Aporte recurrente",
       "currentAge": "Para edades",
       "inflationRate": "Inflación anual",
+      "withdrawalRate": "Retiro anual del portafolio",
       "compoundingFrequency": "Cada cuanto se capitaliza",
       "saveScenario": "Nombre y guarda este ajuste"
     },
@@ -477,6 +480,21 @@
     "savedScenarios": "Escenarios Guardados",
     "noScenarios": "No hay escenarios guardados.",
     "scenarioSummary": "{{amount}}/mes · {{frequency}}x comp",
+    "budget": {
+      "title": "Presupuesto Mensual",
+      "subtitle": "Ingreso proyectado de un retiro anual del {{rate}}%. Verde = neto despues de impuesto PR · Gris = ajustado por inflacion.",
+      "netMonthlyLabel": "Neto Mensual",
+      "weeklyLabel": "Presupuesto Semanal",
+      "dailyLabel": "Presupuesto Diario",
+      "taxLabel": "Impuesto Anual (PR)",
+      "referenceNote": "Basado en {{rate}}% de retorno a {{years}} años",
+      "monthly": "/mes",
+      "annual": "/año",
+      "gross": "bruto {{value}}/mes",
+      "balanceLabel": "saldo {{value}}",
+      "yearCol": "Año",
+      "balanceCol": "Saldo"
+    },
     "projections": {
       "title": "Proyecciones de Inversión",
       "subtitle": "Verde = Nominal (dolares actuales) · Gris = Real (ajustado por inflacion)",
@@ -487,7 +505,8 @@
       "initialBalanceGrowth": "Crecimiento del Saldo Inicial",
       "return": "{{rate}}% Retorno",
       "earnings": "+{{value}} ganancias",
-      "real": "{{value}} real"
+      "real": "{{value}} real",
+      "withdrawn": "-{{value}} retirado"
     },
     "definitions": {
       "title": "Definiciones",
@@ -514,6 +533,10 @@
       "age": {
         "title": "Edad",
         "body": "Edad actual mas los años del hito."
+      },
+      "withdrawalRate": {
+        "title": "Tasa de Retiro",
+        "body": "Porcentaje anual retirado del valor del portafolio para ingreso."
       }
     }
   },
@@ -933,9 +956,6 @@
     "badge": "Toolkit del Asesor",
     "title": "Formulas",
     "subtitle": "Aprende las formulas que hacen el consejo rapido y claro.",
-    "actions": {
-      "example": "Ejemplo"
-    },
     "sections": {
       "mustMemorize": "Formulas para memorizar",
       "recognize": "Conoce y reconoce",

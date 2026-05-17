@@ -1,7 +1,6 @@
 import { Layout } from "@/components/Layout";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useTranslation } from "react-i18next";
-import { BookOpen, ChevronDown } from "lucide-react";
+import { BookOpen } from "lucide-react";
 
 type FormulaItem = {
   title: string;
@@ -127,24 +126,16 @@ export default function Formulas() {
   const renderItems = (items: FormulaItem[]) => (
     <div className="grid gap-4 md:grid-cols-2">
       {items.map((item) => (
-        <Collapsible key={item.title} className="rounded-lg border border-border/60 bg-card p-4">
-          <div className="space-y-2">
-            <div className="flex items-start justify-between gap-3">
-              <p className="font-medium text-foreground">{item.title}</p>
-              <CollapsibleTrigger className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground">
-                {t("formulas.actions.example")}
-                <ChevronDown className="h-4 w-4" />
-              </CollapsibleTrigger>
-            </div>
-            <div className="rounded-md bg-muted/40 px-3 py-2 font-mono text-sm text-foreground">
-              {item.formula}
-            </div>
-            <p className="text-sm text-muted-foreground">{item.use}</p>
+        <div key={item.title} className="rounded-lg border border-border/60 bg-card p-4 space-y-3">
+          <p className="font-medium text-foreground">{item.title}</p>
+          <div className="rounded-md bg-muted/40 px-3 py-2 font-mono text-sm text-foreground">
+            {item.formula}
           </div>
-          <CollapsibleContent className="mt-3 rounded-md bg-muted/30 px-3 py-3 text-sm text-muted-foreground">
-            <p className="whitespace-pre-line">{item.example}</p>
-          </CollapsibleContent>
-        </Collapsible>
+          <p className="text-sm text-muted-foreground">{item.use}</p>
+          <div className="rounded-md bg-muted/30 px-3 py-3 text-sm text-muted-foreground">
+            <p className="whitespace-pre-line leading-loose">{item.example}</p>
+          </div>
+        </div>
       ))}
     </div>
   );
