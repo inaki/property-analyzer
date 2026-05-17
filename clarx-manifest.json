@@ -1,12 +1,17 @@
 {
   "generated": [
     "dist",
-    "server/public"
+    "server/public",
+    "client/src/components/ui/sidebar.tsx"
   ],
   "highFanOut": [
     "client/src/App.tsx"
   ],
-  "vendorFiles": [
-    "client/src/components/ui/sidebar.tsx"
+  "highRisk": [
+    "client/src/lib/buyd.ts",
+    "client/src/lib/debt.ts",
+    "server/storage.ts",
+    "shared/schema.ts"
   ]
 }
+
