@@ -182,3 +182,33 @@ Financial and real estate terminology used throughout Property Analyzer. These t
 - **Advisory fees** — Management fees charged as a percentage of assets under management (AUM); the Advisory Fees page models their long-term compounding impact.
 - **Compound growth** — Exponential wealth accumulation through reinvested returns and contributions over time.
 - **Formulas** — Mathematical reference sheet for key financial calculations (IRR, NPV, compound interest, amortization) used across the toolkit.
+
+## Testing & verification
+
+Property Analyzer currently relies on TypeScript type-checking and linting as its primary code quality gates. Run `npm run check` to validate type safety across the client and server, and `npm run lint` to catch style violations with ESLint. These checks are lightweight and fast, making them suitable for pre-commit hooks and CI pipelines.
+
+Unit and integration tests for business logic (especially financial calculations in `client/src/lib/` and server routes in `server/routes.ts`) should be added using a test runner such as Vitest or Jest. Test files should be colocated with their source modules using the `.test.ts` or `.spec.ts` naming convention.
+
+```bash
+npm run check      # TypeScript type-check
+npm run lint       # ESLint validation
+npm run test       # Run tests (when configured)
+```
+
+When setting up tests, prioritize the BUYD simulator logic, debt payoff calculations, and compound interest formulas in `lib/`, as these are critical financial functions that must produce correct results under various input scenarios and edge cases.
+
+## Deployment / ops
+
+Property Analyzer deploys as a monorepo with both client and server artifacts. The production build process compiles the React frontend via Vite into `dist/` and stages the Express server alongside it. The application runs on a single Node process that serves both the API and static assets.
+
+The build and deployment workflow follows these steps:
+
+```bash
+npm run build      # Compile React client (dist/) and prepare server bundle
+npm run start      # Launch production server from dist/ on port 5000
+npm run db:push    # Migrate schema to production database before startup
+```
+
+**Environment configuration:** The application supports SQLite for local development and PostgreSQL for production. Database connection is managed via environment variables (DATABASE_URL). The deployment environment should set `NODE_ENV=production` to enable minification and disable hot module reloading.
+
+**Branch model:** Development occurs on feature branches and merges to main via pull request. The `npm run start` command is the canonical production entry point and should be invoked after `npm run build` completes successfully. No manual database setup is required if `npm run db:push` executes before the server starts, as Drizzle ORM handles schema synchronization.
