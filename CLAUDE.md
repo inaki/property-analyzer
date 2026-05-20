@@ -14,20 +14,27 @@ npm run lint       # ESLint
 npm run db:push    # Push Drizzle schema to database
 ```
 
-## Architecture
-```
-client/src/
-  pages/          # Route-level components (one per wouter route)
-  components/     # Shared UI + feature sub-components (buyd/, ui/)
-  lib/            # Pure business logic (simulateBuyd, formatters, etc.)
-  hooks/          # React Query mutation/query hooks
-  locales/        # i18n JSON files (en.json, es.json)
-server/
-  index.ts        # Express entry point
-  routes.ts       # REST API routes
-  storage.ts      # DB access layer (Drizzle + SQLite/Postgres)
-shared/           # Types shared between client and server
-```
+## Architecture & module map
+
+Property Analyzer is organized as a monorepo with three deployable units: a React client, an Express server, and shared type definitions. The client runs on port 5000 during development and is bundled by Vite for production; the server uses Express to handle REST API calls and database operations via Drizzle ORM. Shared types live in a separate directory to keep both layers in sync without circular dependencies.
+
+The system splits as follows:
+
+- **`client/src/`** — React 18 frontend bundled by Vite
+  - `pages/` — Route-level components (one per wouter route: Buyd, Compound, DebtOptimizer, BalanceSheet, PersonalFinance, Advisory, Formulas)
+  - `components/` — Shared UI (Tailwind + shadcn/ui) and feature subcomponents (buyd/, ui/)
+  - `lib/` — Pure business logic (simulateBuyd, formatters, validators, financial calculations)
+  - `hooks/` — React Query mutations and queries for API calls
+  - `locales/` — i18n JSON files (en.json, es.json)
+
+- **`server/`** — Express 4 backend
+  - `index.ts` — Entry point, middleware setup, port binding
+  - `routes.ts` — REST API endpoint definitions
+  - `storage.ts` — Data access layer wrapping Drizzle ORM queries
+
+- **`shared/`** — TypeScript type definitions and interfaces used by both client and server
+
+**Production deployment:** The build process generates `dist/` (bundled server) and `server/public/` (bundled client assets). The `npm run start` command runs the compiled server, which serves static assets and API routes from a single process. SQLite is used in development; PostgreSQL in production.
 
 ## Stack
 - **Client**: React 18, Vite, wouter, Tailwind CSS 3, shadcn/ui (Radix), recharts, react-i18next
@@ -36,21 +43,38 @@ shared/           # Types shared between client and server
 
 ## Directory structure
 
+The repository uses a monorepo layout with client, server, and shared type definitions organized at the top level. Each directory serves a distinct purpose in the React + Express architecture, with clear separation between frontend assets, backend logic, and configuration files.
+
 ```
-client/src/              React frontend source code
-  pages/                 Route-level components (one per wouter route)
-  components/            Shared UI and feature sub-components (buyd/, ui/)
-  lib/                   Pure business logic (simulateBuyd, formatters, validators)
-  hooks/                 React Query hooks for mutations and data fetching
-  locales/               i18n translation files (en.json, es.json)
-  main.tsx               React app entry point
-server/                  Express backend and database layer
-  index.ts               Express server entry point
-  routes.ts              REST API endpoint definitions
-  storage.ts             Drizzle ORM database access layer
-shared/                  TypeScript types and interfaces shared client/server
-public/                  Static assets (built client bundle in production)
+client/                 React 18 frontend (Vite bundled)
+├── src/
+│   ├── pages/         Route components (Buyd, Compound, DebtOptimizer, etc.)
+│   ├── components/    Shared UI and feature subcomponents
+│   ├── lib/           Pure business logic and financial calculations
+│   ├── hooks/         React Query mutations and API queries
+│   └── locales/       i18n JSON (en.json, es.json)
+├── index.html         Entry HTML template
+└── vite.config.ts     Vite configuration
+
+server/                 Express 4 backend with Drizzle ORM
+├── src/
+│   ├── index.ts       Entry point, middleware, port binding
+│   ├── routes.ts      REST API endpoint definitions
+│   ├── storage.ts     Database schema and queries
+│   └── db.ts          Drizzle instance
+├── public/            Static assets (client bundle in prod)
+└── package.json
+
+shared/                 Shared type definitions
+├── types.ts           TypeScript interfaces used by both client and server
+
+.env.example           Environment configuration template
+drizzle.config.ts      Drizzle ORM migrations and database config
+tsconfig.json          TypeScript configuration
+package.json           Dependencies and workspace scripts
 ```
+
+The `client/` directory contains all React components, pages, and frontend logic; `server/` holds Express routes and database operations; and `shared/` prevents circular dependencies by housing common types. Configuration files at the root level apply to the entire monorepo workspace.
 
 ## i18n
 All user-facing strings live in `client/src/locales/en.json` and `es.json`. Add keys to both files when adding new UI text.
@@ -142,3 +166,19 @@ All calculations (BUYD simulation, debt optimization, compound interest, balance
 **Internationalization** is handled locally via react-i18next with static locale JSON files (English and Spanish) bundled at build time.
 
 If external integrations are added in the future (e.g., real estate data APIs, rate feeds, or financial data providers), credentials should be stored in environment variables and documented here with their purpose and configuration location.
+
+## Domain glossary
+
+Financial and real estate terminology used throughout Property Analyzer. These terms have specific meanings in the application's context and are used consistently across calculations, UI labels, and API responses. Understanding these definitions ensures correct interpretation of simulation results and feature interactions.
+
+- **BUYD** — Borrow-Yield-Deploy strategy; a leveraged investment approach where capital is borrowed at one rate, deployed to generate yield, and managed according to debt service coverage ratio (DSCR) and loan-to-value (LTV) constraints.
+- **LTV** — Loan-to-Value; the ratio of borrowed amount to total asset value, used to assess leverage risk in BUYD scenarios.
+- **DSCR** — Debt Service Coverage Ratio; the ratio of income to debt payments, indicating ability to service debt from cash flow.
+- **Cash buffer** — Liquid reserves held to cover shortfalls or unexpected expenses; tracked separately from deployed capital in BUYD stress tests.
+- **Stress test** — Scenario modeling that applies shocks (rate spikes, asset price crashes, income shocks) to evaluate portfolio resilience.
+- **Avalanche** — Debt payoff strategy prioritizing highest-interest debt first to minimize total interest paid.
+- **Snowball** — Debt payoff strategy prioritizing smallest balances first for psychological momentum.
+- **Net worth** — Total assets minus total liabilities; the primary metric tracked on the Balance Sheet page.
+- **Advisory fees** — Management fees charged as a percentage of assets under management (AUM); the Advisory Fees page models their long-term compounding impact.
+- **Compound growth** — Exponential wealth accumulation through reinvested returns and contributions over time.
+- **Formulas** — Mathematical reference sheet for key financial calculations (IRR, NPV, compound interest, amortization) used across the toolkit.
